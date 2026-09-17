@@ -1,0 +1,146 @@
+@use "../helpers" as *;
+
+.announcement {
+  position: relative;
+
+  min-height: rem(63);
+
+  display: flex;
+  align-items: center;
+
+  border-bottom: rem(1) solid var(--color-dark-15);
+
+  color: var(--color-light);
+  background-color: var(--color-dark-10);
+  background-image:
+    radial-gradient(
+      circle at 50% 110%,
+      rgba(112, 59, 247, 0.2),
+      transparent 45%
+    ),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%);
+
+  background-size:
+    auto,
+    rem(36) rem(36),
+    rem(36) rem(36);
+
+  transition-property: min-height, opacity, visibility;
+  transition-duration: var(--transition-duration);
+
+  @include mobile {
+    min-height: rem(78);
+  }
+
+  &.is-hidden {
+    min-height: 0;
+    height: 0;
+    border-bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+
+  &__inner {
+    position: relative;
+
+    display: flex;
+    min-height: inherit;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: fluid(10, 6);
+    padding-block: rem(12);
+    padding-inline: fluid(56, 28);
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+
+    width: fluid(30, 22);
+    height: fluid(30, 22);
+
+    object-fit: contain;
+  }
+
+  &__text,
+  &__link {
+    font-size: fluid(18, 12);
+    line-height: 1.5;
+  }
+
+  &__text {
+    color: var(--color-gray-60);
+  }
+
+  &__link {
+    color: var(--color-light);
+    text-decoration: underline;
+    text-decoration-thickness: rem(1);
+    text-underline-offset: rem(3);
+
+    @include hover {
+      color: var(--color-accent-light);
+    }
+  }
+
+  &__close {
+    @include flex-center;
+    @include square(fluid(32, 26));
+
+    position: absolute;
+    top: 50%;
+    right: var(--container-padding-x);
+    translate: 0 -50%;
+
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+
+    color: var(--color-light);
+    background-color: var(--color-dark-15);
+
+    @include hover {
+      color: var(--color-light);
+      background-color: var(--color-accent);
+    }
+
+    svg {
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  @include mobile {
+    &__inner {
+      justify-content: flex-start;
+    }
+
+    &__content {
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      padding-block: rem(10);
+      padding-right: rem(44);
+      padding-left: 0;
+    }
+
+    &__icon {
+      margin-top: rem(1);
+    }
+
+    &__text {
+      max-width: rem(180);
+    }
+
+    &__close {
+      right: 0;
+    }
+  }
+}

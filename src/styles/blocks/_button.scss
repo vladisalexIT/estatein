@@ -1,0 +1,50 @@
+@use "../helpers" as *;
+
+.button {
+  display: inline-flex;
+  min-height: fluid(63, 49);
+  padding-inline: fluid(24, 20);
+  justify-content: center;
+  align-items: center;
+  column-gap: rem(8);
+
+  border: rem(1) solid transparent;
+  border-radius: rem(10);
+
+  color: var(--color-light);
+  font-weight: 500;
+  line-height: 1;
+
+  @include hover {
+    color: var(--color-light);
+    translate: 0 rem(-2);
+  }
+
+  &--transparent {
+    border-color: var(--color-dark-15);
+    background-color: transparent;
+
+    @include hover {
+      border-color: var(--color-dark-40);
+      background-color: var(--color-dark-10);
+    }
+  }
+
+  &--accent {
+    background-color: var(--color-accent);
+
+    @include hover {
+      background-color: var(--color-accent-light);
+    }
+  }
+
+  &--dark {
+    border-color: var(--color-dark-15);
+    background-color: var(--color-dark);
+
+    @include hover {
+      border-color: var(--color-dark-40);
+      background-color: var(--color-dark-15);
+    }
+  }
+}

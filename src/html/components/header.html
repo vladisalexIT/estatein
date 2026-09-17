@@ -1,0 +1,53 @@
+<header class="header" data-js-header>
+  <button class="header__backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"
+    data-js-header-backdrop></button>
+
+  <div class="header__inner container">
+
+    <a class="header__logo logo" href="/" aria-label="Estatein — Home">
+      <img class="logo__image" src="/src/assets/icons/logo.svg" alt="Estatein" width="160" height="48">
+    </a>
+
+    <div class="header__overlay" id="header-menu-panel" data-js-header-overlay>
+      <nav class="header__menu" aria-label="Main navigation">
+        <ul class="header__menu-list">
+          <li class="header__menu-item">
+            <a class="header__menu-link" href="/">
+              Home
+            </a>
+          </li>
+
+          <li class="header__menu-item">
+            <a class="header__menu-link" href="/about.html">
+              About Us
+            </a>
+          </li>
+
+          <li class="header__menu-item">
+            <a class="header__menu-link" href="/properties.html">
+              Properties
+            </a>
+          </li>
+
+          <li class="header__menu-item">
+            <a class="header__menu-link" href="/services.html">
+              Services
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <a class="header__contact button button--dark" href="/contacts.html">
+        Contact Us
+      </a>
+    </div>
+
+    <button class="header__burger burger-button" type="button" aria-label="Open navigation menu" aria-expanded="false"
+      aria-controls="header-menu-panel" data-js-header-burger>
+      <span class="burger-button__line"></span>
+      <span class="burger-button__line"></span>
+      <span class="burger-button__line"></span>
+    </button>
+
+  </div>
+</header>

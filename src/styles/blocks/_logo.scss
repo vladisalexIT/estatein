@@ -1,0 +1,27 @@
+@use '../helpers' as *;
+
+.logo {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+
+  &__image {
+    width: fluid(160, 113);
+    height: auto;
+  }
+
+  &__mark {
+    display: inline-flex;
+
+    color: var(--color-accent);
+    font-size: fluid(34, 26);
+    line-height: 1;
+  }
+
+  &__text {
+    color: var(--color-light);
+    font-size: fluid(24, 20);
+    font-weight: 600;
+    line-height: 1;
+  }
+}

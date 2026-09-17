@@ -1,0 +1,62 @@
+@use '../helpers' as *;
+
+.burger-button {
+  @include square(rem(44));
+
+  position: relative;
+
+  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  row-gap: rem(5);
+
+  border: 0;
+  border-radius: rem(8);
+
+  color: var(--color-light);
+  background-color: transparent;
+
+  @include hover {
+    background-color: var(--color-dark-15);
+  }
+
+  &__line {
+    width: rem(24);
+    height: rem(2);
+
+    border-radius: rem(2);
+    background-color: currentColor;
+
+    transition-property:
+      width,
+      rotate,
+      translate,
+      opacity;
+    transition-duration: var(--transition-duration);
+
+    &:nth-child(2) {
+      width: rem(18);
+    }
+  }
+
+  &.is-active {
+    .burger-button__line {
+      &:nth-child(1) {
+        width: rem(24);
+        translate: 0 rem(7);
+        rotate: 45deg;
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+      &:nth-child(3) {
+        width: rem(24);
+        translate: 0 rem(-7);
+        rotate: -45deg;
+      }
+    }
+  }
+}
