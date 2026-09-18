@@ -3,7 +3,7 @@
 .features {
   padding: rem(20);
 
-  border-bottom: rem(1) solid var(--color-dark-15);
+  border: rem(10) solid var(--color-dark-15);
   background-color: var(--color-dark);
 
   box-shadow:
@@ -36,7 +36,10 @@
   }
 
   @include mobile {
+    margin: rem(16);
     padding: rem(10);
+
+    border-radius: rem(12);
 
     &__list {
       gap: rem(10);
