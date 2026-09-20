@@ -1,5 +1,4 @@
-@use '../variables' as *;
-@use '../helpers' as *; 
+@use "../helpers" as *;
 
 .footer {
   width: 100%;
@@ -15,13 +14,26 @@
     border: none;
     border-top: rem(1) solid var(--color-dark-15);
     border-bottom: rem(1) solid var(--color-dark-15);
-    background-color: var(--color-dark); 
-    background-image: 
-      url('/src/assets/images/footer/footer-bg-left.svg'), 
-      url('/src/assets/images/footer/footer-bg-right.svg');
+    background-color: var(--color-dark);
+    background-image:
+      url("/src/assets/images/footer/footer-bg-left.svg"),
+      url("/src/assets/images/footer/footer-bg-right.svg");
     background-repeat: no-repeat, no-repeat;
-    background-size: contain, contain;
-    background-position: left center, right bottom;
+    background-size:
+      auto 100%,
+      auto 100%;
+    background-position:
+      left center,
+      right center;
+
+    @include mobile {
+      background-size:
+        auto 70%,
+        auto 70%;
+      background-position:
+        left bottom,
+        right bottom;
+    }
 
     &-container {
       display: flex;
@@ -41,16 +53,17 @@
     &-content {
       position: relative;
       z-index: 2;
-      width: 100%;
+      flex: 1 1 auto;
+      min-width: 0;
       max-width: rem(1154);
     }
 
     &-title {
-      @include fluid-text(48, 28); 
+      @include fluid-text(48, 28);
       margin: 0 0 rem(12) 0;
       font-weight: 600;
-      line-height: 1.5; 
-      color: var(--color-light); 
+      line-height: 1.2;
+      color: var(--color-light);
     }
 
     &-text {
@@ -64,6 +77,13 @@
     &-btn {
       position: relative;
       z-index: 2;
+      flex: 0 0 auto;
+    }
+
+    @include mobile {
+      &-btn {
+        width: 100%;
+      }
     }
   }
 
@@ -76,18 +96,10 @@
     &-container {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: fluid(30, 40);
-      padding: 0;
+      gap: fluid(60, 40);
+      min-width: 0;
 
-      @media (min-width: rem(1024)) {
-      flex-direction: row;
-      justify-content: space-between; 
-      align-items: flex-start;
-      gap: rem(60);
-    }
-
-      @include tablet-above {
+      @include laptop-above {
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
@@ -98,12 +110,15 @@
 
   &__brand {
     display: flex;
-    flex-direction: column;
-    gap: rem(30);
     width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(30);
 
-    @include tablet-above {
-      max-width: rem(423); 
+    @include laptop-above {
+      flex: 0 0 fluid(423, 326);
+      max-width: rem(423);
     }
   }
 
@@ -114,29 +129,40 @@
 
     &-container {
       display: flex;
-      flex-direction: column-reverse;
+      padding-block: fluid(30, 24);
+      flex-direction: column;
       align-items: center;
       gap: rem(20);
-      padding-top: rem(30);
-      padding-bottom: rem(30);
+      text-align: center;
 
       @include mobile-above {
+        min-height: rem(104);
         flex-direction: row;
         justify-content: space-between;
-        min-height: rem(104); 
+        text-align: left;
       }
     }
   }
 
   &__legal {
+    order: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: rem(38);
+    gap: rem(16);
 
     @include mobile-above {
+      order: 1;
       flex-direction: row;
       gap: rem(38);
+    }
+
+    &__socials {
+      order: 1;
+
+      @include mobile-above {
+        order: 2;
+      }
     }
 
     &-list {
@@ -147,7 +173,7 @@
     }
 
     &-link {
-      font-size: rem(18);
+      font-size: fluid(18, 14);
       font-weight: 500;
       line-height: 1.33;
       letter-spacing: -0.01em;
@@ -162,7 +188,7 @@
 
   &__copyright {
     margin: 0;
-    font-size: rem(18);
+    font-size: fluid(18, 14);
     font-weight: 500;
     line-height: 1.33;
     letter-spacing: -0.01em;
@@ -173,55 +199,78 @@
 // 4. ФОРМА ПОДПИСКИ (Вынесена отдельным БЭМ-блоком)
 .form-subscribe {
   width: 100%;
-  
-  @include tablet-above {
-    max-width: rem(423); 
+  min-width: 0;
+
+  @include mobile-above {
+    max-width: rem(423);
   }
 
   &__input-wrapper {
-    position: relative;
     display: flex;
-    align-items: center;
     width: 100%;
-    min-height: rem(66); 
-    padding: rem(18) rem(24); 
-    border: rem(1) solid var(--color-dark-15); 
-    border-radius: rem(12); 
-    background-color: var(--color-dark-10); 
+    min-height: fluid(66, 52);
+    padding: rem(8) rem(8) rem(8) fluid(24, 16);
+    align-items: center;
+    column-gap: rem(10);
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(12);
+    background-color: transparent;
+
+    transition:
+      border-color var(--transition-duration),
+      box-shadow var(--transition-duration);
+
+    &:focus-within {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 rem(2) rgba(112, 59, 247, 0.2);
+    }
   }
 
   &__icon {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    margin-right: rem(10);
+    flex: 0 0 auto;
+    width: rem(20);
+    height: rem(20);
     opacity: 0.6;
   }
 
   &__input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: rem(18);
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0;
+
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+
     color: var(--color-light);
+    font-size: fluid(18, 14);
 
     &::placeholder {
-      color: var(--color-dark-60);
+      color: var(--color-gray-60);
+      opacity: 1;
     }
   }
 
   &__submit {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    border: none;
-    cursor: pointer;
-    background: transparent;
-    transition: transform var(--transition-duration) ease;
+    @include flex-center;
+    @include square(rem(44));
+
+    flex: 0 0 auto;
+    padding: rem(10);
+    border: 0;
+    border-radius: rem(8);
+
+    color: var(--color-light);
+    background-color: transparent;
 
     @include hover {
-      transform: scale(1.05);
+      color: var(--color-accent-light);
+      background-color: var(--color-dark-15);
+    }
+
+    img {
+      @include square(rem(24));
     }
   }
 }
@@ -229,37 +278,124 @@
 // 5. СЕТКА ССЫЛОК ПОДВАЛА (Вынесена отдельным БЭМ-блоком)
 .nav-footer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: rem(60);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0;
+  row-gap: rem(20);
   width: 100%;
+  min-width: 0;
 
-  @include mobile-s-above {
-    grid-template-columns: repeat(3, 1fr); 
+  @include laptop-above {
+    flex: 1 1 auto;
+    width: auto;
+    max-width: rem(978);
+    min-width: 0;
+
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
+    gap: fluid(50, 24);
   }
 
-  @include tablet-above {
-    max-width: rem(978); 
-    width: 100%; 
-    grid-template-columns: repeat(5, (max-content)); 
-    justify-content: space-between;
-    justify-items: start;
-    gap: fluid(50, 24); 
+  @media (width > rem($mobile)) and (width <= rem($tablet)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "home about"
+      "properties services"
+      "contact services";
+    column-gap: fluid(80, 48);
+    row-gap: 0;
+
+    &__col {
+      &:nth-child(1) {
+        grid-area: home;
+        padding-right: rem(24);
+      }
+
+      &:nth-child(2) {
+        grid-area: about;
+        padding-left: rem(24);
+      }
+
+      &:nth-child(3) {
+        grid-area: properties;
+        padding-top: rem(40);
+        padding-right: rem(24);
+      }
+
+      &:nth-child(4) {
+        grid-area: services;
+        padding-top: rem(40);
+        padding-left: rem(24);
+      }
+
+      &:nth-child(5) {
+        grid-area: contact;
+        padding-top: rem(40);
+        padding-right: rem(24);
+      }
+    }
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "home about"
+      "properties services"
+      "contact services";
+    column-gap: 0;
+    row-gap: 0;
+
+    &__col {
+      padding-block: rem(24);
+      border-bottom: rem(1) solid var(--color-dark-15);
+
+      &:nth-child(1) {
+        grid-area: home;
+        padding-top: 0;
+        padding-right: rem(20);
+        border-right: rem(1) solid var(--color-dark-15);
+      }
+
+      &:nth-child(2) {
+        grid-area: about;
+        padding-top: 0;
+        padding-left: rem(20);
+      }
+
+      &:nth-child(3) {
+        grid-area: properties;
+        padding-right: rem(20);
+        border-right: rem(1) solid var(--color-dark-15);
+      }
+
+      &:nth-child(4) {
+        grid-area: services;
+        padding-left: rem(20);
+        border-bottom: 0;
+      }
+
+      &:nth-child(5) {
+        grid-area: contact;
+        padding-right: rem(20);
+        border-right: rem(1) solid var(--color-dark-15);
+        border-bottom: 0;
+      }
+    }
   }
 
   &__col {
     display: flex;
     flex-direction: column;
-    gap: rem(30);
-    max-width: 100%; 
+    min-width: 0;
+    max-width: 100%;
   }
 
   &__title {
     @include fluid-text(20, 16);
-    margin: 0;
+    margin: 0 0 fluid(30, 16);
     font-weight: 500;
-    line-height: 1.2;  
-    letter-spacing: -0.01em; 
-    color: var(--color-dark-60);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-gray-60);
 
     @include mobile {
       line-height: 1.5;
@@ -273,12 +409,16 @@
     list-style: none;
     padding: 0;
     margin: 0;
+
+    @include mobile {
+      gap: rem(8);
+    }
   }
 
   &__link {
     @include fluid-text(18, 14);
     font-weight: 500;
-    line-height: 1.33; 
+    line-height: 1.33;
     letter-spacing: -0.01em;
     color: var(--color-light);
     transition: color var(--transition-duration) ease;
@@ -288,7 +428,7 @@
     }
 
     @include hover {
-      color: var(--color-accent); 
+      color: var(--color-accent);
     }
   }
 }
@@ -298,20 +438,28 @@
   gap: rem(10);
 
   &__link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: rem(52);
-    height: rem(52);
-    padding: rem(14);        
-    border-radius: rem(58);  
-    border: rem(1) solid var(--color-dark-15);
+    @include flex-center;
+    @include square(rem(52));
+
+    padding: fluid(14, 12);
+    border: 0;
+    border-radius: 50%;
+
+    color: var(--color-light);
     background-color: var(--color-dark);
-    transition: background-color var(--transition-duration) ease, border-color var(--transition-duration) ease;
+
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
 
     @include hover {
-      border-color: var(--color-accent);
+      color: var(--color-accent-light);
       background-color: var(--color-dark-15);
+    }
+
+    img {
+      width: rem(20);
+      height: rem(20);
     }
   }
 }

@@ -1,54 +1,70 @@
 <footer class="footer">
 
-  <div class="footer__cta">
+  <section class="footer__cta" aria-labelledby="footer-cta-title">
     <div class="footer__cta-container container">
       <div class="footer__cta-content">
-        <h2 class="footer__cta-title">Start Your Real Estate Journey Today</h2>
+        <h2 class="footer__cta-title" id="footer-cta-title">
+          Start Your Real Estate Journey Today
+        </h2>
         <p class="footer__cta-text">
           Your dream property is just a click away.
-          Whether you're looking for a new home, a strategic investment, or expert real estate advice, 
-          Estatein is here to assist you every step of the way. Take the first step towards your real estate goals 
+          Whether you're looking for a new home, a strategic investment, or expert real estate advice,
+          Estatein is here to assist you every step of the way. Take the first step towards your real estate goals
           and explore our available properties or get in touch with our team for personalized assistance.
         </p>
       </div>
-      <a href="#" class="footer__cta-btn button button--accent">Explore Properties</a>
+      <a class="footer__cta-btn button button--accent" href="/properties.html">
+        Explore Properties
+      </a>
     </div>
-  </div>
+  </section>
 
   <div class="footer__main">
     <div class="footer__main-container container">
-      
+
       <div class="footer__brand">
-        <a href="#" class="footer__logo logo">
-          <img class="logo__image" src="/src/assets/icons/logo.svg" alt="Estatein" width="160" height="48" loading="lazy" />
+        <a class="footer__logo logo" href="/">
+          <img class="logo__image" src="/src/assets/icons/logo.svg" alt="Estatein — Home" width="160" height="48">
         </a>
 
-        <form class="footer__form form-subscribe">
+        <form class="footer__form form-subscribe" action="#" method="post">
+          <label class="visually-hidden" for="footer-subscribe-email">
+            Email address
+          </label>
+
           <div class="form-subscribe__input-wrapper">
-            <img src="/src/assets/icons/email.svg" alt="" class="form-subscribe__icon" width="20" height="20">
-            <input type="email" class="form-subscribe__input" placeholder="Enter Your Email" required>
-            <button class="form-subscribe__submit" type="submit" aria-label="Subscribe">
-              <img src="/src/assets/icons/send.svg" alt="" width="24" height="24">
+            <img class="form-subscribe__icon" src="/src/assets/icons/email.svg" alt="" width="20" height="20"
+              aria-hidden="true">
+
+            <input class="form-subscribe__input" id="footer-subscribe-email" name="email" type="email"
+              placeholder="Enter Your Email" autocomplete="email" inputmode="email" required>
+
+            <button class="form-subscribe__submit" type="submit" aria-label="Subscribe to the newsletter">
+              <img src="/src/assets/icons/send.svg" alt="" width="24" height="24" aria-hidden="true">
             </button>
           </div>
         </form>
       </div>
 
-      <nav class="footer__nav nav-footer">
+      <nav class="footer__nav nav-footer" aria-label="Footer navigation">
         <div class="nav-footer__col">
-          <h4 class="nav-footer__title">Home</h4>
+          <p class="nav-footer__title">Home</p>
           <ul class="nav-footer__list">
-            <li><a href="#" class="nav-footer__link">Hero Section</a></li>
-            <li><a href="#" class="nav-footer__link">Features</a></li>
-            <li><a href="#" class="nav-footer__link">Properties</a></li>
-            <li><a href="#" class="nav-footer__link">Testimonials</a></li>
-            <li><a href="#" class="nav-footer__link">FAQ’s</a></li>
+            <li><a class="nav-footer__link" href="/#hero">Hero Section</a></li>
+            <li><a class="nav-footer__link" href="/#features">Features</a></li>
+            <li><a class="nav-footer__link" href="/#properties">Properties</a></li>
+            <li><a class="nav-footer__link" href="/#testimonials">Testimonials</a></li>
+            <li><a class="nav-footer__link" href="/#faq">FAQ’s</a></li>
           </ul>
         </div>
         <div class="nav-footer__col">
-          <h4 class="nav-footer__title">About Us</h4>
+          <p class="nav-footer__title">About Us</p>
           <ul class="nav-footer__list">
-            <li><a href="#" class="nav-footer__link">Our Story</a></li>
+            <li>
+              <a class="nav-footer__link" href="/about.html#our-story">
+                Our Story
+              </a>
+            </li>
             <li><a href="#" class="nav-footer__link">Our Works</a></li>
             <li><a href="#" class="nav-footer__link">How It Works</a></li>
             <li><a href="#" class="nav-footer__link">Our Team</a></li>
@@ -56,27 +72,41 @@
           </ul>
         </div>
         <div class="nav-footer__col">
-          <h4 class="nav-footer__title">Properties</h4>
+          <p class="nav-footer__title">Properties</p>
           <ul class="nav-footer__list">
-            <li><a href="#" class="nav-footer__link">Portfolio</a></li>
+            <li>
+              <a class="nav-footer__link" href="/properties.html">
+                Portfolio
+              </a>
+            </li>
             <li><a href="#" class="nav-footer__link">Categories</a></li>
           </ul>
         </div>
         <div class="nav-footer__col">
-          <h4 class="nav-footer__title">Services</h4>
+          <p class="nav-footer__title">Services</p>
           <ul class="nav-footer__list">
             <li><a href="#" class="nav-footer__link">Valuation Mastery</a></li>
             <li><a href="#" class="nav-footer__link">Strategic Marketing</a></li>
             <li><a href="#" class="nav-footer__link">Negotiation Wizardry</a></li>
             <li><a href="#" class="nav-footer__link">Closing Success</a></li>
-            <li><a href="#" class="nav-footer__link">Property Management</a></li>
+            <a class="nav-footer__link" href="/services.html#property-management">
+              Property Management
+            </a>
           </ul>
         </div>
         <div class="nav-footer__col">
-          <h4 class="nav-footer__title">Contact Us</h4>
+          <p class="nav-footer__title">Contact Us</p>
           <ul class="nav-footer__list">
-            <li><a href="#" class="nav-footer__link">Contact Form</a></li>
-            <li><a href="#" class="nav-footer__link">Our Offices</a></li>
+            <li>
+              <a class="nav-footer__link" href="/contacts.html#contact-form">
+                Contact Form
+              </a>
+            </li>
+            <li>
+              <a class="nav-footer__link" href="/contacts.html#offices">
+                Our Offices
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -87,18 +117,25 @@
   <div class="footer__bottom">
     <div class="footer__bottom-container container">
       <div class="footer__legal">
-        <p class="footer__copyright">@2023 Estatein. All Rights Reserved.</p>
-        <ul class="footer__legal-list">
-          <li><a href="#" class="footer__legal-link">Terms & Conditions</a></li>
-        </ul>
+        <p class="footer__copyright">
+          © 2026 Estatein. All Rights Reserved.
+        </p>
+
+        <a class="footer__legal-link" href="/terms.html">
+          Terms &amp; Conditions
+        </a>
       </div>
 
-      <div class="footer__socials socials">
-        <a class="socials__link" href="#" aria-label="Facebook"><img src="/src/assets/icons/facebook.svg" alt="" width="20" height="20"></a>
-        <a class="socials__link" href="#" aria-label="LinkedIn"><img src="/src/assets/icons/linkedin.svg" alt="" width="20" height="20"></a>
-        <a class="socials__link" href="#" aria-label="Twitter"><img src="/src/assets/icons/twitter.svg" alt="" width="20" height="20"></a>
-        <a class="socials__link" href="#" aria-label="Youtube"><img src="/src/assets/icons/youtube.svg" alt="" width="20" height="20"></a>
-      </div>
+      <nav class="footer__socials socials" aria-label="Social media">
+        <a class="socials__link" href="#" target="_blank" rel="noopener noreferrer"
+          aria-label="Estatein on Facebook"><img src="/src/assets/icons/facebook.svg" alt="" width="20" height="20"></a>
+        <a class="socials__link" href="#" target="_blank" rel="noopener noreferrer"
+          aria-label="Estatein on LinkedIn"><img src="/src/assets/icons/linkedin.svg" alt="" width="20" height="20"></a>
+        <a class="socials__link" href="#" target="_blank" rel="noopener noreferrer"
+          aria-label="Estatein on Twitter"><img src="/src/assets/icons/twitter.svg" alt="" width="20" height="20"></a>
+        <a class="socials__link" href="#" target="_blank" rel="noopener noreferrer"
+          aria-label="Estatein on YouTube"><img src="/src/assets/icons/youtube.svg" alt="" width="20" height="20"></a>
+      </nav>
     </div>
   </div>
 
