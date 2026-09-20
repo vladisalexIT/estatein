@@ -110,10 +110,11 @@
 
   &__brand {
     display: flex;
-    flex-direction: column;
-    gap: rem(30);
     width: 100%;
     min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(30);
 
     @include laptop-above {
       flex: 0 0 fluid(423, 326);
@@ -200,7 +201,7 @@
   width: 100%;
   min-width: 0;
 
-  @include laptop-above {
+  @include mobile-above {
     max-width: rem(423);
   }
 
@@ -283,11 +284,6 @@
   width: 100%;
   min-width: 0;
 
-  @include tablet-above {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: rem(24);
-  }
-
   @include laptop-above {
     flex: 1 1 auto;
     width: auto;
@@ -297,6 +293,46 @@
     grid-template-columns: repeat(5, auto);
     justify-content: space-between;
     gap: fluid(50, 24);
+  }
+
+  @media (width > rem($mobile)) and (width <= rem($tablet)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "home about"
+      "properties services"
+      "contact services";
+    column-gap: fluid(80, 48);
+    row-gap: 0;
+
+    &__col {
+      &:nth-child(1) {
+        grid-area: home;
+        padding-right: rem(24);
+      }
+
+      &:nth-child(2) {
+        grid-area: about;
+        padding-left: rem(24);
+      }
+
+      &:nth-child(3) {
+        grid-area: properties;
+        padding-top: rem(40);
+        padding-right: rem(24);
+      }
+
+      &:nth-child(4) {
+        grid-area: services;
+        padding-top: rem(40);
+        padding-left: rem(24);
+      }
+
+      &:nth-child(5) {
+        grid-area: contact;
+        padding-top: rem(40);
+        padding-right: rem(24);
+      }
+    }
   }
 
   @include mobile {
