@@ -15,6 +15,22 @@ class Header {
     isHidden: 'is-hidden',
   }
 
+  mobileBreakpoint = 767.98
+
+  syncMenuAccessibility() {
+    const isMobile = window.innerWidth <= this.mobileBreakpoint
+
+    if (!isMobile) {
+      this.overlayElement?.removeAttribute('aria-hidden')
+      return
+    }
+
+    this.overlayElement?.setAttribute(
+      'aria-hidden',
+      String(!this.isMenuOpen)
+    )
+  }
+
   constructor() {
     this.rootElement = document.querySelector(
       this.selectors.root
@@ -30,6 +46,8 @@ class Header {
           this.selectors.overlay
         )
 
+      this.overlayElement?.setAttribute('aria-hidden', 'true')
+
       this.burgerElement =
         this.rootElement.querySelector(
           this.selectors.burger
@@ -44,6 +62,8 @@ class Header {
         this.rootElement.querySelectorAll(
           this.selectors.menuLink
         )
+
+      this.syncMenuAccessibility()
 
       this.bindHeaderEvents()
       this.setActiveMenuLink()
@@ -87,6 +107,9 @@ class Header {
     document.documentElement.classList.add(
       this.stateClasses.isLock
     )
+
+    this.overlayElement?.setAttribute('aria-hidden', 'false')
+    this.syncMenuAccessibility()
   }
 
   closeMenu() {
@@ -111,6 +134,9 @@ class Header {
     document.documentElement.classList.remove(
       this.stateClasses.isLock
     )
+
+    this.overlayElement?.setAttribute('aria-hidden', 'true')
+    this.syncMenuAccessibility()
   }
 
   toggleMenu() {
@@ -166,15 +192,17 @@ class Header {
   }
 
   onWindowResize = () => {
-    const mobileBreakpoint = 767.98
-
     if (
-      window.innerWidth > mobileBreakpoint &&
+      window.innerWidth > this.mobileBreakpoint &&
       this.isMenuOpen
     ) {
       this.closeMenu()
     }
+
+    this.syncMenuAccessibility()
   }
+
+
 
   bindHeaderEvents() {
     this.burgerElement.addEventListener(

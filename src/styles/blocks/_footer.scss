@@ -157,14 +157,6 @@
       gap: rem(38);
     }
 
-    &__socials {
-      order: 1;
-
-      @include mobile-above {
-        order: 2;
-      }
-    }
-
     &-list {
       display: flex;
       list-style: none;
@@ -183,6 +175,14 @@
       @include hover {
         color: var(--color-accent);
       }
+    }
+  }
+
+  &__socials {
+    order: 1;
+
+    @include mobile-above {
+      order: 2;
     }
   }
 
@@ -295,7 +295,7 @@
     gap: fluid(50, 24);
   }
 
-  @media (width > rem($mobile)) and (width <= rem($tablet)) {
+  @media (width > rem($mobile)) and (width <= rem($laptop)) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       "home about"
