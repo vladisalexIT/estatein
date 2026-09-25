@@ -1,0 +1,313 @@
+@use '../variables' as *;
+@use '../helpers' as *;
+
+.about-clients {
+  width: 100%;
+  background-color: var(--color-dark);
+  padding-top: fluid(60, 30);
+  padding-bottom: fluid(150, 80);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: fluid(50, 30);
+    width: 100%;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    padding-top: rem(40);
+    padding-bottom: fluid(30, 10);
+
+    @media (width <= rem(1400)) {
+      padding-top: 0;
+    }
+  }
+
+  &__decoration {
+    position: absolute;
+    width: rem(68);
+    height: auto;
+    left: rem(-20);
+    top: rem(0);
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (width <= rem(1400)) {
+      position: static;
+      margin-bottom: rem(16);
+    }
+  }
+
+  &__title {
+    @include fluid-text(48, 28);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-light);
+    margin: 0 0 rem(16) 0;
+  }
+
+  &__text {
+    @include fluid-text(18, 14);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-gray-60);
+    margin: 0;
+  }
+
+  &__grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: fluid(50);
+    margin-left: auto;  
+    margin-right: auto;
+
+    @include tablet {
+      grid-template-columns: 1fr; 
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: rem(20);
+    border-top: rem(1) solid var(--color-dark-15, #262626);
+
+    @include mobile {
+      position: relative;
+      padding-top: rem(30);
+    }
+  }
+
+  &__pagination {
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    @include fluid-text(20, 14);
+    color: var(--color-light);
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding-top: rem(30); 
+      z-index: 2;
+    }
+  }
+
+  &__total {
+    color: var(--color-gray-60);
+    margin-left: rem(4);
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+
+    @include mobile {
+      width: 100%;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(50);
+    height: rem(50);
+    border-radius: 50%;
+    background-color: var(--color-dark-10, #1a1a1a);
+    border: rem(1) solid var(--color-dark-15, #262626);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    img {
+      width: rem(24);
+      height: rem(24);
+      display: block;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    @include hover {
+      background-color: var(--color-dark-15, #262626);
+      border-color: var(--color-dark-20, #333333);
+    }
+  }
+}
+
+.client-card {
+  display: flex;
+  flex-direction: column; 
+  background-color: var(--color-dark, #141414); 
+  border: rem(1) solid var(--color-dark-15, #262626);
+  box-shadow: 0 0 0 rem(8) #191919; 
+  border-radius: rem(12);
+  padding: fluid(50, 24);
+  min-width: 0;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: rem(20);
+    margin-bottom: fluid(40, 30);
+
+    @include mobile {
+      flex-direction: column;
+      align-items: stretch;
+      gap: rem(16);
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+  }
+
+  &__date {
+    font-family: var(--font-family-base);
+    @include fluid-text(18, 14);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-gray-60);
+  }
+
+  &__company {
+    font-family: var(--font-family-base);
+    @include fluid-text(30, 20);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--color-light);
+    margin: 0;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(14) rem(20);
+    background-color: var(--color-dark-10, #1A1A1A);
+    border: rem(1) solid var(--color-dark-15, #262626);
+    border-radius: rem(8);
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    @include fluid-text(18, 14);
+    line-height: 1.5;
+    color: var(--color-light);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    @include hover {
+      color: var(--color-light);
+      background-color: var(--color-dark-15, #262626);
+      border-color: var(--color-dark-20, #333333);
+    }
+
+     @include mobile {
+      width: 100%;
+    }
+  }
+
+  &__details {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16); 
+    margin-bottom: rem(20);
+    padding-bottom: rem(20);
+  }
+
+  &__prop {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+    flex: 1;
+    position: relative;
+
+    &:last-child::before {
+      content: '';
+      position: absolute;
+      left: rem(-32); 
+      top: 50%;
+      transform: translateY(-50%); 
+      width: 0;
+      height: rem(65); 
+      border-left: rem(1) solid var(--color-dark-15, #262626); 
+    }
+
+    @include mobile {
+      &:last-child::before {
+        left: rem(-16);   
+      }
+    }
+  }
+
+  &__prop-title {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    @include fluid-text(18, 14);
+    color: var(--color-gray-60);
+
+    img {
+      opacity: 0.7;
+    }
+  }
+
+  &__prop-value {
+    @include fluid-text(20, 14);
+    font-weight: 500;
+    color: var(--color-light);
+    margin: 0;
+  }
+
+  &__review {
+    display: flex;
+    flex-direction: column;
+    gap: rem(14);
+    padding: rem(30);
+    background-color: var(--color-dark, #141414);
+    border: rem(1) solid var(--color-dark-15, #262626);
+    border-radius: rem(10);
+  }
+
+  &__review-title {
+    @include fluid-text(18, 14);
+    color: var(--color-gray-60);
+  }
+
+  &__review-text {
+    @include fluid-text(18, 14);
+    line-height: 1.6;
+    color: var(--color-light);
+    margin: 0;
+  }
+}
+
+@include mobile {
+  .js-mobile-hide {
+    display: none !important;
+  }
+}
