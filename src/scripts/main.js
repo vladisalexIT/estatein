@@ -2,4 +2,7 @@ import '../styles/main.scss'
 
 import Header from './Header.js'
 
-new Header()
+import initClientsSlider from './about-slider.js';
+
+
+initClientsSlider();
