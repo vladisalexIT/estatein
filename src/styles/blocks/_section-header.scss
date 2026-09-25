@@ -1,0 +1,42 @@
+@use '../helpers' as *;
+
+.section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: fluid(40, 20);
+
+  &__content {
+    min-width: 0;
+  }
+
+  &__decoration {
+    display: block;
+    width: fluid(69, 45);
+    height: fluid(30, 20);
+    margin-bottom: fluid(10, 6);
+  }
+
+  &__title {
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  &__description {
+    max-width: rem(1200);
+    margin-top: fluid(14, 8);
+    line-height: 1.5;
+  }
+
+  &__action {
+    flex: 0 0 auto;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+
+    &__action {
+      display: none;
+    }
+  }
+}

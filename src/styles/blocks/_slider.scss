@@ -1,0 +1,118 @@
+@use "../helpers" as *;
+
+.slider {
+  &__body {
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    min-height: fluid(88, 64);
+    margin-top: fluid(50, 30);
+    padding-top: fluid(20, 16);
+    justify-content: space-between;
+    align-items: center;
+    gap: rem(20);
+
+    border-top: rem(1) solid var(--color-dark-15);
+  }
+
+  &__counter {
+    color: var(--color-gray-60);
+    line-height: 1.5;
+  }
+
+  &__counter-current {
+    color: var(--color-light);
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+  }
+
+  &__button {
+    @include flex-center;
+    @include square(fluid(58, 44));
+
+    flex: 0 0 auto;
+    padding: 0;
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: 50%;
+
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+
+    @include hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-dark-15);
+    }
+
+    &::before {
+      width: fluid(24, 20);
+      height: fluid(24, 20);
+      flex: 0 0 auto;
+
+      background-color: currentColor;
+      mask: var(--slider-arrow-icon) center / contain no-repeat;
+      -webkit-mask: var(--slider-arrow-icon) center / contain no-repeat;
+
+      content: "";
+    }
+
+    &--previous {
+      --slider-arrow-icon: url("/src/assets/icons/arrow-left.svg");
+    }
+
+    &--next {
+      --slider-arrow-icon: url("/src/assets/icons/arrow-right.svg");
+    }
+
+    &:disabled,
+    &.swiper-button-disabled {
+      border-color: var(--color-dark-15);
+      color: var(--color-dark-40);
+      background-color: transparent;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &__pagination {
+    display: none;
+  }
+
+  &__mobile-action {
+    display: none;
+  }
+
+  @include mobile {
+    &__slide {
+      display: flex;
+    }
+
+    &__footer {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+    }
+
+    &__mobile-action {
+      display: inline-flex;
+      grid-row: 1;
+      grid-column: 1;
+      justify-self: start;
+    }
+
+    &__counter {
+      display: none;
+    }
+
+    &__navigation {
+      grid-column: 2;
+    }
+  }
+}
