@@ -24,14 +24,14 @@ class Slider {
             this.selectors.swiper
         )
 
+        if (!this.swiperElement) {
+            return
+        }
+
         this.slidesCount =
             this.swiperElement.querySelectorAll(
                 '.swiper-slide'
             ).length
-
-        if (!this.swiperElement) {
-            return
-        }
 
         this.previousButtonElement =
             this.rootElement.querySelector(

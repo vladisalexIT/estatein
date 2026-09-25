@@ -1,0 +1,131 @@
+@use "../helpers" as *;
+
+.testimonial-card {
+  display: flex;
+  height: 100%;
+  min-height: fluid(442, 363);
+  padding: fluid(50, 30);
+  flex-direction: column;
+
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: fluid(12, 10);
+  background-color: var(--color-dark);
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: fluid(10, 8);
+    margin-bottom: fluid(40, 30);
+  }
+
+  &__star {
+    @include flex-center;
+    @include square(fluid(44, 36));
+
+    flex: 0 0 auto;
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: 50%;
+    background-color: var(--color-dark-10);
+
+    &::before {
+      @include square(fluid(20, 18));
+
+      background: url("/src/assets/icons/star.svg") center / contain no-repeat;
+
+      content: "";
+    }
+  }
+
+  &__content {
+    margin-bottom: fluid(40, 30);
+  }
+
+  &__title {
+    margin-bottom: fluid(14, 10);
+
+    color: var(--color-light);
+    font-size: fluid(24, 18);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  &__text {
+    color: var(--color-light);
+    font-size: fluid(18, 14);
+    line-height: 1.5;
+  }
+
+  &__author {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    gap: fluid(12, 10);
+  }
+
+  &__avatar {
+    @include square(fluid(60, 50));
+
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__author-info {
+    min-width: 0;
+  }
+
+  &__author-name {
+    overflow: hidden;
+
+    color: var(--color-light);
+    font-size: fluid(20, 16);
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__author-location {
+    overflow: hidden;
+
+    color: var(--color-gray-60);
+    font-size: fluid(18, 14);
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include mobile {
+    min-height: rem(363);
+    padding: rem(30);
+
+    &__rating {
+      gap: rem(8);
+      margin-bottom: rem(30);
+    }
+
+    &__star {
+      @include square(rem(36));
+
+      &::before {
+        @include square(rem(18));
+      }
+    }
+
+    &__content {
+      margin-bottom: rem(30);
+    }
+
+    &__avatar {
+      @include square(rem(50));
+    }
+  }
+
+  @media (max-width: 390px) {
+    padding-inline: rem(20);
+
+    &__star {
+      @include square(rem(34));
+    }
+  }
+}

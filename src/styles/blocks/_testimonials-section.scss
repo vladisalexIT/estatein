@@ -1,0 +1,41 @@
+@use "../helpers" as *;
+
+.testimonials-section {
+  padding-bottom: fluid(120, 80);
+
+  &__decoration {
+    display: block;
+    width: fluid(69, 46);
+    height: auto;
+    margin-bottom: fluid(10, 8);
+    margin-left: rem(-20);
+
+    pointer-events: none;
+    user-select: none;
+
+    @media (max-width: 1678px) {
+      margin-left: rem(-14);
+    }
+
+    @media (max-width: 768px) {
+      margin-left: rem(-8);
+    }
+  }
+
+  &__slider {
+    margin-top: fluid(80, 40);
+  }
+
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  @include mobile {
+    padding-bottom: rem(80);
+
+    &__slider {
+      margin-top: rem(40);
+    }
+  }
+}
