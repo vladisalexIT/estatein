@@ -1,7 +1,14 @@
 import '../styles/main.scss'
 
-import Header from './Header.js'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
+import Header from './Header.js'
+import SliderCollection from './Slider.js'
+
+new Header()
+new SliderCollection()
 import initClientsSlider from './about-slider.js';
 
 

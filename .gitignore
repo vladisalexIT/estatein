@@ -28,6 +28,6 @@ Thumbs.db
 *.sln
 *.sw?
 
-*.lnk
-src/styles/**/*.css
-src/styles/blocks/**/*.css
+# Local project reports
+project-report/
+generate-report.ps1

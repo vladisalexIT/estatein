@@ -1,0 +1,930 @@
+========================================
+FILE: src/scripts/Slider.js
+========================================
+import Swiper from 'swiper'
+import {
+    A11y,
+    Keyboard,
+    Navigation,
+    Pagination,
+} from 'swiper/modules'
+
+class Slider {
+    selectors = {
+        root: '[data-js-slider]',
+        swiper: '[data-js-slider-swiper]',
+        previousButton: '[data-js-slider-prev]',
+        nextButton: '[data-js-slider-next]',
+        pagination: '[data-js-slider-pagination]',
+        current: '[data-js-slider-current]',
+        total: '[data-js-slider-total]',
+    }
+
+    constructor(rootElement) {
+        this.rootElement = rootElement
+
+        this.swiperElement = this.rootElement.querySelector(
+            this.selectors.swiper
+        )
+
+        if (!this.swiperElement) {
+            return
+        }
+
+        this.slidesCount =
+            this.swiperElement.querySelectorAll(
+                '.swiper-slide'
+            ).length
+
+        this.previousButtonElement =
+            this.rootElement.querySelector(
+                this.selectors.previousButton
+            )
+
+        this.nextButtonElement =
+            this.rootElement.querySelector(
+                this.selectors.nextButton
+            )
+
+        this.paginationElement =
+            this.rootElement.querySelector(
+                this.selectors.pagination
+            )
+
+        this.currentElement =
+            this.rootElement.querySelector(
+                this.selectors.current
+            )
+
+        this.totalElement =
+            this.rootElement.querySelector(
+                this.selectors.total
+            )
+
+        this.init()
+    }
+
+    getNumberData(attributeName, fallbackValue) {
+        const value = Number(
+            this.rootElement.dataset[attributeName]
+        )
+
+        return Number.isFinite(value)
+            ? value
+            : fallbackValue
+    }
+
+    getBooleanData(attributeName, fallbackValue) {
+        const value =
+            this.rootElement.dataset[attributeName]
+
+        if (value === undefined) {
+            return fallbackValue
+        }
+
+        return value === 'true'
+    }
+
+    formatNumber(value) {
+        return String(value).padStart(2, '0')
+    }
+
+    updateCounter(swiper) {
+        if (!this.currentElement || !this.totalElement) {
+            return
+        }
+
+        const currentSlideIndex =
+            swiper.realIndex + 1
+
+        const totalSlides = this.slidesCount
+
+        this.currentElement.textContent =
+            this.formatNumber(currentSlideIndex)
+
+        this.totalElement.textContent =
+            this.formatNumber(totalSlides)
+    }
+
+    init() {
+        const slidesDesktop =
+            this.getNumberData(
+                'sliderSlidesDesktop',
+                3
+            )
+
+        const slidesTablet =
+            this.getNumberData(
+                'sliderSlidesTablet',
+                2
+            )
+
+        const slidesMobile =
+            this.getNumberData(
+                'sliderSlidesMobile',
+                1
+            )
+
+        const shouldLoop =
+            this.getBooleanData(
+                'sliderLoop',
+                true
+            )
+
+        this.swiper = new Swiper(
+            this.swiperElement,
+            {
+                modules: [
+                    A11y,
+                    Keyboard,
+                    Navigation,
+                    Pagination,
+                ],
+
+                slidesPerView: slidesMobile,
+                spaceBetween: 16,
+                speed: 500,
+                loop: shouldLoop,
+                watchOverflow: true,
+
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: true,
+                },
+
+                a11y: {
+                    enabled: true,
+                },
+
+                navigation: {
+                    prevEl: this.previousButtonElement,
+                    nextEl: this.nextButtonElement,
+                },
+
+                pagination: this.paginationElement
+                    ? {
+                        el: this.paginationElement,
+                        clickable: true,
+                    }
+                    : false,
+
+                breakpoints: {
+                    768: {
+                        slidesPerView: slidesTablet,
+                        spaceBetween: 20,
+                    },
+
+                    1024: {
+                        slidesPerView: slidesDesktop,
+                        spaceBetween: 20,
+                    },
+
+                    1441: {
+                        slidesPerView: slidesDesktop,
+                        spaceBetween: 30,
+                    },
+                },
+
+                on: {
+                    init: (swiper) => {
+                        this.updateCounter(swiper)
+                    },
+
+                    slideChange: (swiper) => {
+                        this.updateCounter(swiper)
+                    },
+                },
+            }
+        )
+    }
+}
+
+class SliderCollection {
+    constructor() {
+        document
+            .querySelectorAll('[data-js-slider]')
+            .forEach((rootElement) => {
+                new Slider(rootElement)
+            })
+    }
+}
+
+export default SliderCollection
+
+
+========================================
+FILE: src/styles/blocks/_slider.scss
+========================================
+@use "../helpers" as *;
+
+.slider {
+  &__body {
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    min-height: fluid(88, 64);
+    margin-top: fluid(50, 30);
+    padding-top: fluid(20, 16);
+    justify-content: space-between;
+    align-items: center;
+    gap: rem(20);
+
+    border-top: rem(1) solid var(--color-dark-15);
+  }
+
+  &__counter {
+    color: var(--color-gray-60);
+    line-height: 1.5;
+  }
+
+  &__counter-current {
+    color: var(--color-light);
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+  }
+
+  &__button {
+    @include flex-center;
+    @include square(fluid(58, 44));
+
+    flex: 0 0 auto;
+    padding: 0;
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: 50%;
+
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+
+    @include hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-dark-15);
+    }
+
+    &::before {
+      width: fluid(24, 20);
+      height: fluid(24, 20);
+      flex: 0 0 auto;
+
+      background-color: currentColor;
+      mask: var(--slider-arrow-icon) center / contain no-repeat;
+      -webkit-mask: var(--slider-arrow-icon) center / contain no-repeat;
+
+      content: "";
+    }
+
+    &--previous {
+      --slider-arrow-icon: url("/src/assets/icons/arrow-left.svg");
+    }
+
+    &--next {
+      --slider-arrow-icon: url("/src/assets/icons/arrow-right.svg");
+    }
+
+    &:disabled,
+    &.swiper-button-disabled {
+      border-color: var(--color-dark-15);
+      color: var(--color-dark-40);
+      background-color: transparent;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &__pagination {
+    display: none;
+  }
+
+  &__mobile-action {
+    display: none;
+  }
+
+  @include mobile {
+    &__slide {
+      display: flex;
+    }
+
+    &__footer {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+    }
+
+    &__mobile-action {
+      display: inline-flex;
+      grid-row: 1;
+      grid-column: 1;
+      justify-self: start;
+    }
+
+    &__counter {
+      display: none;
+    }
+
+    &__navigation {
+      grid-column: 2;
+    }
+  }
+}
+
+
+========================================
+FILE: src/html/sections/home/testimonials.html
+========================================
+<section
+    class="testimonials-section"
+    aria-labelledby="testimonials-title"
+    id="testimonials"
+    data-js-slider
+    data-slider-slides-desktop="3"
+    data-slider-slides-tablet="2"
+    data-slider-slides-mobile="1"
+    data-slider-loop="false"
+>
+    <div class="testimonials-section__inner container">
+        <img
+            class="testimonials-section__decoration"
+            src="/src/assets/icons/sparkle-decoration.svg"
+            alt=""
+            width="69"
+            height="30"
+            aria-hidden="true"
+        />
+
+        <div class="testimonials-section__header section-header">
+            <div class="section-header__content">
+                <h2
+                    class="section-header__title"
+                    id="testimonials-title"
+                >
+                    What Our Clients Say
+                </h2>
+
+                <p class="section-header__description">
+                    Read the success stories and heartfelt testimonials
+                    from our valued clients. Discover why they chose
+                    Estatein for their real estate needs.
+                </p>
+            </div>
+
+            <a
+                class="section-header__action button button--dark"
+                href="/testimonials.html"
+            >
+                View All Testimonials
+            </a>
+        </div>
+
+        <div
+            class="testimonials-section__slider slider swiper"
+            data-js-slider-swiper
+        >
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Exceptional Service!
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                Our experience with Estatein was
+                                outstanding. Their team's dedication and
+                                professionalism made finding our dream
+                                home a breeze. Highly recommended!
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/wade-warren.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    Wade Warren
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, California
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Efficient and Reliable
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                Estatein provided us with top-notch
+                                service. They helped us sell our property
+                                quickly and at a great price. We couldn't
+                                be happier with the results.
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/emelie-thomson.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    Emelie Thomson
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, Florida
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Trusted Advisors
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                The Estatein team guided us through the
+                                entire buying process. Their knowledge
+                                and commitment to our needs were
+                                impressive. Thank you for your support!
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/john-mans.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    John Mans
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, Nevada
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+
+                <!--
+                    Временно дублируем карточки, чтобы проверить работу
+                    навигации. Позже замени их реальными отзывами.
+                -->
+
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Exceptional Service!
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                Our experience with Estatein was
+                                outstanding. Their team's dedication and
+                                professionalism made finding our dream
+                                home a breeze. Highly recommended!
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/wade-warren.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    Wade Warren
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, California
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Efficient and Reliable
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                Estatein provided us with top-notch
+                                service. They helped us sell our property
+                                quickly and at a great price. We couldn't
+                                be happier with the results.
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/emelie-thomson.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    Emelie Thomson
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, Florida
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+
+                <li class="swiper-slide">
+                    <article class="testimonial-card">
+                        <div
+                            class="testimonial-card__rating"
+                            role="img"
+                            aria-label="Rating: 5 out of 5"
+                        >
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                            <span class="testimonial-card__star"></span>
+                        </div>
+
+                        <div class="testimonial-card__content">
+                            <h3 class="testimonial-card__title">
+                                Trusted Advisors
+                            </h3>
+
+                            <p class="testimonial-card__text">
+                                The Estatein team guided us through the
+                                entire buying process. Their knowledge
+                                and commitment to our needs were
+                                impressive. Thank you for your support!
+                            </p>
+                        </div>
+
+                        <footer class="testimonial-card__author">
+                            <img
+                                class="testimonial-card__avatar"
+                                src="/src/assets/images/home/testimonials/john-mans.webp"
+                                alt=""
+                                width="50"
+                                height="50"
+                                loading="lazy"
+                                decoding="async"
+                            />
+
+                            <div class="testimonial-card__author-info">
+                                <p class="testimonial-card__author-name">
+                                    John Mans
+                                </p>
+
+                                <p class="testimonial-card__author-location">
+                                    USA, Nevada
+                                </p>
+                            </div>
+                        </footer>
+                    </article>
+                </li>
+            </ul>
+        </div>
+
+        <div class="testimonials-section__footer slider__footer">
+            <a
+                class="slider__mobile-action button button--dark"
+                href="/testimonials.html"
+            >
+                View All Testimonials
+            </a>
+
+            <p
+                class="slider__counter"
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <span
+                    class="slider__counter-current"
+                    data-js-slider-current
+                >
+                    01
+                </span>
+                of
+                <span data-js-slider-total>06</span>
+            </p>
+
+            <div
+                class="slider__navigation"
+                aria-label="Testimonials slider controls"
+            >
+                <button
+                    class="slider__button slider__button--previous"
+                    type="button"
+                    aria-label="Previous testimonial"
+                    data-js-slider-prev
+                ></button>
+
+                <button
+                    class="slider__button slider__button--next"
+                    type="button"
+                    aria-label="Next testimonial"
+                    data-js-slider-next
+                ></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+========================================
+FILE: src/styles/blocks/_testimonials-section.scss
+========================================
+@use "../helpers" as *;
+
+.testimonials-section {
+  padding-bottom: fluid(120, 80);
+
+  &__decoration {
+    display: block;
+    width: fluid(69, 46);
+    height: auto;
+    margin-bottom: fluid(10, 8);
+    margin-left: rem(-20);
+
+    pointer-events: none;
+    user-select: none;
+
+    @media (max-width: 1678px) {
+      margin-left: rem(-14);
+    }
+
+    @media (max-width: 768px) {
+      margin-left: rem(-8);
+    }
+  }
+
+  &__slider {
+    margin-top: fluid(80, 40);
+  }
+
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  @include mobile {
+    padding-bottom: rem(80);
+
+    &__slider {
+      margin-top: rem(40);
+    }
+  }
+}
+
+
+========================================
+FILE: src/styles/blocks/_testimonial-card.scss
+========================================
+@use "../helpers" as *;
+
+.testimonial-card {
+  display: flex;
+  height: 100%;
+  min-height: fluid(442, 363);
+  padding: fluid(50, 30);
+  flex-direction: column;
+
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: fluid(12, 10);
+  background-color: var(--color-dark);
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: fluid(10, 8);
+    margin-bottom: fluid(40, 30);
+  }
+
+  &__star {
+    @include flex-center;
+    @include square(fluid(44, 36));
+
+    flex: 0 0 auto;
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: 50%;
+    background-color: var(--color-dark-10);
+
+    &::before {
+      @include square(fluid(20, 18));
+
+      background: url("/src/assets/icons/star.svg") center / contain no-repeat;
+
+      content: "";
+    }
+  }
+
+  &__content {
+    margin-bottom: fluid(40, 30);
+  }
+
+  &__title {
+    margin-bottom: fluid(14, 10);
+
+    color: var(--color-light);
+    font-size: fluid(24, 18);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  &__text {
+    color: var(--color-light);
+    font-size: fluid(18, 14);
+    line-height: 1.5;
+  }
+
+  &__author {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    gap: fluid(12, 10);
+  }
+
+  &__avatar {
+    @include square(fluid(60, 50));
+
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__author-info {
+    min-width: 0;
+  }
+
+  &__author-name {
+    overflow: hidden;
+
+    color: var(--color-light);
+    font-size: fluid(20, 16);
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__author-location {
+    overflow: hidden;
+
+    color: var(--color-gray-60);
+    font-size: fluid(18, 14);
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include mobile {
+    min-height: rem(363);
+    padding: rem(30);
+
+    &__rating {
+      gap: rem(8);
+      margin-bottom: rem(30);
+    }
+
+    &__star {
+      @include square(rem(36));
+
+      &::before {
+        @include square(rem(18));
+      }
+    }
+
+    &__content {
+      margin-bottom: rem(30);
+    }
+
+    &__avatar {
+      @include square(rem(50));
+    }
+  }
+
+  @media (max-width: 390px) {
+    padding-inline: rem(20);
+
+    &__star {
+      @include square(rem(34));
+    }
+  }
+}
+
+

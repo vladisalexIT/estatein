@@ -1,0 +1,130 @@
+@use "../helpers" as *;
+
+.property-card {
+  display: flex;
+  height: 100%;
+  padding: fluid(40, 24);
+  flex-direction: column;
+  gap: fluid(30, 20);
+
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: rem(12);
+  background-color: var(--color-dark);
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 512 / 318;
+    object-fit: cover;
+    border-radius: rem(10);
+  }
+
+  &__body {
+    display: flex;
+    min-width: 0;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: fluid(24, 20);
+    line-height: 1.2;
+  }
+
+  &__description {
+    margin-top: fluid(6, 4);
+    line-height: 1.5;
+  }
+
+  &__description-link {
+    color: var(--color-light);
+    text-decoration: underline;
+    text-underline-offset: rem(2);
+  }
+
+  &__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(10);
+    margin: fluid(30, 20) 0 0;
+  }
+
+  &__feature {
+    display: inline-flex;
+    min-height: fluid(43, 36);
+    padding-inline: fluid(14, 10);
+    justify-content: center;
+    align-items: center;
+    column-gap: rem(4);
+
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(28);
+
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+    font-size: fluid(18, 14);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  &__feature-icon {
+    flex: 0 0 auto;
+    width: fluid(24, 20);
+    height: fluid(24, 20);
+    object-fit: contain;
+  }
+
+  &__feature-text {
+    min-width: 0;
+  }
+
+  &__footer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+    gap: fluid(20, 12);
+    margin-top: auto;
+    padding-top: fluid(30, 20);
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  &__price-label {
+    color: var(--color-gray-60);
+    font-size: fluid(18, 14);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  &__price-value {
+    color: var(--color-light);
+    font-size: fluid(24, 18);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  &__button {
+    width: 100%;
+    max-width: fluid(279, 202);
+    min-width: 0;
+    justify-self: end;
+    padding-inline: fluid(20, 12);
+    font-size: fluid(16, 14);
+    white-space: nowrap;
+  }
+
+  @include mobile-s {
+    &__footer {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: end;
+      gap: rem(12);
+    }
+
+    &__button {
+      max-width: rem(202);
+    }
+  }
+}

@@ -153,6 +153,14 @@ label {
   cursor: pointer;
 }
 
+button {
+  color: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 /**
   Приводим к единому цвету svg-элементы
  */

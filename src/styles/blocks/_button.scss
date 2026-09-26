@@ -48,4 +48,14 @@
       background-color: var(--color-dark-15);
     }
   }
+
+  &--gray {
+    border-color: var(--color-dark-15);
+    background-color: var(--color-dark-10);
+
+    @include hover {
+      border-color: var(--color-dark-40);
+      background-color: var(--color-dark-15);
+    }
+  }
 }

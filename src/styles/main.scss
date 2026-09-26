@@ -15,6 +15,15 @@
 @use 'blocks/features';
 @use 'blocks/feature-card';
 
+@use 'blocks/section-header';
+@use 'blocks/slider';
+@use 'blocks/property-card';
+@use 'blocks/properties-section';
+@use 'blocks/testimonial-card';
+@use 'blocks/testimonials-section';
+@use 'blocks/faq-card';
+@use 'blocks/faq-section';
+
 @use 'blocks/about-hero';
 @use 'blocks/value-card';
 @use 'blocks/about-achievements';
