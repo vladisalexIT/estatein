@@ -1,7 +1,7 @@
 @use "../helpers" as *;
 
-.properties-section {
-  padding-block: fluid(110, 80);
+.faq-section {
+  padding-bottom: fluid(96, 80);
 
   &__decoration {
     display: block;
@@ -9,6 +9,7 @@
     height: auto;
     margin-bottom: fluid(10, 8);
     margin-left: rem(-20);
+
     pointer-events: none;
     user-select: none;
 
@@ -26,7 +27,15 @@
   }
 
   .swiper-slide {
-    // display: flex;
+    display: flex;
     height: auto;
+  }
+
+  @include mobile {
+    padding-bottom: rem(80);
+
+    &__slider {
+      margin-top: rem(40);
+    }
   }
 }

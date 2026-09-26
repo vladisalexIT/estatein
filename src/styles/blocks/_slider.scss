@@ -70,6 +70,11 @@
       --slider-arrow-icon: url("/src/assets/icons/arrow-right.svg");
     }
 
+    &:focus-visible {
+      outline: rem(2) solid var(--color-accent);
+      outline-offset: rem(3);
+    }
+
     &:disabled,
     &.swiper-button-disabled {
       border-color: var(--color-dark-15);

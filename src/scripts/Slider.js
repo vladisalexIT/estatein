@@ -122,6 +122,24 @@ class Slider {
                 1
             )
 
+        const groupDesktop =
+            this.getNumberData(
+                'sliderGroupDesktop',
+                1
+            )
+
+        const groupTablet =
+            this.getNumberData(
+                'sliderGroupTablet',
+                1
+            )
+
+        const groupMobile =
+            this.getNumberData(
+                'sliderGroupMobile',
+                1
+            )
+
         const shouldLoop =
             this.getBooleanData(
                 'sliderLoop',
@@ -139,6 +157,7 @@ class Slider {
                 ],
 
                 slidesPerView: slidesMobile,
+                slidesPerGroup: groupMobile,
                 spaceBetween: 16,
                 speed: 500,
                 loop: shouldLoop,
@@ -168,16 +187,19 @@ class Slider {
                 breakpoints: {
                     768: {
                         slidesPerView: slidesTablet,
+                        slidesPerGroup: groupTablet,
                         spaceBetween: 20,
                     },
 
                     1024: {
                         slidesPerView: slidesDesktop,
+                        slidesPerGroup: groupDesktop,
                         spaceBetween: 20,
                     },
 
                     1441: {
                         slidesPerView: slidesDesktop,
+                        slidesPerGroup: groupDesktop,
                         spaceBetween: 30,
                     },
                 },
