@@ -5,7 +5,7 @@
   width: 100%;
   background-color: var(--color-dark);
   padding-top: fluid(100, 50);
-  padding-bottom: fluid(150, 80);
+  padding-bottom: fluid(150, 60);
   overflow: hidden;
 
   &__container {
@@ -131,7 +131,7 @@
     border-radius: rem(12);
     border: rem(1) solid var(--color-dark-15);
     background-color: var(--color-dark-10);
-    background-image: url("/src/assets/images/about/hero-bg.svg");
+    background-image: url("/about-hero-bg-decoration.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

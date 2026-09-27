@@ -1,9 +1,8 @@
-@use "../variables" as *;
 @use "../helpers" as *;
 
 .about-process {
   width: 100%;
-  padding-block: fluid(100, 50);
+  padding-bottom: fluid(110, 60);
   background-color: var(--color-dark);
 
   &__container {
@@ -112,10 +111,6 @@
     border-radius: 0 rem(12) rem(12);
     background-color: var(--color-dark-10);
 
-    /*
-   * Отдельная градиентная рамка.
-   * В отличие от border-image она сохраняет border-radius.
-   */
     &::before {
       content: "";
       position: absolute;
@@ -144,10 +139,6 @@
       mask-composite: exclude;
     }
 
-    /*
-   * Мягкая фиолетовая подсветка внутри верхнего левого угла.
-   * Она не заменяет рамку и поэтому не может скрыть верхнюю линию.
-   */
     &::after {
       content: "";
       position: absolute;
