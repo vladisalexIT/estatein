@@ -6,35 +6,29 @@
   background-color: var(--color-dark);
   padding-top: fluid(100, 50);
   padding-bottom: fluid(150, 80);
+  overflow: hidden;
 
   &__container {
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    gap: rem(60);
+    gap: fluid(60, 30);
 
     @media (max-width: rem(1024)) {
       flex-direction: column-reverse;
-      gap: fluid(50, 30);
-      width: 100%;
+      gap: rem(40);
     }
   }
 
-  &__picture
-
   &__content {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    flex: 1 1 50%;
     min-width: 0;
-    max-width: rem(755);
     padding-top: fluid(40, 0);
 
-    @media (max-width: rem(1400)) {
-      padding-top: 0;
+    @media (max-width: rem(1024)) {
+      flex: none;
+      width: 100%;
+      max-width: 100%;
     }
   }
 
@@ -42,7 +36,7 @@
     position: absolute;
     width: rem(68);
     height: auto;
-    left: rem(-20);
+    left: rem(-30);
     top: rem(0);
 
     img {
@@ -51,7 +45,7 @@
       display: block;
     }
 
-    @media (max-width: rem(1400)) {
+    @media (max-width: rem(1700)) {
       position: static;
       margin-bottom: rem(16);
     }
@@ -75,35 +69,29 @@
 
   &__stats {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: fluid(20, 12);
     margin: 0;
     padding: 0;
-    grid-template-columns: repeat(3, 1fr);
-    gap: rem(20);
 
-    @media (max-width: rem(576)) {
+    @media (max-width: rem(600)) {
       grid-template-columns: repeat(2, 1fr);
-      gap: rem(16);
     }
 
     &-item {
-      max-width: rem(239);
-      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: rem(4);
+      gap: rem(2);
       padding: fluid(24, 16);
       background-color: var(--color-dark-10);
       border: rem(1) solid var(--color-dark-15);
       border-radius: rem(10);
-      min-width: 0;
 
-      @media (max-width: rem(576)) {
-        max-width: 100%;
-        align-items: center;
-        text-align: center;
-
+      @media (max-width: rem(600)) {
         &:last-child {
           grid-column: span 2;
+          align-items: center;
+          text-align: center;
         }
       }
     }
@@ -112,59 +100,57 @@
       @include fluid-text(40, 24);
       font-weight: 700;
       color: var(--color-light);
-      line-height: 1.5;
+      line-height: 1.2;
     }
 
     &-label {
       @include fluid-text(18, 14);
       font-weight: 500;
       color: var(--color-gray-60);
-      margin: 0;
     }
   }
 
   &__banner {
-    width: 100%;
+    flex: 1 1 50%;
+    display: flex;
+    justify-content: flex-end;
     min-width: 0;
-    max-width: fluid(755, 500);
+
+    @media (max-width: rem(1024)) {
+      flex: none;
+      width: 100%;
+      justify-content: center;
+    }
   }
 
   &__image-wrapper {
     position: relative;
     width: 100%;
+    max-width: rem(755);
+    aspect-ratio: 755 / 546;
     border-radius: rem(12);
     border: rem(1) solid var(--color-dark-15);
-    overflow: hidden;
-    aspect-ratio: 755 / 546;
+    background-color: var(--color-dark-10);
     background-image: url("/src/assets/images/about/hero-bg.svg");
     background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 100% 100%;
-
-    @include laptop {
-      aspect-ratio: 610 / 435;
-    }
-
-    @include mobile {
-      aspect-ratio: 358 / 310;
-    }
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
   }
 
   &__picture {
     display: block;
-    min-width: 0;
-    overflow: hidden;
-    border-radius: rem(12);
-    background-color: var(--color-dark-10);
-  }
-  
-
-  &__image {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    // object-fit: contain;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    @include mobile {
+      object-fit: cover;
+    }
   }
 }

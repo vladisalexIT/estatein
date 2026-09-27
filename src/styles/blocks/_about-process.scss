@@ -1,0 +1,189 @@
+@use "../variables" as *;
+@use "../helpers" as *;
+
+.about-process {
+  width: 100%;
+  padding-block: fluid(100, 50);
+  background-color: var(--color-dark);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: fluid(80, 40);
+    width: 100%;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    padding-top: rem(40);
+
+    @include laptop {
+      padding-top: 0;
+    }
+  }
+
+  &__decoration {
+    position: absolute;
+    top: 0;
+    left: rem(-20);
+    display: block;
+    width: rem(68);
+    height: rem(30);
+
+    @include laptop {
+      position: static;
+      margin-bottom: rem(16);
+    }
+  }
+
+  &__title {
+    margin: 0 0 rem(14);
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.2;
+
+    @include fluid-text(48, 28);
+  }
+
+  &__description {
+    max-width: rem(1280);
+    margin: 0;
+    color: var(--color-gray-60);
+    font-weight: 500;
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: fluid(50, 30) fluid(30, 20);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: process-step;
+
+    @include tablet {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  counter-increment: process-step;
+
+  &::before {
+    content: "Step " counter(process-step, decimal-leading-zero);
+    display: flex;
+    align-items: center;
+    min-height: rem(62);
+    padding: rem(16) rem(20);
+    border-left: rem(1) solid var(--color-accent);
+    color: var(--color-light);
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    line-height: 1.5;
+
+    @include fluid-text(20, 16);
+  }
+}
+
+  &__card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+    padding: fluid(50, 30);
+    overflow: hidden;
+    border-radius: 0 rem(12) rem(12);
+    background-color: var(--color-dark-10);
+
+    /*
+   * Отдельная градиентная рамка.
+   * В отличие от border-image она сохраняет border-radius.
+   */
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      border-radius: inherit;
+      padding: rem(1);
+      background: linear-gradient(
+        135deg,
+        var(--color-accent) 0%,
+        rgb(112 59 247 / 78%) 4%,
+        rgb(112 59 247 / 38%) 12%,
+        var(--color-dark-15) 30%,
+        var(--color-dark-15) 100%
+      );
+      pointer-events: none;
+
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+    }
+
+    /*
+   * Мягкая фиолетовая подсветка внутри верхнего левого угла.
+   * Она не заменяет рамку и поэтому не может скрыть верхнюю линию.
+   */
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      width: fluid(260, 180);
+      height: fluid(180, 130);
+      background: radial-gradient(
+        ellipse at top left,
+        rgb(112 59 247 / 15%) 0%,
+        rgb(112 59 247 / 8%) 28%,
+        rgb(112 59 247 / 3%) 48%,
+        transparent 72%
+      );
+      pointer-events: none;
+    }
+  }
+
+  &__card-title {
+    position: relative;
+    margin: 0 0 fluid(20, 14);
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.3;
+
+    @include fluid-text(26, 18);
+  }
+
+  &__card-description {
+    position: relative;
+    margin: 0;
+    color: var(--color-gray-60);
+    font-weight: 500;
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
+  }
+}

@@ -1,16 +1,14 @@
-@use '../variables' as *;
-@use '../helpers' as *;
+@use "../helpers" as *;
 
 .about-achievements {
   width: 100%;
+  padding-block: fluid(100, 50);
   background-color: var(--color-dark);
-  padding-top: fluid(60, 30);
-  padding-bottom: fluid(100, 50);
 
   &__container {
     display: flex;
     flex-direction: column;
-    gap: fluid(50, 30);
+    gap: fluid(80, 40);
     width: 100%;
   }
 
@@ -19,60 +17,62 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: rem(1000);
     min-width: 0;
-    max-width: rem(1000); 
-    padding-top: fluid(40, 0);
+    padding-top: rem(40);
 
-    @media (max-width: rem(1400)) {
+    @include laptop {
       padding-top: 0;
     }
   }
 
   &__decoration {
     position: absolute;
+    top: 0;
+    left: rem(-20);
+    display: block;
     width: rem(68);
     height: auto;
-    left: rem(-20);
-    top: rem(0);
+    pointer-events: none;
+    user-select: none;
 
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    @media (max-width: rem(1400)) {
+    @include laptop {
       position: static;
-      margin-bottom: rem(16);
+      width: fluid(68, 45);
+      margin-bottom: fluid(16, 10);
     }
   }
 
   &__title {
-    @include fluid-text(48, 28);
+    margin: 0 0 fluid(14, 8);
+    color: var(--color-light);
     font-weight: 600;
     line-height: 1.2;
-    color: var(--color-light);
-    margin: 0 0 rem(12) 0;
+
+    @include fluid-text(48, 28);
   }
 
   &__text {
-    @include fluid-text(18, 14);
-    line-height: 1.5;
-    color: var(--color-gray-60);
+    max-width: rem(1200);
     margin: 0;
+    color: var(--color-gray-60);
+    font-weight: 500;
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
   }
 
   &__grid {
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: fluid(30, 20);
+    width: 100%;
 
-    @media (max-width: rem(1024)) {
+    @include tablet {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: rem(600)) {
+    @include mobile {
       grid-template-columns: 1fr;
     }
   }
@@ -81,46 +81,35 @@
 .achievement-card {
   display: flex;
   flex-direction: column;
-  gap: rem(30);
-  max-width: rem(505); 
-  width: 100%;
-  min-height: rem(256);
-  padding: rem(50); 
+  gap: fluid(30, 16);
+  min-width: 0;
+  padding: fluid(50, 30);
   background-color: var(--color-dark);
   border: rem(1) solid var(--color-dark-15);
-  box-shadow: 0 0 0 8px #191919;
   border-radius: rem(12);
-  min-width: 0;
+  box-shadow: 0 0 0 rem(8) #191919;
 
   @include laptop {
-    min-height: rem(212);
-  }
-
-  @include mobile {
-    min-height: rem(169);
+    box-shadow: 0 0 0 rem(6) #191919;
   }
 
   &__title {
-    @include fluid-text(30, 20);
+    margin: 0;
+    color: var(--color-light);
     font-weight: 600;
     line-height: 1.3;
-    color: var(--color-light);
-    margin: 0;
+    overflow-wrap: anywhere;
+
+    @include fluid-text(30, 20);
   }
 
   &__text {
-    @include fluid-text(18, 14);
+    margin: 0;
+    color: var(--color-gray-60);
     font-weight: 500;
     line-height: 1.5;
-    color: var(--color-gray-60);
-    margin: 0;
-  }
+    overflow-wrap: anywhere;
 
-  @include laptop {
-    max-width: 100%; 
-    height: auto;  
-    padding: fluid(40, 30); 
-    box-shadow: 0 0 0 rem(6) #191919; 
-    row-gap: rem(16);
+    @include fluid-text(18, 14);
   }
 }
