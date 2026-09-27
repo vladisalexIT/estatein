@@ -1,5 +1,5 @@
-@use '../variables' as *;
-@use '../helpers' as *;
+@use "../variables" as *;
+@use "../helpers" as *;
 
 .about-hero {
   width: 100%;
@@ -16,20 +16,22 @@
     gap: rem(60);
 
     @media (max-width: rem(1024)) {
-      flex-direction: column-reverse; 
+      flex-direction: column-reverse;
       gap: fluid(50, 30);
       width: 100%;
     }
   }
-  
-   &__content {
-    position: relative; 
+
+  &__picture
+
+  &__content {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     min-width: 0;
     max-width: rem(755);
-    padding-top: fluid(40, 0); 
+    padding-top: fluid(40, 0);
 
     @media (max-width: rem(1400)) {
       padding-top: 0;
@@ -58,7 +60,7 @@
   &__title {
     @include fluid-text(48, 28);
     font-weight: 600;
-    line-height: 1.2; 
+    line-height: 1.2;
     color: var(--color-light);
     margin: 0 0 rem(16) 0;
   }
@@ -67,7 +69,7 @@
     @include fluid-text(18, 14);
     font-weight: 500;
     line-height: 1.5;
-    color: var(--color-gray-60); 
+    color: var(--color-gray-60);
     margin: 0 0 fluid(40, 24) 0;
   }
 
@@ -96,12 +98,12 @@
       min-width: 0;
 
       @media (max-width: rem(576)) {
-        max-width: 100%; 
-        align-items: center; 
+        max-width: 100%;
+        align-items: center;
         text-align: center;
 
         &:last-child {
-          grid-column: span 2; 
+          grid-column: span 2;
         }
       }
     }
@@ -124,7 +126,7 @@
   &__banner {
     width: 100%;
     min-width: 0;
-    max-width: fluid(755, 500); 
+    max-width: fluid(755, 500);
   }
 
   &__image-wrapper {
@@ -133,12 +135,29 @@
     border-radius: rem(12);
     border: rem(1) solid var(--color-dark-15);
     overflow: hidden;
-    aspect-ratio: 755 / 546; 
-    background-image: url('/src/assets/images/about/about-hero-bg.svg');
+    aspect-ratio: 755 / 546;
+    background-image: url("/src/assets/images/about/hero-bg.svg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%;
+
+    @include laptop {
+      aspect-ratio: 610 / 435;
+    }
+
+    @include mobile {
+      aspect-ratio: 358 / 310;
+    }
   }
+
+  &__picture {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: rem(12);
+    background-color: var(--color-dark-10);
+  }
+  
 
   &__image {
     position: absolute;
@@ -146,6 +165,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    // object-fit: contain;
   }
 }
