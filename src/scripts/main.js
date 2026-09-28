@@ -9,7 +9,5 @@ import SliderCollection from './Slider.js'
 
 new Header()
 new SliderCollection()
-import initClientsSlider from './about-slider.js';
 
 
-initClientsSlider();
