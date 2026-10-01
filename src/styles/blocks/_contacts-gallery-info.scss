@@ -1,0 +1,122 @@
+@use '../helpers' as *;
+
+.contacts-gallery-info {
+  display: flex;
+  justify-content: space-between; 
+  width: 100%;
+  position: relative;
+
+  &__row {
+    position: relative; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%;
+    height: 100%;
+
+    @include tablet {
+      flex-direction: column !important; 
+      align-items: flex-start;
+      gap: rem(20); 
+    }
+  }
+
+ &__decoration {
+    position: absolute;
+    top: rem(20); 
+    left: rem(-20); 
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    z-index: 10;
+
+    img {
+      display: block;
+      max-width: rem(68);
+      height: auto;
+    }
+
+    @include laptop {
+      top: rem(-7);
+      left: rem(-10);
+    }
+
+    @include tablet {
+      top: rem(-35);
+
+      img {
+        max-width: rem(55);
+      }
+    }
+
+    @include mobile {
+      top: rem(-35);
+      left: rem(-10);
+    }
+  }
+
+  &__content {
+    flex: 0 1 calc(50% - fluid(15, 10)); 
+    display: flex;
+    flex-direction: column;
+    gap: fluid(14, 8);
+    width: 100%; 
+    height: 100%;
+
+    @include laptop {
+      gap: rem(10) !important;
+    }
+
+    @include mobile {
+      flex: 1 1 100%;
+    }
+  }
+
+  &__title {
+    @include fluid-text(48, 28);
+    font-weight: 600;
+    margin: 0;
+    text-align: left;
+
+    @include laptop {
+      @include fluid-text(38)
+    }
+
+    @include tablet {
+      @include fluid-text(32)
+    }
+  }
+
+  &__text {
+    @include fluid-text(18, 14);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+    color: var(--color-gray-60);
+    text-align: left;
+
+    @include laptop {
+      @include fluid-text(16)
+    }
+
+    @include tablet {
+      @include fluid-text(14)
+    }
+  }
+
+  &__handshake {
+    flex: 0 1 calc(50% - fluid(15, 10)); 
+    width: 100%;
+    border: rem(1) solid var(--color-dark-15, #262626); 
+    border-radius: rem(12); 
+    overflow: hidden; 
+    background-color: var(--color-dark-10, #1a1a1a);
+    box-sizing: border-box;
+
+    @include mobile {
+      flex: 1 1 100%; 
+      height: 100%;
+    }
+  }
+}

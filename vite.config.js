@@ -36,6 +36,7 @@ export default defineConfig({
       input: {
         home: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
+        contact: resolve(__dirname, 'contacts.html'),
       },
     },
   },

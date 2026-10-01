@@ -1,0 +1,109 @@
+.contact-hero {
+  width: 100%;
+  background-color: var(--color-dark);
+  padding-top: clamp(
+    3.125rem,
+    1.5318627451rem + 6.5359477124vw,
+    9.375rem
+  );
+  padding-bottom: clamp(
+    3.125rem,
+    2.3284313725rem + 3.2679738562vw,
+    6.25rem
+  );
+}
+@media (width <= 90.06125rem) {
+  .contact-hero {
+    padding-top: 6.25rem;
+    padding-bottom: 3.75rem;
+  }
+}
+.contact-hero__container {
+  width: 100%;
+  margin-bottom: clamp(
+    3.125rem,
+    2.3284313725rem + 3.2679738562vw,
+    6.25rem
+  );
+}
+.contact-hero__header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(
+    0.625rem,
+    0.5612745098rem + 0.2614379085vw,
+    0.875rem
+  );
+  max-width: 71.25rem;
+}
+.contact-hero__title {
+  font-size: clamp(
+    1.75rem,
+    1.431372549rem + 1.3071895425vw,
+    3rem
+  );
+  font-weight: 600;
+  margin: 0;
+}
+.contact-hero__text {
+  font-size: clamp(
+    0.875rem,
+    0.8112745098rem + 0.2614379085vw,
+    1.125rem
+  );
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-gray-60);
+}
+.contact-hero__list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(
+    0.625rem,
+    0.4656862745rem + 0.6535947712vw,
+    1.25rem
+  );
+  margin: 0;
+  list-style: none;
+  background-color: var(--color-dark);
+  border-top: 0.0625rem solid var(--color-dark-15);
+  border-bottom: 0.0625rem solid var(--color-dark-15);
+  box-shadow: 0 -0.625rem 0 0 #191919, 0 0.5625rem 0 0 #191919;
+  padding: clamp(
+    0.625rem,
+    0.4656862745rem + 0.6535947712vw,
+    1.25rem
+  );
+  align-items: stretch;
+  box-sizing: border-box;
+}
+.contact-hero__list__item {
+  min-width: 0;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+}
+@media (width <= 90.06125rem) {
+  .contact-hero__list {
+    padding: 1rem clamp(
+    1rem,
+    0.7769607843rem + 0.9150326797vw,
+    1.875rem
+  );
+    gap: 1rem;
+  }
+}
+@media (width <= 63.99875rem) {
+  .contact-hero__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (width <= 47.99875rem) {
+  .contact-hero__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+    padding: 0.625rem 1rem;
+  }
+}
