@@ -109,6 +109,11 @@
   grid-row: 3/4;
   overflow: visible !important;
 }
+@media (width <= 90.06125rem) {
+  .contacts-gallery-grid__item {
+    border-radius: 0.625rem;
+  }
+}
 @media (width <= 47.99875rem) {
   .contacts-gallery-grid__item {
     border-radius: 0.625rem;

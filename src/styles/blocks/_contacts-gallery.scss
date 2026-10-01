@@ -102,9 +102,9 @@
       overflow: visible !important;
     }
 
-    // @include laptop {
-    //   border-radius: rem(10);
-    // }
+    @include laptop {
+      border-radius: rem(10);
+    }
 
     @include mobile {
       border-radius: rem(10);
