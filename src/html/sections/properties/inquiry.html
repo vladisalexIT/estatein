@@ -1,0 +1,188 @@
+<section class="property-inquiry" aria-labelledby="property-inquiry-title">
+  <div class="property-inquiry__container container">
+    <img class="property-inquiry__decoration" src="/src/assets/icons/sparkle-decoration.svg" alt="" width="69"
+      height="30" aria-hidden="true" />
+
+    <header class="property-inquiry__header">
+      <h2 class="property-inquiry__title" id="property-inquiry-title">
+        Let's Make it Happen
+      </h2>
+
+      <p class="property-inquiry__description">
+        Ready to take the first step toward your dream property?
+        Fill out the form below, and our real estate experts will
+        work closely with you to understand your needs, arrange
+        viewings, and guide you through the process.
+      </p>
+    </header>
+
+    <form class="property-inquiry__form" action="" method="post">
+      <div class="property-inquiry__grid">
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-first-name">
+            First Name
+          </label>
+
+          <input class="form-field__control" id="inquiry-first-name" name="first-name" type="text"
+            placeholder="Enter First Name" autocomplete="given-name" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-last-name">
+            Last Name
+          </label>
+
+          <input class="form-field__control" id="inquiry-last-name" name="last-name" type="text"
+            placeholder="Enter Last Name" autocomplete="family-name" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-email">
+            Email
+          </label>
+
+          <input class="form-field__control" id="inquiry-email" name="email" type="email" placeholder="Enter your Email"
+            autocomplete="email" inputmode="email" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-phone">
+            Phone
+          </label>
+
+          <input class="form-field__control" id="inquiry-phone" name="phone" type="tel" placeholder="Enter Phone Number"
+            autocomplete="tel" inputmode="tel" required />
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-location">
+            Preferred Location
+          </label>
+
+          <select class="form-field__control form-field__control--select" id="inquiry-location" name="location">
+            <option value="">Select Location</option>
+            <option value="new-york">New York</option>
+            <option value="california">California</option>
+            <option value="florida">Florida</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-type">
+            Property Type
+          </label>
+
+          <select class="form-field__control form-field__control--select" id="inquiry-type" name="property-type">
+            <option value="">Select Property Type</option>
+            <option value="house">House</option>
+            <option value="apartment">Apartment</option>
+            <option value="villa">Villa</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-bathrooms">
+            No. of Bathrooms
+          </label>
+
+          <select class="form-field__control form-field__control--select" id="inquiry-bathrooms" name="bathrooms">
+            <option value="">Select no. of Bathrooms</option>
+            <option value="1">1 Bathroom</option>
+            <option value="2">2 Bathrooms</option>
+            <option value="3">3 Bathrooms</option>
+            <option value="4-plus">4 or more</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="inquiry-bedrooms">
+            No. of Bedrooms
+          </label>
+
+          <select class="form-field__control form-field__control--select" id="inquiry-bedrooms" name="bedrooms">
+            <option value="">Select no. of Bedrooms</option>
+            <option value="1">1 Bedroom</option>
+            <option value="2">2 Bedrooms</option>
+            <option value="3">3 Bedrooms</option>
+            <option value="4-plus">4 or more</option>
+          </select>
+        </div>
+
+        <div class="form-field form-field--budget">
+          <label class="form-field__label" for="inquiry-budget">
+            Budget
+          </label>
+
+          <select class="form-field__control form-field__control--select" id="inquiry-budget" name="budget">
+            <option value="">Select Budget</option>
+            <option value="0-250000">Up to $250,000</option>
+            <option value="250000-500000">
+              $250,000–$500,000
+            </option>
+            <option value="500000-plus">
+              $500,000 and above
+            </option>
+          </select>
+        </div>
+
+        <fieldset class="contact-method">
+          <legend class="contact-method__legend">
+            Preferred Contact Method
+          </legend>
+
+          <div class="contact-method__options">
+            <label class="contact-method__option">
+              <img class="contact-method__icon" src="/src/assets/icons/phone.svg" alt="" width="24" height="24"
+                aria-hidden="true" />
+
+              <span class="contact-method__text">
+                Enter Your Number
+              </span>
+
+              <input class="contact-method__radio" type="radio" name="contact-method" value="phone"
+                aria-label="Contact me by phone" checked />
+            </label>
+
+            <label class="contact-method__option">
+              <img class="contact-method__icon" src="/src/assets/icons/mail.svg" alt="" width="24" height="24"
+                aria-hidden="true" />
+
+              <span class="contact-method__text">
+                Enter Your Email
+              </span>
+
+              <input class="contact-method__radio" type="radio" name="contact-method" value="email"
+                aria-label="Contact me by email" />
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-field form-field--wide">
+          <label class="form-field__label" for="inquiry-message">
+            Message
+          </label>
+
+          <textarea class="form-field__control form-field__control--textarea" id="inquiry-message" name="message"
+            placeholder="Enter your Message here..." rows="5"></textarea>
+        </div>
+      </div>
+
+      <div class="property-inquiry__footer">
+        <label class="agreement">
+          <input class="agreement__checkbox" type="checkbox" name="privacy-consent" required />
+
+          <span class="agreement__text">
+            I agree with
+            <a href="/terms.html">Terms of Use</a>
+            and
+            <a href="/privacy.html">Privacy Policy</a>
+          </span>
+        </label>
+
+        <button class="property-inquiry__submit button button--accent" type="submit">
+          Send Your Message
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

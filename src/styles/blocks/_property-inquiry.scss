@@ -1,0 +1,288 @@
+@use "../helpers" as *;
+
+.property-inquiry {
+  padding-bottom: fluid(150, 80);
+
+  &__decoration {
+    display: block;
+    width: fluid(69, 46);
+    height: auto;
+    margin-bottom: fluid(10, 8);
+    margin-left: rem(-20);
+    pointer-events: none;
+
+    @include mobile {
+      margin-left: rem(-8);
+    }
+  }
+
+  &__header {
+    max-width: rem(1300);
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--color-light);
+    line-height: 1.2;
+
+    @include fluid-text(48, 28);
+  }
+
+  &__description {
+    margin: fluid(14, 8) 0 0;
+    color: var(--color-gray-60);
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
+  }
+
+  &__form {
+    margin-top: fluid(80, 40);
+    padding: fluid(100, 20);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(12);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: fluid(50, 24) fluid(30, 20);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(24);
+    margin-top: fluid(50, 30);
+  }
+
+  &__submit {
+    min-width: fluid(250, 190);
+    font-size: fluid(18, 14);
+  }
+
+  @include tablet {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @include mobile {
+    &__form {
+      border-radius: rem(10);
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__submit {
+      width: 100%;
+    }
+  }
+}
+
+.form-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: rem(16);
+
+  &--budget {
+    grid-column: span 2;
+  }
+
+  &--wide {
+    grid-column: 1 / -1;
+  }
+
+  &__label {
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.5;
+
+    @include fluid-text(20, 14);
+  }
+
+  &__control {
+    width: 100%;
+    min-width: 0;
+    min-height: fluid(67, 52);
+    padding: rem(14) fluid(20, 16);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(8);
+    outline: 0;
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+    line-height: 1.5;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    @include fluid-text(18, 14);
+
+    &::placeholder {
+      color: var(--color-dark-40);
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 rem(2) rgb(112 59 247 / 20%);
+    }
+
+    &--select {
+      padding-right: rem(52);
+      color: var(--color-gray-60);
+      background-image:
+        url("/src/assets/icons/properties/chevron-down.svg");
+      background-repeat: no-repeat;
+      background-position: right rem(18) center;
+      background-size: rem(20);
+      appearance: none;
+      cursor: pointer;
+
+      option {
+        padding: rem(10) rem(14);
+        color: var(--color-light);
+        background-color: var(--color-dark-10);
+      }
+    }
+
+    &--textarea {
+      min-height: fluid(190, 140);
+      resize: vertical;
+    }
+  }
+
+  @include tablet {
+    &--budget {
+      grid-column: span 1;
+    }
+  }
+
+  @include mobile {
+    gap: rem(10);
+
+    &--budget,
+    &--wide {
+      grid-column: auto;
+    }
+  }
+}
+
+.contact-method {
+  grid-column: span 2;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  &__legend {
+    margin-bottom: rem(16);
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.5;
+
+    @include fluid-text(20, 14);
+  }
+
+  &__options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: fluid(20, 12);
+  }
+
+  &__option {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-width: 0;
+    min-height: fluid(67, 52);
+    align-items: center;
+    gap: rem(12);
+    padding-inline: fluid(20, 16);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(8);
+    color: var(--color-gray-60);
+    background-color: var(--color-dark-10);
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+
+    @include fluid-text(18, 14);
+
+    &:hover {
+      border-color: var(--color-gray-40);
+    }
+
+    &:focus-within {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 rem(2) rgb(112 59 247 / 20%);
+    }
+
+    &:has(.contact-method__radio:checked) {
+      border-color: rgb(112 59 247 / 55%);
+    }
+  }
+
+  &__icon {
+    width: fluid(24, 20);
+    height: fluid(24, 20);
+    object-fit: contain;
+  }
+
+  &__text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__radio {
+    width: rem(18);
+    height: rem(18);
+    margin: 0;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  @include tablet {
+    grid-column: span 1;
+
+    &__options {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @include mobile {
+    grid-column: auto;
+  }
+}
+
+.agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(10);
+  color: var(--color-gray-60);
+  font-size: fluid(18, 14);
+  line-height: 1.5;
+
+  &__checkbox {
+    flex: 0 0 auto;
+    width: rem(20);
+    height: rem(20);
+    margin: rem(3) 0 0;
+    accent-color: var(--color-accent);
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

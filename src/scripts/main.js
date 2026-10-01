@@ -6,8 +6,10 @@ import 'swiper/css/pagination'
 
 import Header from './Header.js'
 import SliderCollection from './Slider.js'
+import PropertiesSearch from './PropertiesSearch'
 
-new Header()
-new SliderCollection()
-
-
+document.addEventListener('DOMContentLoaded', () => {
+    new Header()
+    new SliderCollection()
+    new PropertiesSearch()
+})

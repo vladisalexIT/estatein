@@ -8,7 +8,6 @@ import {
 
 class Slider {
     selectors = {
-        root: '[data-js-slider]',
         swiper: '[data-js-slider-swiper]',
         previousButton: '[data-js-slider-prev]',
         nextButton: '[data-js-slider-next]',
@@ -138,9 +137,24 @@ class Slider {
             1
         )
 
+        const spaceDesktop = this.getNumberData(
+            'sliderSpaceDesktop',
+            30
+        )
+
+        const spaceTablet = this.getNumberData(
+            'sliderSpaceTablet',
+            20
+        )
+
+        const spaceMobile = this.getNumberData(
+            'sliderSpaceMobile',
+            16
+        )
+
         const shouldLoop = this.getBooleanData(
             'sliderLoop',
-            true
+            false
         )
 
         this.swiper = new Swiper(this.swiperElement, {
@@ -153,7 +167,7 @@ class Slider {
 
             slidesPerView: slidesMobile,
             slidesPerGroup: groupMobile,
-            spaceBetween: 16,
+            spaceBetween: spaceMobile,
             speed: 500,
             loop: shouldLoop,
             watchOverflow: true,
@@ -189,27 +203,23 @@ class Slider {
                 768: {
                     slidesPerView: slidesTablet,
                     slidesPerGroup: groupTablet,
-                    spaceBetween: 20,
+                    spaceBetween: spaceTablet,
                 },
                 1024: {
                     slidesPerView: slidesDesktop,
                     slidesPerGroup: groupDesktop,
-                    spaceBetween: 20,
+                    spaceBetween: spaceTablet,
                 },
                 1441: {
                     slidesPerView: slidesDesktop,
                     slidesPerGroup: groupDesktop,
-                    spaceBetween: 30,
+                    spaceBetween: spaceDesktop,
                 },
             },
 
             on: {
-                init: (swiper) => {
-                    this.updateCounter(swiper)
-                },
-                slideChange: (swiper) => {
-                    this.updateCounter(swiper)
-                },
+                init: (swiper) => this.updateCounter(swiper),
+                slideChange: (swiper) => this.updateCounter(swiper),
                 breakpoint: (swiper) => {
                     requestAnimationFrame(() => {
                         this.updateCounter(swiper)
