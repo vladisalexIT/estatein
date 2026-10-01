@@ -25,6 +25,21 @@
     flex-direction: column;
   }
 
+  &__eyebrow {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 fluid(20, 16);
+    padding: fluid(10, 8) fluid(14, 12);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(28);
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+    font-size: fluid(18, 14);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
+
   &__title {
     font-size: fluid(24, 20);
     line-height: 1.2;
@@ -127,4 +142,18 @@
       max-width: rem(202);
     }
   }
+
+  // @media (width <= rem(420)) {
+  //   .property-card {
+  //     &__footer {
+  //       grid-template-columns: 1fr;
+  //       align-items: stretch;
+  //     }
+
+  //     &__button {
+  //       max-width: none;
+  //       justify-self: stretch;
+  //     }
+  //   }
+  // }
 }

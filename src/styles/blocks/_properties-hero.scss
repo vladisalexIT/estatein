@@ -1,0 +1,296 @@
+@use "../helpers" as *;
+
+.properties-hero {
+  padding-bottom: fluid(110, 80);
+  background-color: var(--color-dark);
+
+  &__intro {
+    min-height: fluid(400, 300);
+    padding-block: fluid(150, 60) fluid(100, 80);
+    border-bottom: rem(1) solid var(--color-dark-15);
+    background: linear-gradient(
+      95deg,
+      var(--color-dark-10) 0%,
+      var(--color-dark-10) 42%,
+      rgb(26 26 26 / 0%) 100%
+    );
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: fluid(14, 10);
+  }
+
+  &__title {
+    max-width: rem(1100);
+    margin: 0;
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.2;
+
+    @include fluid-text(48, 28);
+  }
+
+  &__description {
+    max-width: rem(1350);
+    margin: 0;
+    color: var(--color-gray-60);
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
+  }
+}
+
+.properties-search {
+  position: relative;
+  z-index: 2;
+  margin-top: fluid(-57, -34);
+  color-scheme: dark;
+
+  &__form {
+    width: 100%;
+  }
+
+  &__primary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: rem(12);
+    width: min(100% - fluid(160, 0), rem(1300));
+    min-height: fluid(103, 74);
+    margin-inline: auto;
+    padding: fluid(20, 10);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(12) rem(12) 0 0;
+    background-color: var(--color-dark);
+    box-shadow: 0 0 0 fluid(10, 4) var(--color-dark-10);
+    cursor: text;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus-within {
+      border-color: var(--color-accent);
+      box-shadow:
+        0 0 0 rem(2) rgb(112 59 247 / 14%),
+        0 0 0 fluid(10, 4) var(--color-dark-10);
+    }
+  }
+
+  &__input-wrapper {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    cursor: text;
+  }
+
+  &__input {
+    width: 100%;
+    min-width: 0;
+    padding-inline: fluid(24, 16);
+    border: 0;
+    outline: 0;
+    color: var(--color-light);
+    background-color: transparent;
+    line-height: 1.5;
+
+    @include fluid-text(24, 16);
+
+    &::placeholder {
+      color: var(--color-dark-40);
+      opacity: 1;
+    }
+  }
+
+  &__submit {
+    flex: 0 0 auto;
+    min-width: fluid(185, 54);
+    padding-inline: fluid(24, 15);
+    font-size: fluid(18, 14);
+    cursor: pointer;
+
+    img {
+      width: rem(24);
+      height: rem(24);
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &__filters {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: fluid(20, 10);
+    padding: fluid(20, 10);
+    border: rem(1) solid var(--color-dark-15);
+    border-top: none;
+    border-radius: rem(12);
+    background-color: var(--color-dark-10);
+    box-shadow: 0 rem(20) rem(50) rgb(0 0 0 / 12%);
+  }
+
+  &__field {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: fluid(12, 8);
+    min-width: 0;
+    min-height: fluid(72, 58);
+    padding-inline: fluid(20, 14);
+    overflow: hidden;
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(10);
+    color: var(--color-gray-60);
+    background-color: var(--color-dark);
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: var(--color-gray-40);
+    }
+
+    &:focus-within {
+      border-color: var(--color-accent);
+      background-color: var(--color-dark-10);
+      box-shadow: 0 0 0 rem(2) rgb(112 59 247 / 14%);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: fluid(20, 14);
+      z-index: 1;
+      width: rem(20);
+      height: rem(20);
+      background: url("/src/assets/icons/properties/chevron-down.svg") center /
+        contain no-repeat;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+  }
+
+  &__field-icon {
+    position: relative;
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 1;
+    width: fluid(24, 20);
+    height: fluid(24, 20);
+    padding-right: fluid(8, 0);
+    border-right: rem(1) solid var(--color-dark-15);
+    box-sizing: content-box;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  &__field-value {
+    position: relative;
+    z-index: 1;
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    padding-right: rem(34);
+    overflow: hidden;
+    color: var(--color-gray-60);
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+
+    @include fluid-text(18, 14);
+  }
+
+  &__select {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    outline: 0;
+    color: var(--color-light);
+    background-color: transparent;
+    opacity: 0;
+    appearance: none;
+    cursor: pointer;
+
+    @include fluid-text(18, 14);
+
+
+
+    optgroup {
+      color: var(--color-gray-60);
+      background-color: var(--color-dark-10);
+      font-weight: 600;
+    }
+
+    option {
+      padding: rem(10) rem(14);
+      color: var(--color-light);
+      background-color: var(--color-dark-10);
+      font-weight: 400;
+    }
+
+    option:disabled {
+      color: var(--color-gray-60);
+    }
+
+    option:checked {
+      color: var(--color-light);
+      background-color: var(--color-accent);
+    }
+  }
+
+  @include tablet {
+    &__primary {
+      width: 100%;
+    }
+
+    &__filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__field:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include mobile {
+    &__primary {
+      grid-template-columns: minmax(0, 1fr) auto;
+      border-bottom: rem(1) solid var(--color-dark-15);
+      border-radius: rem(12);
+    }
+
+    &__input {
+      padding-inline: rem(10);
+    }
+
+    &__submit {
+      width: rem(54);
+      min-width: rem(54);
+      padding: 0;
+
+      span {
+        @include visually-hidden;
+      }
+    }
+
+    &__filters {
+      grid-template-columns: 1fr;
+      margin-top: rem(20);
+      padding: rem(10);
+    }
+
+    &__field:last-child {
+      grid-column: auto;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+<section class="properties-hero" aria-labelledby="properties-hero-title">
+    <div class="properties-hero__intro">
+        <div class="properties-hero__container container">
+            <h1 class="properties-hero__title" id="properties-hero-title">
+                Find Your Dream Property
+            </h1>
+
+            <p class="properties-hero__description">
+                Welcome to Estatein, where your dream property awaits
+                in every corner of our beautiful world. Explore our
+                curated selection of properties, each offering a unique
+                story and a chance to redefine your life. With categories
+                to suit every dreamer, your journey begins here.
+            </p>
+        </div>
+    </div>
+
+    <div class="properties-search container">
+        <form class="properties-search__form" action="/properties.html" method="get" role="search">
+            <div class="properties-search__primary">
+                <label class="properties-search__input-wrapper" for="properties-search-query">
+                    <span class="visually-hidden">
+                        Search for a property
+                    </span>
+
+                    <input class="properties-search__input" id="properties-search-query" name="query" type="search"
+                        placeholder="Search For A Property" autocomplete="off" />
+                </label>
+
+                <button class="properties-search__submit button button--accent" type="submit">
+                    <img src="/src/assets/icons/properties/search.svg" alt="" width="24" height="24"
+                        aria-hidden="true" />
+                    <span>Find Property</span>
+                </button>
+            </div>
+
+            <div class="properties-search__filters">
+                <div class="properties-search__field">
+                    <img class="properties-search__field-icon" src="/src/assets/icons/properties/location.svg" alt=""
+                        width="24" height="24" aria-hidden="true" />
+
+                    <span class="properties-search__field-value" aria-hidden="true">
+                        Location
+                    </span>
+
+                    <select class="properties-search__select" id="property-location" name="location"
+                        aria-label="Location">
+                        <option value="">Location</option>
+                        <option value="new-york">New York</option>
+                        <option value="california">California</option>
+                        <option value="florida">Florida</option>
+                    </select>
+                </div>
+
+                <div class="properties-search__field">
+                    <img class="properties-search__field-icon" src="/src/assets/icons/properties/property.svg" alt=""
+                        width="24" height="24" aria-hidden="true" />
+
+                    <span class="properties-search__field-value" aria-hidden="true">
+                        Property Type
+                    </span>
+
+                    <select class="properties-search__select" id="property-type" name="type" aria-label="Property type">
+                        <option value="">Property Type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="villa">Villa</option>
+                    </select>
+                </div>
+
+                <div class="properties-search__field">
+                    <img class="properties-search__field-icon" src="/src/assets/icons/properties/price.svg" alt=""
+                        width="24" height="24" aria-hidden="true" />
+
+                    <span class="properties-search__field-value" aria-hidden="true">
+                        Pricing Range
+                    </span>
+
+                    <select class="properties-search__select" id="property-price" name="price" aria-label="Price range">
+                        <option value="">Pricing Range</option>
+                        <option value="0-250000">Up to $250,000</option>
+                        <option value="250000-500000">
+                            $250,000–$500,000
+                        </option>
+                        <option value="500000-plus">
+                            $500,000 and above
+                        </option>
+                    </select>
+                </div>
+
+                <div class="properties-search__field">
+                    <img class="properties-search__field-icon" src="/src/assets/icons/properties/size.svg" alt=""
+                        width="24" height="24" aria-hidden="true" />
+
+                    <span class="properties-search__field-value" aria-hidden="true">
+                        Property Size
+                    </span>
+
+                    <select class="properties-search__select" id="property-size" name="size" aria-label="Property size">
+                        <option value="">Property Size</option>
+                        <option value="small">Up to 1,000 sq ft</option>
+                        <option value="medium">1,000–2,500 sq ft</option>
+                        <option value="large">2,500 sq ft and above</option>
+                    </select>
+                </div>
+
+                <div class="properties-search__field">
+                    <img class="properties-search__field-icon" src="/src/assets/icons/properties/calendar.svg" alt=""
+                        width="24" height="24" aria-hidden="true" />
+
+                    <span class="properties-search__field-value" aria-hidden="true">
+                        Build Year
+                    </span>
+
+                    <select class="properties-search__select" id="property-build-year" name="build-year"
+                        aria-label="Build year">
+                        <option value="">Build Year</option>
+                        <option value="2020-plus">2020 and newer</option>
+                        <option value="2010-2019">2010–2019</option>
+                        <option value="before-2010">Before 2010</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

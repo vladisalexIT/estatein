@@ -1,0 +1,189 @@
+@use "../helpers" as *;
+
+.properties-listings {
+  padding-bottom: fluid(110, 80);
+
+  &__container {
+    min-width: 0;
+  }
+
+  &__decoration {
+    display: block;
+    width: fluid(69, 46);
+    height: auto;
+    margin-bottom: fluid(10, 8);
+    margin-left: rem(-20);
+    pointer-events: none;
+    user-select: none;
+
+    @media (width <= rem(1678)) {
+      margin-left: rem(-14);
+    }
+
+    @include mobile {
+      margin-left: rem(-8);
+    }
+  }
+
+  &__header {
+    max-width: rem(1300);
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--color-light);
+    line-height: 1.2;
+    text-wrap: balance;
+
+    @include fluid-text(48, 28);
+  }
+
+  &__description {
+    margin: fluid(14, 8) 0 0;
+    color: var(--color-gray-60);
+    line-height: 1.5;
+
+    @include fluid-text(18, 14);
+  }
+
+  &__slider {
+    margin-top: fluid(80, 40);
+  }
+
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  /*
+   * Только карточки страницы Properties.
+   * Общий компонент .property-card на главной не изменяется.
+   */
+  .property-card {
+    gap: 0;
+    padding: fluid(30, 20);
+    border-radius: rem(12);
+
+    &__image {
+      aspect-ratio: 432 / 318;
+      border-radius: rem(10);
+    }
+
+    &__body {
+      padding-top: fluid(30, 20);
+    }
+
+    &__title {
+      margin: 0;
+      color: var(--color-light);
+      font-weight: 600;
+      line-height: 1.2;
+
+      @include fluid-text(24, 20);
+    }
+
+    &__description {
+      margin: fluid(6, 4) 0 0;
+      color: var(--color-gray-60);
+      line-height: 1.5;
+
+      @include fluid-text(18, 14);
+    }
+
+    &__description-link {
+      color: var(--color-light);
+      text-decoration-thickness: rem(1);
+      text-underline-offset: rem(3);
+    }
+
+    &__features {
+      order: -1;
+      margin: 0 0 fluid(20, 16);
+    }
+
+    &__feature {
+      width: 100%;
+      min-height: auto;
+      justify-content: flex-start;
+      padding: fluid(10, 8) fluid(14, 12);
+      border-radius: rem(28);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: fluid(18, 14);
+    }
+
+    // &__feature:not(:first-child) {
+    //   display: none;
+    // }
+
+    // &__feature:first-child {
+    //   &::before {
+    //     content: "Coastal Escapes - Where Waves Beckon";
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    //     white-space: nowrap;
+    //   }
+
+    //   > * {
+    //     display: none;
+    //   }
+    // }
+
+    &__footer {
+      grid-template-columns: minmax(rem(110), auto) minmax(0, 1fr);
+      align-items: end;
+      gap: fluid(20, 12);
+      padding-top: fluid(30, 20);
+    }
+
+    &__price-label {
+      margin-bottom: rem(2);
+      font-size: fluid(18, 14);
+    }
+
+    &__price-value {
+      font-size: fluid(24, 18);
+    }
+
+    &__button {
+      min-height: fluid(60, 52);
+      max-width: rem(279);
+      font-size: fluid(18, 14);
+    }
+  }
+
+  @include mobile {
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .slider__counter {
+      display: block;
+    }
+
+    .property-card {
+      &__footer {
+        grid-template-columns: minmax(rem(90), auto) minmax(0, 1fr);
+      }
+
+      &__button {
+        max-width: none;
+      }
+    }
+  }
+
+  @media (width <= rem(420)) {
+    .property-card {
+      &__footer {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+
+      &__button {
+        width: 100%;
+        justify-self: stretch;
+      }
+    }
+  }
+}
