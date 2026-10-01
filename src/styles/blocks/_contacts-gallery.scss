@@ -1,0 +1,148 @@
+@use '../helpers' as *;
+
+.contacts-gallery {
+  width: 100%;
+  background-color: var(--color-dark);
+  padding-bottom: fluid(120, 60);
+  box-sizing: border-box;
+  margin: 0 auto !important;
+
+  
+  &__container {
+    width: 100%;
+  }
+
+    &__box {
+    width: 100%;
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(12);
+    padding: fluid(80, 24); 
+    background-color: var(--color-dark-10);
+    background-image: url('/raw-assets/images/contacts/abstract-design.png'); 
+    background-repeat: no-repeat;
+    background-size: cover; 
+    gap: fluid(20, 10);
+
+    @include laptop {
+      padding: rem(40);
+      border-radius: rem(10);
+    }
+
+    @include tablet {
+      padding: rem(30);
+    }
+
+    @include mobile {
+      padding: rem(24);
+      border-radius: rem(8);
+      background-size: cover;
+      background-position: right 100%;
+    }
+  }
+}
+
+.contacts-gallery-grid {
+  width: 100%;
+  margin-bottom: fluid(20, 10);
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: rem(20);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include tablet {
+      gap: rem(10);
+      margin-bottom: rem(55);
+    }
+  }
+
+  &__item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: rem(12);
+    overflow: hidden;
+
+    &:not(&--info) {
+      border: rem(1) solid var(--color-dark-15, #262626);
+      background-color: var(--color-dark-10, #1a1a1a);
+    }
+
+    &--office {
+      grid-column: span 2;
+      grid-row: 1 / 2;
+    }
+
+    &--team-1 {
+      grid-column: span 2;
+      grid-row: 1 / 2;
+    }
+
+    &--team-2 {
+      grid-column: span 2;
+      grid-row: 2 / 3;
+    }
+
+    &--team-3 {
+      grid-column: span 1;
+      grid-row: 2 / 3;
+    }
+
+    &--team-4 {
+      grid-column: span 1;
+      grid-row: 2 / 3;
+    }
+
+    &--info {
+      grid-column: 1 / -1; 
+      grid-row: 3 / 4;
+      overflow: visible !important;
+    }
+
+    // @include laptop {
+    //   border-radius: rem(10);
+    // }
+
+    @include mobile {
+      border-radius: rem(10);
+    }
+  }
+
+  &__picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-duration, 0.3s) ease;
+
+    @include hover {
+      transform: scale(1.02);
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+
+      &__item {
+        grid-column: auto !important;
+        grid-row: auto !important;
+
+        &--info {
+          grid-column: 1 / -1 !important;
+        }
+      }
+    }
+
+    @include mobile {
+      gap: rem(16);
+    }
+  }
+}
