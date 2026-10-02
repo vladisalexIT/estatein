@@ -4,12 +4,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   row-gap: fluid(20, 14);
   width: 100%;
-  height: 100%;
   min-height: fluid(212, 144);
+  height: 100%;
   padding: fluid(40, 20);
   border: rem(1) solid var(--color-dark-15);
   border-radius: rem(12);
@@ -17,92 +17,6 @@
   background-color: var(--color-dark-10);
   text-align: center;
   text-decoration: none;
-
-  @include laptop {
-    padding: rem(30);
-    row-gap: rem(16);
-  }
-
-  &__arrow {
-    position: absolute;
-    top: rem(20);
-    right: rem(20);
-    width: fluid(34, 26);
-    height: fluid(34, 26);
-    color: var(--color-gray-60);
-    fill: none;
-    transition: color var(--transition-duration, 0.2s) ease, translate var(--transition-duration, 0.2s) ease;
-  }
-
-  &__icon-wrapper {
-    @include flex-center;
-    @include square(fluid(82, 60));
-    flex: 0 0 auto;
-
-  }
-
-  &__icon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  &__title {
-    max-width: rem(300);
-    @include fluid-text(20, 14);
-    font-weight: 600;
-    line-height: 1.5;
-    text-wrap: balance;
-
-    @include laptop {
-      @include fluid-text(16);
-    }
-  }
-
-  &--socials {
-    justify-content: center;
-  }
-
-  &__socials-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: rem(8);
-    width: 100%;
-  }
-
-  &__socials-list {
-    max-width: rem(415);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: fluid(30, 10);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    flex-wrap: wrap;
-
-    @include laptop {
-      gap: rem(20);
-    }
-  }
-
-  &__social-link {
-    font-weight: 600;
-    @include fluid-text(20, 14);
-    line-height: 1.5;
-    color: var(--color-light);
-    transition: color var(--transition-duration, 0.2s) ease;
-    text-decoration: underline !important;
-
-    @include hover {
-      color: var(--color-accent);
-    }
-
-    @include laptop {
-      @include fluid-text(16);
-    }
-  }
 
   @include hover {
     color: var(--color-light);
@@ -118,17 +32,91 @@
     }
   }
 
-  @include mobile {
-    justify-content: center;
-    align-items: center;
+  &__arrow {
+    position: absolute;
+    top: fluid(20, 12);
+    right: fluid(20, 12);
+    width: fluid(34, 26);
+    height: fluid(34, 26);
+    color: var(--color-gray-60);
+    fill: none;
+    transition:
+      color var(--transition-duration) ease,
+      translate var(--transition-duration) ease;
+  }
 
+  &__icon-wrapper {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: fluid(82, 60);
+    height: fluid(82, 60);
+    transition: scale var(--transition-duration) ease;
+  }
+
+  &__icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__title {
+    max-width: rem(300);
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.5;
+    text-wrap: balance;
+
+    @include fluid-text(20, 14);
+  }
+
+  &--socials {
+    justify-content: center;
+  }
+
+  &__socials-wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: rem(8);
+  }
+
+  &__socials-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: fluid(30, 10);
+    width: 100%;
+    max-width: rem(415);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__social-link {
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: underline;
+    text-underline-offset: rem(3);
+
+    @include fluid-text(20, 14);
+
+    @include hover {
+      color: var(--color-accent-light);
+    }
+  }
+
+  @include mobile {
     &__title {
       max-width: rem(140);
     }
 
-
     &__socials-list {
-      justify-content: center;
+      gap: rem(10);
     }
   }
 }
