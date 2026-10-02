@@ -168,16 +168,21 @@
       </div>
 
       <div class="property-inquiry__footer">
-        <label class="agreement">
-          <input class="agreement__checkbox" type="checkbox" name="privacy-consent" required />
+        <div class="agreement">
+          <input class="agreement__checkbox visually-hidden" type="checkbox" id="inquiry-privacy-policy"
+            name="privacy_agreement" required />
 
-          <span class="agreement__text">
+          <label class="agreement__label" for="inquiry-privacy-policy">
             I agree with
-            <a href="/terms.html">Terms of Use</a>
+            <a class="agreement__link" href="/terms.html">
+              Terms of Use
+            </a>
             and
-            <a href="/privacy.html">Privacy Policy</a>
-          </span>
-        </label>
+            <a class="agreement__link" href="/privacy.html">
+              Privacy Policy
+            </a>
+          </label>
+        </div>
 
         <button class="property-inquiry__submit button button--accent" type="submit">
           Send Your Message
