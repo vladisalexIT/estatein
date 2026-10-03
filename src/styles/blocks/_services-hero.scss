@@ -1,28 +1,30 @@
 @use '../helpers' as *;
 
 .services-hero {
-  width: 100%;
   background-color: var(--color-dark);
-  background: linear-gradient(95.93deg, #262626 -24.88%, rgba(38, 38, 38, 0) 41.38%);
-  border-bottom: 1px solid var(--color-dark-15) !important;
-  padding-top: fluid(150, 50);
-  padding-bottom: fluid(40, 30);
-  box-sizing: border-box;
+  background-image:
+    linear-gradient(
+      95.93deg,
+      #262626 -24.88%,
+      rgba(38, 38, 38, 0) 41.38%
+    );
+  background-repeat: no-repeat;
+  border-bottom: rem(1) solid var(--color-dark-15);
+  padding-block: fluid(150, 50) fluid(40, 30);
 
   &__header {
     display: flex;
-    flex-direction: column;
-    max-width: rem(1358);
     width: 100%;
+    max-width: rem(1358);
+    flex-direction: column;
     margin-bottom: fluid(60, 20);
   }
 
   &__title {
-    margin: 0;
+    margin: 0 0 fluid(14, 10);
     color: var(--color-light);
     font-weight: 600;
-    line-height: 1.5;
-    margin-bottom: fluid(14, 10);
+    line-height: 1.2;
 
     @include fluid-text(48, 28);
   }

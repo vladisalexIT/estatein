@@ -1,7 +1,15 @@
 @use '../helpers' as *;
 
 .features {
+  width: 100%;
+  max-width: calc(
+    var(--container-width) +
+    var(--container-padding-x) +
+    var(--container-padding-x)
+  );
+  margin-inline: auto;
   padding: rem(20);
+  overflow: hidden;
 
   border: rem(10) solid var(--color-dark-15);
   background-color: var(--color-dark);
@@ -15,6 +23,8 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: rem(20);
     margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   &__item {
@@ -36,9 +46,8 @@
   }
 
   @include mobile {
-    margin: rem(16);
+    width: calc(100% - rem(32));
     padding: rem(10);
-
     border-radius: rem(12);
 
     &__list {
