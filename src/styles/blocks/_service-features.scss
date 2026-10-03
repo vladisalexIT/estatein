@@ -1,0 +1,16 @@
+@use '../helpers' as *;
+
+.main {
+  .features {
+    position: relative;
+    z-index: 2;
+    border-top: rem(1) solid var(--color-dark-15);
+    border-bottom: rem(1) solid var(--color-dark-15);
+    background-color: var(--color-dark);
+    box-shadow:
+      0 rem(-10) 0 #191919,
+      0 rem(9) 0 #191919;
+    border-left: none !important;
+    border-right: none !important;
+  }
+}

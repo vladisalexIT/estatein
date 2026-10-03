@@ -38,6 +38,7 @@ export default defineConfig({
         about: resolve(__dirname, 'about.html'),
         properties: resolve(__dirname, 'properties.html'),
         contact: resolve(__dirname, 'contacts.html'),
+        services: resolve(__dirname, 'services.html'),
       },
     },
   },
