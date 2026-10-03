@@ -1,0 +1,108 @@
+.contacts-gallery {
+  width: 100%;
+  padding-bottom: clamp(
+    5rem,
+    4.362745098rem + 2.614379085vw,
+    7.5rem
+  );
+  background-color: var(--color-dark);
+}
+.contacts-gallery__container {
+  width: 100%;
+}
+.contacts-gallery__box {
+  width: 100%;
+  padding: clamp(
+    1.5rem,
+    0.6078431373rem + 3.660130719vw,
+    5rem
+  );
+  border: 0.0625rem solid var(--color-dark-15);
+  border-radius: 0.75rem;
+  background-color: var(--color-dark-10);
+  background-image: url("/src/assets/images/contacts/abstract-design.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.contacts-gallery-grid {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+.contacts-gallery-grid__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(
+    0.625rem,
+    0.4656862745rem + 0.6535947712vw,
+    1.25rem
+  );
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.contacts-gallery-grid__item {
+  min-width: 0;
+  overflow: hidden;
+  border: 0.0625rem solid var(--color-dark-15);
+  border-radius: 0.75rem;
+  background-color: var(--color-dark-10);
+}
+.contacts-gallery-grid__item--office, .contacts-gallery-grid__item--team-1, .contacts-gallery-grid__item--team-2 {
+  grid-column: span 2;
+  aspect-ratio: 709/236;
+}
+.contacts-gallery-grid__item--team-3, .contacts-gallery-grid__item--team-4 {
+  grid-column: span 1;
+  aspect-ratio: 345/236;
+}
+.contacts-gallery-grid__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.contacts-gallery-grid__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform var(--transition-duration) ease;
+}
+@media (any-hover: hover) {
+  .contacts-gallery-grid__img:hover {
+    transform: scale(1.02);
+  }
+}
+@media (any-hover: none) {
+  .contacts-gallery-grid__img:active {
+    transform: scale(1.02);
+  }
+}
+@media (width <= 90.06125rem) {
+  .contacts-gallery-grid__item {
+    border-radius: 0.625rem;
+  }
+}
+@media (width <= 62.5rem) {
+  .contacts-gallery-grid {
+    margin-bottom: 1.875rem;
+  }
+  .contacts-gallery-grid__list {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    aspect-ratio: 2/1;
+  }
+  .contacts-gallery-grid__item {
+    aspect-ratio: auto;
+  }
+}
+@media (width <= 47.99875rem) {
+  .contacts-gallery-grid__list {
+    gap: 0.5rem;
+  }
+  .contacts-gallery-grid__item {
+    border-radius: 0.5rem;
+  }
+}
