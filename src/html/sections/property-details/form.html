@@ -1,0 +1,211 @@
+<section
+  class="property-details-inquiry"
+  id="property-details-inquiry"
+  aria-labelledby="property-details-inquiry-title"
+>
+  <div class="property-details-inquiry__container container">
+    <div class="property-details-inquiry__layout">
+      <div class="property-details-inquiry__intro">
+        <img
+          class="property-details-inquiry__decoration"
+          src="/src/assets/icons/sparkle-decoration.svg"
+          alt=""
+          width="69"
+          height="30"
+          loading="lazy"
+          decoding="async"
+          aria-hidden="true"
+        />
+
+        <h2
+          class="property-details-inquiry__title"
+          id="property-details-inquiry-title"
+        >
+          Inquire About Seaside Serenity Villa
+        </h2>
+
+        <p class="property-details-inquiry__description">
+          Interested in this property? Fill out the form below, and our real
+          estate experts will get back to you with more details, including
+          scheduling a viewing and answering any questions you may have.
+        </p>
+      </div>
+
+      <div class="property-details-inquiry__form-card">
+        <form
+          class="property-details-inquiry__form"
+          action=""
+          method="post"
+          autocomplete="on"
+        >
+          <div class="property-details-inquiry__fields">
+            <div class="form-field">
+              <label
+                class="form-field__label"
+                for="property-details-first-name"
+              >
+                First Name
+              </label>
+
+              <input
+                class="form-field__control"
+                id="property-details-first-name"
+                name="first_name"
+                type="text"
+                placeholder="Enter First Name"
+                autocomplete="given-name"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label
+                class="form-field__label"
+                for="property-details-last-name"
+              >
+                Last Name
+              </label>
+
+              <input
+                class="form-field__control"
+                id="property-details-last-name"
+                name="last_name"
+                type="text"
+                placeholder="Enter Last Name"
+                autocomplete="family-name"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label
+                class="form-field__label"
+                for="property-details-email"
+              >
+                Email
+              </label>
+
+              <input
+                class="form-field__control"
+                id="property-details-email"
+                name="email"
+                type="email"
+                placeholder="Enter your Email"
+                autocomplete="email"
+                inputmode="email"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label
+                class="form-field__label"
+                for="property-details-phone"
+              >
+                Phone
+              </label>
+
+              <input
+                class="form-field__control"
+                id="property-details-phone"
+                name="phone"
+                type="tel"
+                placeholder="Enter Phone Number"
+                autocomplete="tel"
+                inputmode="tel"
+                required
+              />
+            </div>
+
+            <div class="form-field form-field--wide">
+              <label
+                class="form-field__label"
+                for="property-details-selected-property"
+              >
+                Selected Property
+              </label>
+
+              <div class="property-details-inquiry__selected-control">
+                <input
+                  class="form-field__control"
+                  id="property-details-selected-property"
+                  name="selected_property"
+                  type="text"
+                  value="Seaside Serenity Villa, Malibu, California"
+                  readonly
+                  aria-readonly="true"
+                />
+
+                <img
+                  class="property-details-inquiry__selected-icon"
+                  src="/src/assets/icons/properties/location.svg"
+                  alt=""
+                  width="24"
+                  height="24"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+
+            <div class="form-field form-field--wide">
+              <label
+                class="form-field__label"
+                for="property-details-message"
+              >
+                Message
+              </label>
+
+              <textarea
+                class="form-field__control form-field__control--textarea"
+                id="property-details-message"
+                name="message"
+                placeholder="Enter your Message here..."
+                rows="5"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="property-details-inquiry__footer">
+            <div class="agreement">
+              <input
+                class="agreement__checkbox visually-hidden"
+                type="checkbox"
+                id="property-details-privacy-policy"
+                name="privacy_agreement"
+                required
+              />
+
+              <label
+                class="agreement__label"
+                for="property-details-privacy-policy"
+              >
+                I agree with
+                <a
+                  class="agreement__link"
+                  href="/terms.html"
+                >
+                  Terms of Use
+                </a>
+                and
+                <a
+                  class="agreement__link"
+                  href="/privacy.html"
+                >
+                  Privacy Policy
+                </a>
+              </label>
+            </div>
+
+            <button
+              class="property-details-inquiry__submit button button--accent"
+              type="submit"
+            >
+              Send Your Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
