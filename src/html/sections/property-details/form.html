@@ -1,26 +1,12 @@
-<section
-  class="property-details-inquiry"
-  id="property-details-inquiry"
-  aria-labelledby="property-details-inquiry-title"
->
+<section class="property-details-inquiry" id="property-details-inquiry"
+  aria-labelledby="property-details-inquiry-title">
   <div class="property-details-inquiry__container container">
     <div class="property-details-inquiry__layout">
       <div class="property-details-inquiry__intro">
-        <img
-          class="property-details-inquiry__decoration"
-          src="/src/assets/icons/sparkle-decoration.svg"
-          alt=""
-          width="69"
-          height="30"
-          loading="lazy"
-          decoding="async"
-          aria-hidden="true"
-        />
+        <img class="property-details-inquiry__decoration" src="/src/assets/icons/sparkle-decoration.svg" alt=""
+          width="69" height="30" loading="lazy" decoding="async" aria-hidden="true" />
 
-        <h2
-          class="property-details-inquiry__title"
-          id="property-details-inquiry-title"
-        >
+        <h2 class="property-details-inquiry__title" id="property-details-inquiry-title">
           Inquire About Seaside Serenity Villa
         </h2>
 
@@ -32,175 +18,94 @@
       </div>
 
       <div class="property-details-inquiry__form-card">
-        <form
-          class="property-details-inquiry__form"
-          action=""
-          method="post"
-          autocomplete="on"
-        >
+        <form class="property-details-inquiry__form" action="" method="post" autocomplete="on">
           <div class="property-details-inquiry__fields">
             <div class="form-field">
-              <label
-                class="form-field__label"
-                for="property-details-first-name"
-              >
+              <label class="form-field__label" for="property-details-first-name">
                 First Name
               </label>
 
-              <input
-                class="form-field__control"
-                id="property-details-first-name"
-                name="first_name"
-                type="text"
-                placeholder="Enter First Name"
-                autocomplete="given-name"
-                required
-              />
+              <input class="form-field__control" id="property-details-first-name" name="first_name" type="text"
+                placeholder="Enter First Name" autocomplete="given-name" required />
             </div>
 
             <div class="form-field">
-              <label
-                class="form-field__label"
-                for="property-details-last-name"
-              >
+              <label class="form-field__label" for="property-details-last-name">
                 Last Name
               </label>
 
-              <input
-                class="form-field__control"
-                id="property-details-last-name"
-                name="last_name"
-                type="text"
-                placeholder="Enter Last Name"
-                autocomplete="family-name"
-                required
-              />
+              <input class="form-field__control" id="property-details-last-name" name="last_name" type="text"
+                placeholder="Enter Last Name" autocomplete="family-name" required />
             </div>
 
             <div class="form-field">
-              <label
-                class="form-field__label"
-                for="property-details-email"
-              >
+              <label class="form-field__label" for="property-details-email">
                 Email
               </label>
 
-              <input
-                class="form-field__control"
-                id="property-details-email"
-                name="email"
-                type="email"
-                placeholder="Enter your Email"
-                autocomplete="email"
-                inputmode="email"
-                required
-              />
+              <input class="form-field__control" id="property-details-email" name="email" type="email"
+                placeholder="Enter your Email" autocomplete="email" inputmode="email" required />
             </div>
 
             <div class="form-field">
-              <label
-                class="form-field__label"
-                for="property-details-phone"
-              >
+              <label class="form-field__label" for="property-details-phone">
                 Phone
               </label>
-
-              <input
-                class="form-field__control"
-                id="property-details-phone"
-                name="phone"
-                type="tel"
-                placeholder="Enter Phone Number"
-                autocomplete="tel"
-                inputmode="tel"
-                required
-              />
+              <input class="form-field__control" id="property-details-phone" name="phone" type="tel"
+                placeholder="Enter Phone Number" autocomplete="tel" inputmode="tel" required />
             </div>
 
             <div class="form-field form-field--wide">
-              <label
-                class="form-field__label"
-                for="property-details-selected-property"
-              >
+              <label class="form-field__label" for="property-details-selected-property">
                 Selected Property
               </label>
-
               <div class="property-details-inquiry__selected-control">
-                <input
-                  class="form-field__control"
-                  id="property-details-selected-property"
-                  name="selected_property"
-                  type="text"
-                  value="Seaside Serenity Villa, Malibu, California"
-                  readonly
-                  aria-readonly="true"
-                />
-
-                <img
-                  class="property-details-inquiry__selected-icon"
-                  src="/src/assets/icons/properties/location.svg"
-                  alt=""
-                  width="24"
-                  height="24"
-                  aria-hidden="true"
-                />
+                <select class="form-field__control form-field__control--select" id="property-details-selected-property"
+                  name="selected_property" required>
+                  <option value="Seaside Serenity Villa, Malibu, California" selected>Seaside Serenity Villa, Malibu,
+                    California</option>
+                  <option value="Metropolitan Haven, New York City, NY">Metropolitan Haven, New York City, NY</option>
+                  <option value="Rustic Retreat Cottage, Aspen, Colorado">Rustic Retreat Cottage, Aspen, Colorado
+                  </option>
+                  <option value="Coastal Elegance, Miami, Florida">Coastal Elegance, Miami, Florida</option>
+                  <option value="Urban Vista Apartment, Chicago, Illinois">Urban Vista Apartment, Chicago, Illinois
+                  </option>
+                  <option value="Countryside Haven, Austin, Texas">Countryside Haven, Austin, Texas</option>
+                  <option value="Modern Loft, Los Angeles, CA">Modern Loft, Los Angeles, CA</option>
+                  <option value="Mountain View Estate, Boulder, CO">Mountain View Estate, Boulder, CO</option>
+                  <option value="Desert Oasis Villa, Phoenix, Arizona">Desert Oasis Villa, Phoenix, Arizona</option>
+                </select>
               </div>
             </div>
 
             <div class="form-field form-field--wide">
-              <label
-                class="form-field__label"
-                for="property-details-message"
-              >
+              <label class="form-field__label" for="property-details-message">
                 Message
               </label>
 
-              <textarea
-                class="form-field__control form-field__control--textarea"
-                id="property-details-message"
-                name="message"
-                placeholder="Enter your Message here..."
-                rows="5"
-                required
-              ></textarea>
+              <textarea class="form-field__control form-field__control--textarea" id="property-details-message"
+                name="message" placeholder="Enter your Message here..." rows="5" required></textarea>
             </div>
           </div>
 
           <div class="property-details-inquiry__footer">
             <div class="agreement">
-              <input
-                class="agreement__checkbox visually-hidden"
-                type="checkbox"
-                id="property-details-privacy-policy"
-                name="privacy_agreement"
-                required
-              />
+              <input class="agreement__checkbox visually-hidden" type="checkbox" id="property-details-privacy-policy"
+                name="privacy_agreement" required />
 
-              <label
-                class="agreement__label"
-                for="property-details-privacy-policy"
-              >
+              <label class="agreement__label" for="property-details-privacy-policy">
                 I agree with
-                <a
-                  class="agreement__link"
-                  href="/terms.html"
-                >
+                <a class="agreement__link" href="/terms.html">
                   Terms of Use
                 </a>
                 and
-                <a
-                  class="agreement__link"
-                  href="/privacy.html"
-                >
+                <a class="agreement__link" href="/privacy.html">
                   Privacy Policy
                 </a>
               </label>
             </div>
 
-            <button
-              class="property-details-inquiry__submit button button--accent"
-              type="submit"
-            >
+            <button class="property-details-inquiry__submit button button--accent" type="submit">
               Send Your Message
             </button>
           </div>
