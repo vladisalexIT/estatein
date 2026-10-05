@@ -1,0 +1,167 @@
+@use '../helpers' as *;
+
+.pricing-card {
+  width: 100%;
+  background-color: var(--color-dark);
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: rem(12);
+  padding: fluid(50, 20);
+  box-sizing: border-box;
+
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: fluid(40, 20);
+    border-bottom: rem(1) solid var(--color-dark-15);
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-light);
+
+    @include fluid-text(24, 18);
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: fluid(18, 14) fluid(24, 20);
+    background-color: var(--color-dark-10);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: fluid(10, 8);
+    color: var(--color-light);
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color var(--transition-duration, 0.2s) ease;
+
+     @include fluid-text(18, 14);
+
+    @include hover {
+      background-color: var(--color-dark-15);
+    }
+  }
+
+  &__subgrid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: fluid(40, 20);
+    padding-bottom: fluid(40, 20);
+    border-bottom: rem(1) solid var(--color-dark-15);
+    box-sizing: border-box;
+
+  }
+
+  &__row-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: rem(20);
+    list-style: none;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  &__row,
+  &__row--full-width {
+    width: 100%;
+    border-bottom: rem(1) solid var(--color-dark-15);
+    
+    &:last-child {
+      padding-top: fluid(40, 20);
+      border-bottom: none;
+    }
+  }
+
+  &__subitem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: fluid(16, 10);
+    box-sizing: border-box;
+
+    &--left {
+      @include mobile {
+        padding-bottom: rem(20);
+      }
+    }
+
+    &--right {
+      padding-left: rem(20);
+      border-left: rem(1) solid var(--color-dark-15);
+
+      @include mobile {
+        padding-left: 0;
+        border-left: none;
+        padding-top: rem(20);
+        border-top: rem(1) solid var(--color-dark-15);
+      }
+    }
+
+    &--full-width {
+      border-bottom: none;
+
+      @include mobile {
+        grid-column: auto;
+      }
+    }
+  }
+
+  &__sublabel {
+    margin: 0;
+    color: var(--color-gray-60);
+    font-weight: 500;
+
+    @include fluid-text(18, 14);
+  }
+
+  &__text {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: fluid(16, 12);
+    margin: 0;
+  }
+
+  &__price {
+    font-weight: 600;
+    color: var(--color-light);
+
+    @include fluid-text(24, 18);
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: fluid(8, 6) fluid(14, 12);
+    background-color: var(--color-dark-10);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: fluid(28, 6);
+    color: var(--color-gray-60);
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: left;
+    box-sizing: border-box;
+
+    @include fluid-text(18, 14);
+  }
+}
