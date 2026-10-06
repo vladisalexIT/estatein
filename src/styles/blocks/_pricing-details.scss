@@ -1,10 +1,9 @@
-@use '../helpers' as *;
+@use "../helpers" as *;
 
 .pricing {
   width: 100%;
-  background-color: var(--color-dark);
   padding-bottom: fluid(100, 50);
-  box-sizing: border-box;
+  background-color: var(--color-dark);
 
   &__container {
     position: relative;
@@ -15,31 +14,30 @@
     position: absolute;
     top: rem(-40);
     left: rem(-20);
+    display: block;
     width: rem(69);
     height: auto;
     pointer-events: none;
     user-select: none;
 
-    @media (width <= rem(1919)) {
+    @media (max-width: rem(1919)) {
       position: static;
-      margin-bottom: fluid(16, 10);
       width: fluid(69, 46);
+      margin-bottom: fluid(16, 10);
     }
   }
 
   &__header {
     width: 100%;
-    display: flex;
-    flex-direction: column;
     margin-bottom: fluid(80, 40);
   }
 
   &__title {
-    margin: 0;
-    margin-bottom: fluid(14, 8);
+    margin: 0 0 fluid(14, 8);
     color: var(--color-light);
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
 
     @include fluid-text(48, 28);
   }
@@ -50,81 +48,81 @@
     color: var(--color-gray-60);
     font-weight: 500;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 
     @include fluid-text(18, 14);
   }
 
   &__note {
-    width: 100%;
     display: flex;
     align-items: center;
     gap: fluid(20, 10);
+    width: 100%;
+    margin-bottom: fluid(50, 30);
     padding: fluid(30, 24) fluid(50, 20);
     border: rem(1) solid var(--color-dark-15);
     border-radius: fluid(12, 8);
     background-color: var(--color-dark-10);
-    margin-bottom: fluid(50, 30);
-    box-sizing: border-box;
 
     @include mobile {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
     }
+  }
 
-    &-label {
-      display: inline-flex;
-      color: var(--color-light);
-      font-weight: 600;
-      line-height: 1.5;
+  &__note-label {
+    flex: 0 0 auto;
+    color: var(--color-light);
+    font-weight: 600;
+    line-height: 1.5;
 
-      @include fluid-text(24, 18);
-    }
+    @include fluid-text(24, 18);
+  }
 
-    &-text {
-      margin: 0;
-      color: var(--color-gray-60);
-      font-weight: 500;
-      line-height: 1.5;
-      padding-left: fluid(20, 0);
-      border-left: rem(1) solid var(--color-dark-15);
+  &__note-text {
+    min-width: 0;
+    margin: 0;
+    padding-left: fluid(20, 0);
+    border-left: rem(1) solid var(--color-dark-15);
+    color: var(--color-gray-60);
+    font-weight: 500;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 
-      @include fluid-text(18, 14);
+    @include fluid-text(18, 14);
 
-      @include mobile {
-        width: 100%;
-        padding-left: 0;
-        border-left: none;
-        border-top: rem(1) solid var(--color-dark-15);
-        padding-top: rem(10);
-      }
+    @include mobile {
+      width: 100%;
+      padding-top: rem(10);
+      padding-left: 0;
+      border-top: rem(1) solid var(--color-dark-15);
+      border-left: 0;
     }
   }
 
   &__grid {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: start; 
+    display: grid;
+    grid-template-columns: minmax(rem(170), rem(220)) minmax(0, 1fr);
+    align-items: start;
     gap: fluid(50, 20);
+    width: 100%;
 
     @include tablet {
-      flex-direction: column;
+      grid-template-columns: minmax(0, 1fr);
+      gap: fluid(30, 20);
     }
   }
 
-  &__left-aside {
-    max-width: rem(220);
-    width: 100%;
+  &__summary {
+    min-width: 0;
   }
 
-  &__info-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  &__summary-list {
+    margin: 0;
   }
 
-  &__info-label {
-    margin-bottom: rem(2);
+  &__summary-label {
+    margin: 0 0 rem(2);
     color: var(--color-gray-60);
     font-weight: 500;
     line-height: 1.5;
@@ -132,19 +130,21 @@
     @include fluid-text(20, 14);
   }
 
-  &__info-value {
+  &__summary-value {
     margin: 0;
     color: var(--color-light);
     font-weight: 600;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 
     @include fluid-text(40, 24);
   }
 
   &__blocks {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: fluid(50, 20);
+    min-width: 0;
+    width: 100%;
   }
 }
