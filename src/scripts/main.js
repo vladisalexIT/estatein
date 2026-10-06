@@ -8,10 +8,14 @@ import Header from './Header.js'
 import SliderCollection from './Slider.js'
 import PropertiesSearch from './PropertiesSearch'
 import ContactsOffices from './ContactsOffices.js'
+import PropertyDetailsGallery from './PropertyDetailsGallery.js'
+import FormMasks from './FormMasks.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     new Header()
     new SliderCollection()
     new PropertiesSearch()
     new ContactsOffices()
+    new PropertyDetailsGallery()
+    new FormMasks();
 })
