@@ -1,3 +1,4 @@
+import 'choices.js/public/assets/styles/choices.min.css'
 import '../styles/main.scss'
 
 import 'swiper/css'
@@ -11,6 +12,7 @@ import ContactsOffices from './ContactsOffices.js'
 import PropertyDetailsGallery from './PropertyDetailsGallery.js'
 import FormMasks from './FormMasks.js'
 import ScrollToTop from './ScrollToTop.js'
+import CustomSelects from './CustomSelects.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Header()
@@ -19,5 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   new ContactsOffices()
   new PropertyDetailsGallery()
   new FormMasks()
+  new CustomSelects()
   new ScrollToTop()
 })

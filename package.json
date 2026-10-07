@@ -21,6 +21,7 @@
     "vite-plugin-image-optimizer": "^2.0.3"
   },
   "dependencies": {
+    "choices.js": "^11.2.4",
     "imask": "^7.6.1",
     "swiper": "^14.2.0"
   }
