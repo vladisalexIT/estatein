@@ -179,9 +179,6 @@ class PropertyDetailsGallery {
 
         slideChange: (instance) => {
           updateThumbnails(instance.activeIndex)
-        },
-
-        slideChangeTransitionEnd: (instance) => {
           updateInfoPanel(instance.activeIndex)
         },
       },

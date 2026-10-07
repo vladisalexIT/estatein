@@ -1,4 +1,4 @@
-@use '../helpers' as *;
+@use "../helpers" as *;
 
 .contact-hero {
   width: 100%;
@@ -42,11 +42,11 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: fluid(20, 10);
     width: 100%;
-    margin: 0;
+    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+    margin: 0 auto;
     padding: fluid(20, 10);
     list-style: none;
-    border-top: rem(1) solid var(--color-dark-15);
-    border-bottom: rem(1) solid var(--color-dark-15);
+    border: rem(1) solid var(--color-dark-15);
     background-color: var(--color-dark);
     box-shadow:
       0 rem(-10) 0 #191919,
@@ -81,7 +81,8 @@
     &__list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: rem(10);
-      padding: rem(10) rem(16);
+      padding: rem(10);
+      border-radius: rem(12);
     }
   }
 }

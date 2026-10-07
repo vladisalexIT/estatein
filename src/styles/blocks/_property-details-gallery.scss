@@ -354,7 +354,7 @@
     color: var(--color-gray-60);
     line-height: 1.5;
 
-    @include fluid-text(16, 13);
+    @include fluid-text(16, 14);
   }
 
   &__stat-value {
@@ -385,7 +385,7 @@
     background-color: var(--color-dark-10);
     line-height: 1.5;
 
-    @include fluid-text(16, 13);
+    @include fluid-text(16, 14);
 
     &::before {
       @include square(rem(24));

@@ -1,12 +1,8 @@
-@use '../helpers' as *;
+@use "../helpers" as *;
 
 .features {
   width: 100%;
-  max-width: calc(
-    var(--container-width) +
-    var(--container-padding-x) +
-    var(--container-padding-x)
-  );
+  max-width: var(--page-canvas-width);
   margin-inline: auto;
   padding: rem(20);
   overflow: hidden;
@@ -52,6 +48,31 @@
 
     &__list {
       gap: rem(10);
+    }
+  }
+}
+
+.feature-card {
+  &__arrow {
+    color: #4d4d4d;
+    transform-origin: center;
+
+    transition-property: color, transform;
+    transition-duration: var(--transition-duration);
+    transition-timing-function: ease;
+  }
+
+  @include hover {
+    .feature-card__arrow {
+      color: var(--color-light);
+      transform: scale(1.05);
+    }
+  }
+
+  &:focus-visible {
+    .feature-card__arrow {
+      color: var(--color-light);
+      transform: scale(1.08);
     }
   }
 }
