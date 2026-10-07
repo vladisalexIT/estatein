@@ -6,33 +6,47 @@
   flex-direction: column;
   background-color: var(--color-dark);
 
-  // 1. ВЕРХНИЙ БАННЕР CTA (Призыв к действию)
   &__cta {
-    width: 100%;
     position: relative;
+    isolation: isolate;
+    width: 100%;
     overflow: hidden;
     border: none;
     border-top: rem(1) solid var(--color-dark-15);
     border-bottom: rem(1) solid var(--color-dark-15);
     background-color: var(--color-dark);
-    background-image:
-      url("/src/assets/images/footer/footer-bg-left.svg"),
-      url("/src/assets/images/footer/footer-bg-right.svg");
-    background-repeat: no-repeat, no-repeat;
-    background-size:
-      auto 100%,
-      auto 100%;
-    background-position:
-      left center,
-      right center;
+
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: 0;
+      width: min(rem(633), 50vw);
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      content: "";
+      pointer-events: none;
+    }
+
+    &::before {
+      left: max(0px, calc((100% - var(--page-canvas-width)) / 2));
+      background-image: url("/src/assets/images/footer/footer-bg-left.svg");
+      background-position: left center;
+    }
+
+    &::after {
+      right: max(0px, calc((100% - var(--page-canvas-width)) / 2));
+      background-image: url("/src/assets/images/footer/footer-bg-right.svg");
+      background-position: right center;
+    }
 
     @include mobile {
-      background-size:
-        auto 70%,
-        auto 70%;
-      background-position:
-        left bottom,
-        right bottom;
+      &::before,
+      &::after {
+        background-size: auto 70%;
+        background-position-y: bottom;
+      }
     }
 
     &-container {
@@ -178,7 +192,7 @@
     }
   }
 
-  &__socials {
+  &__soc1als {
     order: 1;
 
     @include mobile-above {
@@ -433,7 +447,7 @@
   }
 }
 // 6. СОЦИАЛЬНЫЕ СЕТИ (Вынесена отдельным БЭМ-блоком)
-.socials {
+.soc1als {
   display: flex;
   gap: rem(10);
 
@@ -456,6 +470,7 @@
       color: var(--color-accent-light);
       background-color: var(--color-dark-15);
     }
+
 
     img {
       width: rem(20);

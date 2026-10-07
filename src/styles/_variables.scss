@@ -1,10 +1,10 @@
-@use 'helpers' as *;
+@use "helpers" as *;
 
 :root {
-  --color-light: #FFFFFF;
+  --color-light: #ffffff;
 
   --color-dark: #141414;
-  --color-dark-10: #1A1A1A;
+  --color-dark-10: #1a1a1a;
   --color-dark-15: #262626;
   --color-dark-20: #333333;
   --color-dark-40: #666666;
@@ -13,12 +13,13 @@
   --color-gray-60: #999999;
 
   --color-accent: #703bf7;
-  --color-accent-light: #A685FA;
+  --color-accent-light: #a685fa;
 
-  --font-family-base: 'Urbanist', sans-serif;
+  --font-family-base: "Urbanist", sans-serif;
 
-  --container-width: #{rem(1600)};
+  --page-canvas-width: #{rem(1920)};
   --container-padding-x: #{rem(16)};
+  --container-width: #{rem(1600)};
 
   --transition-duration: 0.2s;
 

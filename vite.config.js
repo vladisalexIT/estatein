@@ -4,7 +4,6 @@ import { defineConfig } from 'vite'
 import htmlInject from 'vite-plugin-html-inject'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
-// Получаем __dirname для ES-модулей
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({

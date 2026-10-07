@@ -27,10 +27,14 @@ class Slider {
             return
         }
 
-        // this.slidesCount =
-        //     this.swiperElement.querySelectorAll(
-        //         '.swiper-slide'
-        //     ).length
+        this.slidesCount =
+            this.swiperElement.querySelectorAll(
+                '.swiper-slide'
+            ).length
+
+        this.counterMode =
+            this.rootElement.dataset.sliderCounterMode ||
+            'pages'
 
         this.previousButtonElement =
             this.rootElement.querySelector(
@@ -90,6 +94,33 @@ class Slider {
 
     updateCounter(swiper) {
         if (!this.currentElement || !this.totalElement) {
+            return
+        }
+
+        if (this.counterMode === 'visible-cards') {
+            const slidesPerView =
+                Number(swiper.params.slidesPerView) || 1
+
+            const visibleSlidesCount = Math.max(
+                Math.ceil(slidesPerView),
+                1
+            )
+
+            const firstVisibleSlideIndex =
+                swiper.realIndex ?? swiper.activeIndex
+
+            const currentCard = Math.min(
+                firstVisibleSlideIndex +
+                visibleSlidesCount,
+                this.slidesCount
+            )
+
+            this.currentElement.textContent =
+                this.formatNumber(currentCard)
+
+            this.totalElement.textContent =
+                this.formatNumber(this.slidesCount)
+
             return
         }
 

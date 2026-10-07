@@ -22,5 +22,21 @@
   }
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: rem(12);
+  left: rem(12);
+  padding: rem(12) rem(16);
+  border-radius: rem(8);
+  color: var(--color-light);
+  background-color: var(--color-accent);
+  translate: 0 calc(-100% - rem(24));
+
+  &:focus {
+    translate: 0;
+  }
+}
+
 
 

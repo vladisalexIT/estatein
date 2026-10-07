@@ -218,7 +218,7 @@
     @include fluid-text(18, 14);
 
     &:hover {
-      border-color: var(--color-gray-40);
+      border-color: var(--color-dark-40);
     }
 
     &:focus-within {
@@ -327,8 +327,9 @@
     outline-offset: rem(4);
   }
 
-  a {
+  span {
     text-decoration: underline;
+    
 
     @include hover {
       color: var(--color-accent-light);

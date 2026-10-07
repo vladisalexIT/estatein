@@ -1,0 +1,66 @@
+@use "../helpers" as *;
+
+.scroll-top {
+  position: fixed;
+  z-index: 70;
+  right: max(
+    var(--container-padding-x),
+    calc((100vw - var(--page-canvas-width)) / 2 + rem(24))
+  );
+  bottom: rem(85);
+
+  display: grid;
+  place-items: center;
+  width: fluid(54, 46);
+  height: fluid(54, 46);
+
+  border: rem(1) solid var(--color-dark-20);
+  border-radius: 50%;
+  color: var(--color-light);
+  background-color: rgb(26 26 26 / 92%);
+  box-shadow: 0 rem(10) rem(28) rgb(0 0 0 / 28%);
+  backdrop-filter: blur(rem(8));
+
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 rem(12);
+  pointer-events: none;
+
+  transition:
+    opacity var(--transition-duration) ease,
+    visibility var(--transition-duration) ease,
+    translate var(--transition-duration) ease,
+    border-color var(--transition-duration) ease,
+    background-color var(--transition-duration) ease;
+
+  svg {
+    width: rem(22);
+    height: rem(22);
+  }
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    translate: 0;
+    pointer-events: auto;
+  }
+
+  @include hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+  }
+
+  &:focus-visible {
+    outline: rem(2) solid var(--color-light);
+    outline-offset: rem(3);
+  }
+
+  @include mobile {
+    right: rem(16);
+    bottom: rem(16);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

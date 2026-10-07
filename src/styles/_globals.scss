@@ -4,6 +4,10 @@ html {
   &.is-lock {
     overflow: hidden;
     overscroll-behavior: none;
+
+    body {
+      padding-right: var(--scrollbar-compensation, 0px);
+    }
   }
 }
 
@@ -21,6 +25,9 @@ body {
   line-height: 1.5;
   color: var(--color-gray-60);
   background-color: var(--color-dark);
+
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 main {
