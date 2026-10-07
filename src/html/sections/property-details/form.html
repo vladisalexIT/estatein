@@ -18,7 +18,7 @@
       </div>
 
       <div class="property-details-inquiry__form-card">
-        <form class="property-details-inquiry__form" action="" method="post" autocomplete="on">
+        <form class="property-details-inquiry__form" data-js-form action="" method="post" autocomplete="on" novalidate>
           <div class="property-details-inquiry__fields">
             <div class="form-field">
               <label class="form-field__label" for="property-details-first-name">
@@ -27,6 +27,7 @@
 
               <input class="form-field__control" id="property-details-first-name" name="first_name" type="text"
                 placeholder="Enter First Name" autocomplete="given-name" required />
+                <div data-js-form-field-errors></div>
             </div>
 
             <div class="form-field">
@@ -36,6 +37,7 @@
 
               <input class="form-field__control" id="property-details-last-name" name="last_name" type="text"
                 placeholder="Enter Last Name" autocomplete="family-name" required />
+                <div data-js-form-field-errors></div>
             </div>
 
             <div class="form-field">
@@ -45,6 +47,7 @@
 
               <input class="form-field__control" id="property-details-email" name="email" type="email"
                 placeholder="Enter your Email" autocomplete="email" inputmode="email" required />
+                <div data-js-form-field-errors></div>
             </div>
 
             <div class="form-field">
@@ -53,6 +56,7 @@
               </label>
               <input class="form-field__control" id="property-details-phone" name="phone" type="tel"
                 placeholder="Enter Phone Number" autocomplete="tel" inputmode="tel" required />
+                <div data-js-form-field-errors></div>
             </div>
 
             <div class="form-field form-field--wide">
@@ -76,6 +80,7 @@
                   <option value="Desert Oasis Villa, Phoenix, Arizona">Desert Oasis Villa, Phoenix, Arizona</option>
                 </select>
               </div>
+              <div data-js-form-field-errors></div>
             </div>
 
             <div class="form-field form-field--wide">
@@ -85,6 +90,7 @@
 
               <textarea class="form-field__control form-field__control--textarea" id="property-details-message"
                 name="message" placeholder="Enter your Message here..." rows="5" required></textarea>
+                <div data-js-form-field-errors></div>
             </div>
           </div>
 
@@ -103,6 +109,7 @@
                   Privacy Policy
                 </span>
               </label>
+              <div data-js-form-field-errors></div>
             </div>
 
             <button class="property-details-inquiry__submit button button--accent" type="submit">
