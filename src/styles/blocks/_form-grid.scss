@@ -184,7 +184,7 @@
     outline-offset: rem(4);
   }
 
-  span {
+  &__footer-link {
     text-decoration: underline;
 
     @include hover {

@@ -1,284 +1,336 @@
-class FormsValidation {
-  selectors = {
-    form: '[data-js-form]',
-    formFieldErrors: '[data-js-form-field-errors]'
-  }
+import ThankYouModal from './ThankYouModal.js'
 
-  errorMessages = {
-    valueMissing: (field) => {
-      if (field.type === 'checkbox') return 'You must agree to the terms and conditions';
-      if (field.tagName.toLowerCase() === 'select') return 'Please select one of the options';
-      return 'This field cannot be empty or contain only spaces';
+export default class FormsValidation {
+  errorSelector = '[data-js-form-field-errors]'
+
+  successMessages = {
+    inquiry: {
+      title: 'Thank You for Getting in Touch!',
+      text: 'Your details have been collected successfully. This is a demo submission; no message has been sent.',
     },
-    typeMismatch: ({ type }) => {
-      if (type === 'email') return 'Please enter a valid email address (e.g., name@mail.com)';
-      return 'The entered data does not match the field type';
+    newsletter: {
+      title: 'Thanks for Your Interest!',
+      text: 'Your email address has been collected successfully. This is a demo; no newsletter subscription has been created.',
     },
-    patternMismatch: ({ title }) => title || 'The data format is incorrect',
-    tooShort: ({ minLength }) => `Minimum length is ${minLength} characters`,
-    tooLong: ({ maxLength }) => `Maximum length is ${maxLength} characters`
+    search: {
+      title: 'Demo Search Completed',
+      text: 'Your search criteria have been collected successfully. This demo does not filter the property listings.',
+    },
   }
 
   constructor() {
-    this.bindEvents()
+    this.modal = new ThankYouModal()
+
+    document.querySelectorAll('[data-js-form]').forEach((form) => {
+      this.initForm(form)
+    })
   }
 
-  sanitizeFieldValue(field) {
-    if (['input', 'textarea'].includes(field.tagName.toLowerCase()) && field.type !== 'checkbox' && field.type !== 'radio') {
-      field.value = field.value.replace(/\s+/g, ' ');
+  isField(element) {
+    return (
+      element.matches('input, select, textarea') &&
+      Boolean(element.name) &&
+      element.willValidate
+    )
+  }
+
+  getFields(form) {
+    return [...form.elements].filter((element) => {
+      return this.isField(element)
+    })
+  }
+
+  getVisibleControl(field) {
+    return field.closest('.choices') ?? field
+  }
+
+  getErrorElement(field) {
+    const wrapper = field.closest(
+      '.form-field, .form-grid__item, .agreement, ' +
+      '.form-grid__checkbox-wrapper, .form-subscribe',
+    )
+
+    if (wrapper) {
+      return wrapper.querySelector(this.errorSelector)
+    }
+
+    if (field.type === 'search') {
+      return field.form.querySelector('[data-search-errors]')
+    }
+
+    return null
+  }
+
+  initField(field) {
+    const control = this.getVisibleControl(field)
+    const error = this.getErrorElement(field)
+
+    if (control !== field) {
+      const label = field.labels?.[0]
+
+      if (label) {
+        label.id ||= `${field.id}-label`
+        control.setAttribute('aria-labelledby', label.id)
+      } else if (field.hasAttribute('aria-label')) {
+        control.setAttribute(
+          'aria-label',
+          field.getAttribute('aria-label'),
+        )
+      }
+    }
+
+    if (!error) return
+
+    error.id ||= `${field.id}-error`
+
+    const descriptionIds = new Set([
+      ...(field.getAttribute('aria-describedby') ?? '')
+        .split(/\s+/)
+        .filter(Boolean),
+      error.id,
+    ])
+
+    const description = [...descriptionIds].join(' ')
+
+    field.setAttribute('aria-describedby', description)
+    control.setAttribute('aria-describedby', description)
+  }
+
+  trimValue(field) {
+    if (
+      field.matches(
+        'input[type="text"], input[type="email"], ' +
+        'input[type="search"], textarea',
+      )
+    ) {
+      field.value = field.value.trim()
     }
   }
 
-  sanitizeOnBlur(field) {
-    if (['input', 'textarea'].includes(field.tagName.toLowerCase()) && field.type !== 'checkbox' && field.type !== 'radio') {
-      field.value = field.value.trim();
+  getMessage(field) {
+    field.setCustomValidity('')
+
+    if (
+      field.required &&
+      field.matches('input[type="text"], textarea') &&
+      field.value !== '' &&
+      field.value.trim() === ''
+    ) {
+      field.setCustomValidity('Please complete this field.')
+    }
+
+    if (
+      field.type === 'search' &&
+      field.form.dataset.formKind === 'search'
+    ) {
+      const hasFilter = [...field.form.querySelectorAll('select')]
+        .some((select) => !select.disabled && select.value !== '')
+
+      if (!field.value.trim() && !hasFilter) {
+        field.setCustomValidity(
+          'Enter a search term or choose a filter.',
+        )
+      }
+    }
+
+    const { validity } = field
+
+    if (validity.customError) {
+      return field.validationMessage
+    }
+
+    if (validity.valueMissing) {
+      if (field.type === 'checkbox') {
+        return 'Please accept the terms and privacy policy.'
+      }
+
+      if (field.tagName === 'SELECT') {
+        return 'Please select an option.'
+      }
+
+      return 'Please complete this field.'
+    }
+
+    if (validity.typeMismatch) {
+      return field.type === 'email'
+        ? 'Enter a valid email address.'
+        : 'Enter a valid value.'
+    }
+
+    if (validity.patternMismatch) {
+      return field.type === 'tel'
+        ? 'Enter a complete phone number.'
+        : 'Check the format of this field.'
+    }
+
+    if (validity.tooShort) {
+      return `Use at least ${field.minLength} characters.`
+    }
+
+    if (validity.tooLong) {
+      return `Use no more than ${field.maxLength} characters.`
+    }
+
+    return validity.valid ? '' : 'Check the value of this field.'
+  }
+
+  showError(field, message) {
+    const control = this.getVisibleControl(field)
+    const error = this.getErrorElement(field)
+    const isInvalid = message !== ''
+
+    field.setAttribute('aria-invalid', String(isInvalid))
+
+    if (control !== field) {
+      control.setAttribute('aria-invalid', String(isInvalid))
+      control.classList.toggle('is-invalid', isInvalid)
+    }
+
+    if (error) {
+      error.textContent = message
+      error.hidden = !isInvalid
     }
   }
 
-  getCustomFieldErrors(field) {
-    const value = field.value.trim();
-    const name = field.name;
+  validateField(field) {
+    const message = this.getMessage(field)
 
-    if (field.required && value === '') {
-      return 'This field cannot contain only spaces';
-    }
+    this.showError(field, message)
 
-    if (value.length > 0) {
-      if (name === 'first_name' || name === 'last_name' || name === 'first-name' || name === 'last-name') {
-        const nameRegex = /^[a-zA-Zа-яА-ЯёЁіІїЇєЄ\s\-'\`]+$/;
-        if (!nameRegex.test(value)) {
-          return 'Names can only contain letters (English or Russian), hyphens, or apostrophes';
+    return message === ''
+  }
+
+  initForm(form) {
+    form.querySelectorAll(this.errorSelector).forEach((error) => {
+      error.classList.add('form-error')
+      error.hidden = true
+    })
+
+    this.getFields(form).forEach((field) => {
+      this.initField(field)
+    })
+
+    form.addEventListener('input', ({ target }) => {
+      if (
+        this.isField(target) &&
+        target.getAttribute('aria-invalid') === 'true'
+      ) {
+        this.validateField(target)
+      }
+    })
+
+    form.addEventListener('focusout', ({ target }) => {
+      if (
+        !this.isField(target) ||
+        ['checkbox', 'radio', 'select-one'].includes(target.type)
+      ) {
+        return
+      }
+
+      this.trimValue(target)
+      this.validateField(target)
+    })
+
+    form.addEventListener('change', ({ target }) => {
+      if (!this.isField(target)) return
+
+      this.validateField(target)
+
+      if (form.dataset.formKind === 'search') {
+        const query = form.querySelector('input[type="search"]')
+
+        if (query?.getAttribute('aria-invalid') === 'true') {
+          this.validateField(query)
         }
-        if (value.length < 2) {
-          return 'Name must be at least 2 characters long';
-        }
       }
+    })
 
-      if (field.type === 'email') {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(value)) {
-          return 'Invalid email format. Domain required (e.g., .com or .net)';
-        }
-        if (value.endsWith('@test.com') || value.endsWith('@example.com') || value.endsWith('@test.ru')) {
-          return 'Please use a valid working email address';
-        }
-      }
+    form.addEventListener('reset', () => {
+      window.requestAnimationFrame(() => {
+        this.getFields(form).forEach((field) => {
+          field.setCustomValidity('')
+          this.showError(field, '')
+        })
+      })
+    })
 
-      if (field.tagName.toLowerCase() === 'textarea' || name === 'message') {
-        if (value.length < 10) {
-          return 'Please provide a more detailed message (minimum 10 characters)';
-        }
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        if (urlRegex.test(value)) {
-          return 'Links are not allowed in the message for security reasons';
-        }
-      }
-    }
-
-    return null; 
-  }
-
-  manageErrors(fieldControlElement, errorMessages) {
-    const parentField = fieldControlElement.closest('.form-field') || 
-      fieldControlElement.closest('.form-grid__item') || 
-      fieldControlElement.closest('.agreement') ||
-      fieldControlElement.closest('.form-grid__checkbox-wrapper') ||
-      fieldControlElement.closest('.form-subscribe');
-    
-    if (!parentField) return;
-
-    const fieldErrorsElement = parentField.querySelector(this.selectors.formFieldErrors);
-    if (fieldErrorsElement) {
-      fieldErrorsElement.innerHTML = errorMessages
-        .map((errorMessage) => `<span class="field__error" style="color: rgb(228, 21, 21); font-size: 0.875rem; display: block; margin-top: 0.375rem; font-weight: 500; line-height: 1.4;">${errorMessage}</span>`)
-        .join('');
-    }
-    
-    if (errorMessages.length > 0) {
-      fieldControlElement.style.borderColor = 'rgb(228, 21, 21)';
-      parentField.classList.add('is-invalid');
-      parentField.classList.remove('is-valid');
-    } else {
-      const isFooterInput = fieldControlElement.classList.contains('form-subscribe__input');
-      fieldControlElement.style.borderColor = fieldControlElement.type !== 'checkbox' 
-        ? (isFooterInput ? '' : '#703bf7') 
-        : '';
-      parentField.classList.remove('is-invalid');
-      parentField.classList.add('is-valid');
-    }
-  }
-
-  validateField(fieldControlElement) {
-    fieldControlElement.setCustomValidity('');
-
-    if (fieldControlElement.value.trim() === '') {
-      this.manageErrors(fieldControlElement, []); 
-      fieldControlElement.style.borderColor = ''; 
-      
-      const parentField = fieldControlElement.closest('.form-field') || 
-        fieldControlElement.closest('.form-grid__item') || 
-        fieldControlElement.closest('.agreement') ||
-        fieldControlElement.closest('.form-grid__checkbox-wrapper');
-
-      if (parentField) {
-        parentField.classList.remove('is-invalid', 'is-valid');
-      }
-
-      if (fieldControlElement.required) {
-        const errorMessages = [this.errorMessages.valueMissing(fieldControlElement)];
-        this.manageErrors(fieldControlElement, errorMessages);
-        return false;
-      }
-
-      return true;
-    }
-
-    const errors = fieldControlElement.validity;
-    const errorMessages = [];
-
-    Object.entries(this.errorMessages).forEach(([errorType, getErrorMessage]) => {
-      if (errors[errorType]) {
-        errorMessages.push(getErrorMessage(fieldControlElement));
-      }
-    });
-
-    if (errorMessages.length === 0) {
-      const customError = this.getCustomFieldErrors(fieldControlElement);
-      if (customError) {
-        errorMessages.push(customError);
-        fieldControlElement.setCustomValidity(customError);
-      }
-    }
-
-    this.manageErrors(fieldControlElement, errorMessages);
-
-    return errorMessages.length === 0;
-  }
-
-  onInput(event) {
-    const { target } = event;
-    const isFormField = target.closest(this.selectors.form);
-    if (isFormField) {
-      this.sanitizeFieldValue(target);
-    }
-  }
-
-  onBlur(event) {
-    const { target } = event;
-    const isFormField = target.closest(this.selectors.form);
-    if (isFormField) {
-      this.sanitizeOnBlur(target);
-      
-      if (target.required && ['input', 'textarea'].includes(target.tagName.toLowerCase())) {
-        this.validateField(target);
-      }
-    }
-  }
-
-  onChange(event) {
-    const { target } = event;
-    const isFormField = target.closest(this.selectors.form);
-    if (!isFormField) return;
-
-    const isRequired = target.required;
-    const isInteractiveType = ['radio', 'checkbox'].includes(target.type) || target.tagName.toLowerCase() === 'select';
-
-    if (isRequired && isInteractiveType) {
-      this.validateField(target);
-    }
-  }
-
-  showThankYouModal() {
-    const overlay = document.getElementById('thank-you-overlay');
-    const closeBtn = document.getElementById('close-thank-you-btn');
-    
-    if (!overlay) return;
-
-    overlay.classList.add('is-open');
-
-    const closeModal = () => {
-      overlay.classList.remove('is-open');
-    };
-
-    closeBtn.addEventListener('click', closeModal, { once: true });
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal();
-    }, { once: true });
+    form.addEventListener('submit', (event) => {
+      this.onSubmit(event)
+    })
   }
 
   onSubmit(event) {
-    const form = event.target;
-    const isFormElement = form.matches(this.selectors.form);
-    
-    if (!isFormElement) return;
+    event.preventDefault()
 
-    event.preventDefault();
+    const form = event.currentTarget
 
-    const allControlElements = [...form.elements].filter(el => ['input', 'select', 'textarea'].includes(el.tagName.toLowerCase()));
-    let isFormValid = true;
-    let firstInvalidFieldControl = null;
+    if (form.dataset.submitting === 'true') return
 
-    allControlElements.forEach((checkedField) => {
-      this.sanitizeOnBlur(checkedField);
-      
-      if (!this.validateField(checkedField)) {
-        isFormValid = false;
-        if (!firstInvalidFieldControl) {
-          firstInvalidFieldControl = checkedField;
-        }
-      }
-    });
+    const invalidFields = this.getFields(form).filter((field) => {
+      this.trimValue(field)
 
-    if (!isFormValid) {
-      if (firstInvalidFieldControl) firstInvalidFieldControl.focus();
-      return;
+      return !this.validateField(field)
+    })
+
+    if (invalidFields.length) {
+      const control = this.getVisibleControl(invalidFields[0])
+
+      control.focus({ preventScroll: true })
+      control.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+
+      return
     }
 
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton ? submitButton.innerHTML : 'Submit';
-    const isFooterForm = form.classList.contains('form-subscribe');
+    const formData = new FormData(form)
+    const kind = form.dataset.formKind ?? 'inquiry'
+    const button = form.querySelector('button[type="submit"]')
+    const buttonLabel = button?.querySelector('span') ?? button
+    const originalText = buttonLabel?.textContent
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.innerHTML = 'Sending...';
+    if (import.meta.env.DEV) {
+      console.info(
+        'Demo form submission:',
+        Object.fromEntries(formData.entries()),
+      )
     }
 
-    const formInputs = [...form.elements].filter(el => ['input', 'select', 'textarea', 'button'].includes(el.tagName.toLowerCase()));
-    formInputs.forEach(el => el.disabled = true);
+    form.dataset.submitting = 'true'
+    form.setAttribute('aria-busy', 'true')
+    form.inert = true
 
-    const formData = new FormData(form);
-    const collectedData = Object.fromEntries(formData);
-    console.log('--- На сервер отправлены следующие данные формы: ---', collectedData);
+    if (button) {
+      button.disabled = true
 
-    setTimeout(() => {
-      this.showThankYouModal();
-      form.reset();
-
-      formInputs.forEach(el => {
-        el.style.borderColor = '';
-        el.disabled = false;
-
-        const parent = el.closest('.form-field') || el.closest('.form-grid__item') || el.closest('.agreement') || el.closest('.form-grid__checkbox-wrapper');
-        if (parent) {
-          parent.classList.remove('is-invalid', 'is-valid');
-        }
-      });
-
-      form.querySelectorAll(this.selectors.formFieldErrors).forEach(el => el.innerHTML = '');
-
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalButtonText;
+      if (kind !== 'newsletter') {
+        buttonLabel.textContent =
+          kind === 'search' ? 'Searching...' : 'Sending...'
       }
-    }, 1500);
-  }
+    }
 
-  bindEvents() {
-    document.addEventListener('input', (event) => this.onInput(event));
-    document.addEventListener('blur', (event) => this.onBlur(event), { capture: true });
-    document.addEventListener('change', (event) => this.onChange(event));
-    document.addEventListener('submit', (event) => this.onSubmit(event));
+    window.setTimeout(() => {
+      if (kind !== 'search') {
+        form.reset()
+      }
+
+      delete form.dataset.submitting
+      form.removeAttribute('aria-busy')
+      form.inert = false
+
+      if (button) {
+        button.disabled = false
+
+        if (kind !== 'newsletter') {
+          buttonLabel.textContent = originalText
+        }
+      }
+
+      const message =
+        this.successMessages[kind] ?? this.successMessages.inquiry
+
+      this.modal.open(message, button)
+    }, 800)
   }
 }
-
-new FormsValidation();

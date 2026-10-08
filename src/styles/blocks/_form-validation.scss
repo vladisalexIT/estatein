@@ -1,0 +1,75 @@
+@use "../helpers" as *;
+
+.form-error {
+  margin: 0;
+  color: #f08484;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+
+  @include fluid-text(18, 14);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.form-field,
+.form-grid__item {
+  > .form-error:not([hidden]) {
+    margin-top: rem(-4);
+  }
+}
+
+.form-field__control[aria-invalid="true"],
+.form-grid__input[aria-invalid="true"],
+.form-grid__textarea[aria-invalid="true"],
+.form-grid__select[aria-invalid="true"],
+.choices.is-invalid .choices__inner {
+  border-color: #f08484;
+}
+
+.agreement,
+.form-grid__checkbox-wrapper {
+  flex-direction: column;
+
+  > .form-error:not([hidden]) {
+    margin-top: rem(8);
+    padding-left: rem(32);
+  }
+}
+
+.agreement__checkbox[aria-invalid="true"]
+  + .agreement__label::before,
+.form-grid__checkbox[aria-invalid="true"]
+  + .form-grid__checkbox-label::before {
+  border-color: #f08484;
+}
+
+.form-subscribe {
+  > .form-error:not([hidden]) {
+    margin-top: rem(8);
+  }
+
+  &__input-wrapper:has(input[aria-invalid="true"]) {
+    border-color: #f08484;
+  }
+}
+
+.properties-search {
+  &__primary:has(input[aria-invalid="true"]) {
+    border-color: #f08484;
+  }
+
+  &__error:not([hidden]) {
+    width: min(100% - fluid(160, 0), rem(1300));
+    margin: rem(12) auto rem(16);
+  }
+}
+
+[data-js-form] {
+  button[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
+}

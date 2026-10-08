@@ -1,29 +1,29 @@
 import IMask from 'imask'
 
-class FormMasks {
-  selectors = {
-    phoneInput: 'input[type="tel"]',
-  }
-
+export default class FormMasks {
   constructor() {
     this.maskInstances = []
 
-    document
-      .querySelectorAll(this.selectors.phoneInput)
-      .forEach((inputElement) => {
-        this.initPhoneMask(inputElement)
-      })
+    document.querySelectorAll('input[type="tel"]').forEach((input) => {
+      this.initPhoneMask(input)
+    })
   }
 
-  initPhoneMask(inputElement) {
-    const maskInstance = IMask(inputElement, {
+  initPhoneMask(input) {
+    input.pattern = String.raw`\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{4}`
+
+    const instance = IMask(input, {
       mask: '+{7} (000) 000-0000',
       lazy: true,
       placeholderChar: '_',
     })
 
-    this.maskInstances.push(maskInstance)
+    this.maskInstances.push(instance)
+
+    input.form?.addEventListener('reset', () => {
+      window.requestAnimationFrame(() => {
+        instance.updateValue()
+      })
+    })
   }
 }
-
-export default FormMasks

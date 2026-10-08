@@ -1,43 +1,87 @@
 @use "../helpers" as *;
 
+html.has-thank-you-modal {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
 .thank-you-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(10, 10, 10, 0.8);
-  backdrop-filter: blur(rem(10));
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
   z-index: 2000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+  display: none;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: rem(16);
+  overflow: auto;
+  border: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--color-light);
 
-  &.is-open {
-    opacity: 1;
-    pointer-events: auto;
-    
-    .thank-you-modal {
-      transform: scale(1);
-    }
+  &[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &::backdrop {
+    background-color: rgb(10 10 10 / 80%);
+    -webkit-backdrop-filter: blur(rem(10));
+    backdrop-filter: blur(rem(10));
   }
 }
 
 .thank-you-modal {
-  background-color: var(--color-dark);
+  position: relative;
+  flex: 0 1 rem(520);
+  width: 100%;
+  min-width: 0;
+  max-height: 100%;
+  padding: fluid(72, 64) fluid(40, 24) fluid(40, 24);
+  overflow-y: auto;
   border: rem(1) solid var(--color-dark-15);
   border-radius: rem(12);
-  padding: fluid(40, 24);
-  max-width: rem(520);
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 rem(15) rem(40) rgba(0, 0, 0, 0.6);
-  transform: scale(0.85);
-  transition: transform 0.3s ease;
   box-sizing: border-box;
+  background-color: var(--color-dark);
+  text-align: center;
+  box-shadow: 0 rem(15) rem(40) rgb(0 0 0 / 60%);
+
+  .thank-you-overlay[open] & {
+    animation: thank-you-appear 0.2s ease-out;
+  }
+
+  &__timer {
+    position: absolute;
+    top: rem(16);
+    right: rem(16);
+    padding: rem(6) rem(10);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(8);
+    background-color: var(--color-dark-10);
+    color: var(--color-gray-60);
+    font-family: inherit;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+
+    @include fluid-text(18, 14);
+
+    &:focus-visible {
+      outline: rem(2) solid var(--color-accent);
+      outline-offset: rem(3);
+    }
+
+    @include hover {
+      border-color: var(--color-accent);
+      color: var(--color-light);
+    }
+  }
 
   &__decoration {
     display: inline-block;
@@ -58,10 +102,28 @@
     color: var(--color-gray-60);
     line-height: 1.6;
 
-    @include fluid-text(15, 14);
+    @include fluid-text(18, 14);
   }
 
   &__close {
     width: 100%;
+  }
+}
+
+@keyframes thank-you-appear {
+  from {
+    opacity: 0;
+    transform: translateY(rem(8)) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thank-you-overlay[open] .thank-you-modal {
+    animation: none;
   }
 }
