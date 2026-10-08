@@ -16,7 +16,8 @@
     </div>
 
     <div class="properties-search container">
-        <form class="properties-search__form" action="/properties.html" method="get" role="search">
+        <form class="properties-search__form" data-js-form data-form-kind="search" action="/properties.html"
+            method="get" role="search" novalidate>
             <div class="properties-search__primary">
                 <label class="properties-search__input-wrapper" for="properties-search-query">
                     <span class="visually-hidden">
@@ -24,7 +25,7 @@
                     </span>
 
                     <input class="properties-search__input" id="properties-search-query" name="query" type="search"
-                        placeholder="Search For A Property" autocomplete="off" />
+                        placeholder="Search For A Property" autocomplete="off" maxlength="100" />
                 </label>
 
                 <button class="properties-search__submit button button--accent" type="submit">
@@ -33,6 +34,8 @@
                     <span>Find Property</span>
                 </button>
             </div>
+
+            <p class="properties-search__error" data-js-form-field-errors data-search-errors></p>
 
             <div class="properties-search__filters">
                 <div class="properties-search__field">
@@ -60,7 +63,8 @@
                         Property Type
                     </span>
 
-                    <select class="properties-search__select js-custom-select" id="property-type" name="type" aria-label="Property type">
+                    <select class="properties-search__select js-custom-select" id="property-type" name="type"
+                        aria-label="Property type">
                         <option value="">Property Type</option>
                         <option value="house">House</option>
                         <option value="apartment">Apartment</option>
@@ -76,7 +80,8 @@
                         Pricing Range
                     </span>
 
-                    <select class="properties-search__select js-custom-select" id="property-price" name="price" aria-label="Price range">
+                    <select class="properties-search__select js-custom-select" id="property-price" name="price"
+                        aria-label="Price range">
                         <option value="">Pricing Range</option>
                         <option value="0-250000">Up to $250,000</option>
                         <option value="250000-500000">
@@ -96,7 +101,8 @@
                         Property Size
                     </span>
 
-                    <select class="properties-search__select js-custom-select" id="property-size" name="size" aria-label="Property size">
+                    <select class="properties-search__select js-custom-select" id="property-size" name="size"
+                        aria-label="Property size">
                         <option value="">Property Size</option>
                         <option value="small">Up to 1,000 sq ft</option>
                         <option value="medium">1,000–2,500 sq ft</option>
@@ -112,8 +118,8 @@
                         Build Year
                     </span>
 
-                    <select class="properties-search__select js-custom-select" id="property-build-year" name="build-year"
-                        aria-label="Build year">
+                    <select class="properties-search__select js-custom-select" id="property-build-year"
+                        name="build-year" aria-label="Build year">
                         <option value="">Build Year</option>
                         <option value="2020-plus">2020 and newer</option>
                         <option value="2010-2019">2010–2019</option>

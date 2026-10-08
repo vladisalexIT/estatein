@@ -30,6 +30,8 @@ export default class CustomSelects {
             select.closest('.property-details-inquiry__selected-control'),
         ].filter(Boolean)
 
+        const initialValue = select.value
+
         try {
             const instance = new Choices(select, {
                 allowHTML: false,
@@ -59,7 +61,11 @@ export default class CustomSelects {
             if (clickableContainer) {
                 clickableContainer.addEventListener('click', (event) => {
 
-                    if (event.target.closest('.choices')) {
+                    if (
+                        event.target.closest(
+                            '.choices, [data-js-form-field-errors]',
+                        )
+                    ) {
                         return
                     }
 
@@ -82,36 +88,17 @@ export default class CustomSelects {
             select.dataset.selectInitialized = 'true'
 
             select.addEventListener('change', () => {
-                choicesElement.classList.remove('is-invalid')
                 choicesElement.classList.toggle(
                     'has-value',
                     select.value !== '',
                 )
             })
 
-            select.addEventListener('invalid', (event) => {
-                event.preventDefault()
-                choicesElement.classList.add('is-invalid')
-
-                const firstInvalidControl =
-                    select.form?.querySelector(':invalid')
-
-                if (firstInvalidControl === select) {
-                    choicesElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    })
-
-                    instance.showDropdown()
-                }
-            })
-
             if (select.form) {
                 select.form.addEventListener('reset', () => {
                     window.requestAnimationFrame(() => {
-                        instance.setChoiceByValue(select.value)
+                        instance.setChoiceByValue(initialValue)
 
-                        choicesElement.classList.remove('is-invalid')
                         choicesElement.classList.toggle(
                             'has-value',
                             select.value !== '',

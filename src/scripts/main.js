@@ -13,7 +13,7 @@ import PropertyDetailsGallery from './PropertyDetailsGallery.js'
 import FormMasks from './FormMasks.js'
 import ScrollToTop from './ScrollToTop.js'
 import CustomSelects from './CustomSelects.js'
-import './FormsValidation.js'
+import FormsValidation from './FormsValidation.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Header()
@@ -23,5 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   new PropertyDetailsGallery()
   new FormMasks()
   new CustomSelects()
+  new FormsValidation()
   new ScrollToTop()
 })
