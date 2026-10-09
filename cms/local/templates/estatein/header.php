@@ -39,7 +39,7 @@ foreach ($estateinAssets['css'] as $estateinCss) {
 
         <span class="announcement__message">
           Discover Your Dream Property with Estatein
-          <a class="announcement__link" href="/properties.html">
+          <a class="announcement__link" href="/properties/">
             Learn More
           </a>
         </span>
@@ -85,19 +85,19 @@ foreach ($estateinAssets['css'] as $estateinCss) {
           </li>
 
           <li class="header__menu-item">
-            <a class="header__menu-link" href="/about.html">
+            <a class="header__menu-link" href="/about/">
               About Us
             </a>
           </li>
 
           <li class="header__menu-item">
-            <a class="header__menu-link" href="/properties.html">
+            <a class="header__menu-link" href="/properties/">
               Properties
             </a>
           </li>
 
           <li class="header__menu-item">
-            <a class="header__menu-link" href="/services.html">
+            <a class="header__menu-link" href="/services/">
               Services
             </a>
           </li>
@@ -119,7 +119,7 @@ foreach ($estateinAssets['css'] as $estateinCss) {
         </div>
       </div>
 
-      <a class="header__contact button button--dark" href="/contacts.html">
+      <a class="header__contact button button--dark" href="/contacts/">
         Contact Us
       </a>
     </div>

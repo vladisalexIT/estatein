@@ -4,5 +4,5 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 }
 return array(
     'css' => array('assets/main-ikf5QpSS.css'),
-    'js' => array('assets/main-Cjw5nXYH.js'),
+    'js' => array('assets/main-DbMPbFyK.js'),
 );

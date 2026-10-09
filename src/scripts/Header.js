@@ -84,14 +84,20 @@ class Header {
   }
 
   normalizePath(pathname) {
-    const pathWithoutTrailingSlash =
-      pathname.replace(/\/+$/, '') || '/'
+    const normalizedPath =
+      pathname
+        .replace(/\/index\.(?:html|php)$/i, '/')
+        .replace(/\/+$/, '') || '/'
 
-    if (pathWithoutTrailingSlash === '/index.html') {
-      return '/'
+    const staticPagePaths = {
+      '/about.html': '/about',
+      '/properties.html': '/properties',
+      '/services.html': '/services',
+      '/property-details.html': '/property-details',
+      '/contacts.html': '/contacts',
     }
 
-    return pathWithoutTrailingSlash
+    return staticPagePaths[normalizedPath] ?? normalizedPath
   }
 
   syncMenuAccessibility() {
@@ -234,8 +240,8 @@ class Header {
     )
 
     const navigationPath =
-      currentPath === '/property-details.html'
-        ? '/properties.html'
+      currentPath === '/property-details'
+        ? '/properties'
         : currentPath
 
     this.menuLinkElements.forEach((linkElement) => {
@@ -246,8 +252,7 @@ class Header {
         ).pathname
       )
 
-      const isActive =
-        linkPath === navigationPath
+      const isActive = linkPath === navigationPath
 
       linkElement.classList.toggle(
         this.stateClasses.isActive,
@@ -255,19 +260,13 @@ class Header {
       )
 
       if (isActive) {
-        linkElement.setAttribute(
-          'aria-current',
-          'page'
-        )
+        linkElement.setAttribute('aria-current', 'page')
       } else {
-        linkElement.removeAttribute(
-          'aria-current'
-        )
+        linkElement.removeAttribute('aria-current')
       }
     })
 
-    const isContactPage =
-      currentPath === '/contacts.html'
+    const isContactPage = currentPath === '/contacts'
 
     this.contactElement?.classList.toggle(
       this.stateClasses.isActive,
@@ -280,9 +279,7 @@ class Header {
         'page'
       )
     } else {
-      this.contactElement?.removeAttribute(
-        'aria-current'
-      )
+      this.contactElement?.removeAttribute('aria-current')
     }
   }
 
@@ -311,7 +308,7 @@ class Header {
 
     const lastElement =
       focusableElements[
-        focusableElements.length - 1
+      focusableElements.length - 1
       ]
 
     if (

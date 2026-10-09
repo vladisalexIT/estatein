@@ -19,7 +19,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           and explore our available properties or get in touch with our team for personalized assistance.
         </p>
       </div>
-      <a class="footer__cta-btn button button--accent" href="/properties.html">
+      <a class="footer__cta-btn button button--accent" href="/properties/">
         Explore Properties
       </a>
     </div>
@@ -69,36 +69,36 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           <p class="nav-footer__title">About Us</p>
           <ul class="nav-footer__list">
             <li>
-              <a class="nav-footer__link" href="/about.html#about-hero">
+              <a class="nav-footer__link" href="/about/#about-hero">
                 Our Story
               </a>
             </li>
-            <li><a href="/about.html#about-achievements" class="nav-footer__link">Our Works</a></li>
-            <li><a href="/about.html#about-process" class="nav-footer__link">How It Works</a></li>
-            <li><a href="/about.html#about-team" class="nav-footer__link">Our Team</a></li>
-            <li><a href="/about.html#about-clients" class="nav-footer__link">Our Clients</a></li>
+            <li><a href="/about/#about-achievements" class="nav-footer__link">Our Works</a></li>
+            <li><a href="/about/#about-process" class="nav-footer__link">How It Works</a></li>
+            <li><a href="/about/#about-team" class="nav-footer__link">Our Team</a></li>
+            <li><a href="/about/#about-clients" class="nav-footer__link">Our Clients</a></li>
           </ul>
         </div>
         <div class="nav-footer__col">
           <p class="nav-footer__title">Properties</p>
           <ul class="nav-footer__list">
             <li>
-              <a class="nav-footer__link" href="/properties.html#property-listings">
+              <a class="nav-footer__link" href="/properties/#property-listings">
                 Portfolio
               </a>
             </li>
-            <li><a href="/properties.html#property-listings" class="nav-footer__link">Categories</a></li>
+            <li><a href="/properties/#property-listings" class="nav-footer__link">Categories</a></li>
           </ul>
         </div>
         <div class="nav-footer__col">
           <p class="nav-footer__title">Services</p>
           <ul class="nav-footer__list">
-            <li><a href="/services.html#valuation-mastery" class="nav-footer__link">Valuation Mastery</a></li>
-            <li><a href="/services.html#strategic-marketing" class="nav-footer__link">Strategic Marketing</a></li>
-            <li><a href="/services.html#negotiation-wizardry" class="nav-footer__link">Negotiation Wizardry</a></li>
-            <li><a href="/services.html#closing-success" class="nav-footer__link">Closing Success</a></li>
+            <li><a href="/services/#valuation-mastery" class="nav-footer__link">Valuation Mastery</a></li>
+            <li><a href="/services/#strategic-marketing" class="nav-footer__link">Strategic Marketing</a></li>
+            <li><a href="/services/#negotiation-wizardry" class="nav-footer__link">Negotiation Wizardry</a></li>
+            <li><a href="/services/#closing-success" class="nav-footer__link">Closing Success</a></li>
             <li>
-              <a class="nav-footer__link" href="/services.html#services-management">
+              <a class="nav-footer__link" href="/services/#services-management">
                 Property Management
               </a>
             </li>
@@ -108,12 +108,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           <p class="nav-footer__title">Contact Us</p>
           <ul class="nav-footer__list">
             <li>
-              <a class="nav-footer__link" href="/contacts.html#contact-form">
+              <a class="nav-footer__link" href="/contacts/#contact-form">
                 Contact Form
               </a>
             </li>
             <li>
-              <a class="nav-footer__link" href="/contacts.html#offices">
+              <a class="nav-footer__link" href="/contacts/#offices">
                 Our Offices
               </a>
             </li>
@@ -131,9 +131,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           © 2026 Estatein. All Rights Reserved.
         </p>
 
-        <a class="footer__legal-link" href="/terms.html">
-          Terms &amp; Conditions
-        </a>
+        
       </div>
 
       <nav class="footer__soc1als soc1als" aria-label="Social media">

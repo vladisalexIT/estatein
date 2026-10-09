@@ -17,11 +17,11 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
         </p>
 
         <div class="hero__actions">
-          <a class="button button--transparent" href="/about.html">
+          <a class="button button--transparent" href="/about/">
             Learn More
           </a>
 
-          <a class="button button--accent" href="/properties.html">
+          <a class="button button--accent" href="/properties/">
             Browse Properties
           </a>
         </div>
@@ -52,7 +52,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
           decoding="async">
       </picture>
 
-      <a class="hero__round-link" href="/properties.html" aria-label="Discover your dream property">
+      <a class="hero__round-link" href="/properties/" aria-label="Discover your dream property">
         <svg class="hero__round-link-text" viewBox="0 0 160 160" aria-hidden="true">
           <defs>
             <path id="hero-round-text-path" d="M 80 145 A 65 65 0 1 1 80 15 A 65 65 0 1 1 80 145" />
@@ -86,7 +86,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
     <nav class="features" id="features" aria-label="Estatein service highlights">
     <ul class="features__list">
         <li class="features__item">
-            <a class="feature-card" href="/properties.html#property-listings">
+            <a class="feature-card" href="/properties/#property-listings">
                 <svg class="feature-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M6.375 27.625L27.625 6.375M27.625 22.3125V6.375L11.6875 6.375" stroke="currentColor"
@@ -104,7 +104,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
         </li>
 
         <li class="features__item">
-            <a class="feature-card" href="/services.html#unlock-value">
+            <a class="feature-card" href="/services/#unlock-value">
                 <svg class="feature-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M6.375 27.625L27.625 6.375M27.625 22.3125V6.375L11.6875 6.375" stroke="currentColor"
@@ -122,7 +122,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
         </li>
 
         <li class="features__item">
-            <a class="feature-card" href="/services.html#services-management">
+            <a class="feature-card" href="/services/#services-management">
                 <svg class="feature-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M6.375 27.625L27.625 6.375M27.625 22.3125V6.375L11.6875 6.375" stroke="currentColor"
@@ -141,7 +141,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
         </li>
 
         <li class="features__item">
-            <a class="feature-card" href="/services.html#services-investments">
+            <a class="feature-card" href="/services/#services-investments">
                 <svg class="feature-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M6.375 27.625L27.625 6.375M27.625 22.3125V6.375L11.6875 6.375" stroke="currentColor"
@@ -191,7 +191,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                 </p>
             </div>
 
-            <a class="section-header__action button button--dark" href="/properties.html">
+            <a class="section-header__action button button--dark" href="/properties/">
                 View All Properties
             </a>
         </div>
@@ -212,7 +212,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -248,7 +248,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Seaside Serenity Villa">
                                     View Property Details
                                 </a>
@@ -271,7 +271,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>A chic and fully-furnished 2-bedroom apartment with panoramic city views...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -307,7 +307,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Metropolitan Haven">
                                     View Property Details
                                 </a>
@@ -329,7 +329,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>An elegant 3-bedroom, 2.5-bathroom townhouse in a gated community...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -365,7 +365,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Rustic Retreat Cottage">
                                     View Property Details
                                 </a>
@@ -387,7 +387,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -423,7 +423,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Seaside Serenity Villa">
                                     View Property Details
                                 </a>
@@ -445,7 +445,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -481,7 +481,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Seaside Serenity Villa">
                                     View Property Details
                                 </a>
@@ -503,7 +503,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                             <div class="property-card__description">
                                 <p>A stunning 4-bedroom, 3-bathroom villa in a peaceful suburban neighborhood...
-                                    <a class="property-card__description-link" href="/property-details.html">
+                                    <a class="property-card__description-link" href="/property-details/">
                                         Read More
                                     </a>
                                 </p>
@@ -539,7 +539,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
                                     </strong>
                                 </p>
 
-                                <a class="property-card__button button button--accent" href="/property-details.html"
+                                <a class="property-card__button button button--accent" href="/property-details/"
                                     aria-label="View details for Seaside Serenity Villa">
                                     View Property Details
                                 </a>
@@ -553,7 +553,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
         </div>
 
         <div class="properties-section__footer slider__footer">
-            <a class="slider__mobile-action button button--dark" href="/properties.html">
+            <a class="slider__mobile-action button button--dark" href="/properties/">
                 View All Properties
             </a>
 
@@ -1065,7 +1065,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1090,7 +1090,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/services.html#unlock-value"
+                            href="/services/#unlock-value"
                             aria-label="Read more about documents needed to sell a property"
                         >
                             Read More
@@ -1113,7 +1113,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/contacts.html#contact-form"
+                            href="/contacts/#contact-form"
                             aria-label="Read more about contacting an Estatein agent"
                         >
                             Read More
@@ -1138,7 +1138,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1163,7 +1163,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1188,7 +1188,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1213,7 +1213,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1238,7 +1238,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
@@ -1263,7 +1263,7 @@ $APPLICATION->SetPageProperty('description', 'Discover properties, expert real e
 
                         <a
                             class="faq-card__link button button--gray"
-                            href="/properties.html"
+                            href="/properties/"
                             aria-label="Read more about searching for properties on Estatein"
                         >
                             Read More
