@@ -10,17 +10,17 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
 <section class="contact-hero" id="contact-hero" aria-labelledby="contact-hero-title">
   <div class="contact-hero__container container">
     <header class="contact-hero__header">
-      <h1 class="contact-hero__title" id="contact-hero-title">
-        Get in Touch with Estatein
-      </h1>
-
-      <p class="contact-hero__text">
-        Welcome to Estatein's Contact Us page. We're here to assist you with
-        any inquiries, requests, or feedback you may have. Whether you're
-        looking to buy or sell a property, explore investment opportunities,
-        or simply want to connect, we're just a message away. Reach out to us,
-        and let's start a conversation.
-      </p>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:main.include',
+        '',
+        [
+          'AREA_FILE_SHOW' => 'file',
+          'PATH' => '/local/include/pages/contacts/hero-content.php',
+          'EDIT_TEMPLATE' => '',
+        ]
+      );
+      ?>
     </header>
   </div>
 
@@ -148,18 +148,17 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
       aria-hidden="true" />
 
     <header class="contacts-form__header">
-      <h2
-        class="contacts-form__title"
-        id="contacts-form-title">
-        Let's Connect
-      </h2>
-
-      <p class="contacts-form__text">
-        We're excited to connect with you and learn more about your real estate
-        goals. Use the form below to get in touch with Estatein. Whether you're
-        a prospective client, partner, or simply curious about our services,
-        we're here to answer your questions and provide the assistance you need.
-      </p>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:main.include',
+        '',
+        [
+          'AREA_FILE_SHOW' => 'file',
+          'PATH' => '/local/include/pages/contacts/form-content.php',
+          'EDIT_TEMPLATE' => '',
+        ]
+      );
+      ?>
     </header>
 
     <form
@@ -411,19 +410,17 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
       aria-hidden="true" />
 
     <header class="contacts-offices__header">
-      <h2
-        class="contacts-offices__title"
-        id="contacts-offices-title">
-        Discover Our Office Locations
-      </h2>
-
-      <p class="contacts-offices__text">
-        Estatein is here to serve you across multiple locations. Whether you're
-        looking to meet our team, discuss real estate opportunities, or simply
-        drop by for a chat, we have offices conveniently located to serve your
-        needs. Explore the categories below to find the Estatein office nearest
-        to you.
-      </p>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:main.include',
+        '',
+        [
+          'AREA_FILE_SHOW' => 'file',
+          'PATH' => '/local/include/pages/contacts/offices-content.php',
+          'EDIT_TEMPLATE' => '',
+        ]
+      );
+      ?>
     </header>
 
     <div class="contacts-offices__tabs tabs-offices">
@@ -702,10 +699,17 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
         <div class="contacts-gallery-info__row">
 
           <div class="contacts-gallery-info__content">
-            <h2 class="contacts-gallery-info__title" id="contacts-gallery-title">Explore Estatein's World</h2>
-            <p class="contacts-gallery-info__text">
-              Step inside the world of Estatein, where professionalism meets warmth, and expertise meets passion. Our gallery offers a glimpse into our team and workspaces, inviting you to get to know us better.
-            </p>
+            <?php
+            $APPLICATION->IncludeComponent(
+              'bitrix:main.include',
+              '',
+              [
+                'AREA_FILE_SHOW' => 'file',
+                'PATH' => '/local/include/pages/contacts/gallery-content.php',
+                'EDIT_TEMPLATE' => '',
+              ]
+            );
+            ?>
           </div>
 
           <div class="contacts-gallery-info__handshake">

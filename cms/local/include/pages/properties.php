@@ -6,17 +6,17 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 <section class="properties-hero" aria-labelledby="properties-hero-title">
     <div class="properties-hero__intro">
         <div class="properties-hero__container container">
-            <h1 class="properties-hero__title" id="properties-hero-title">
-                Find Your Dream Property
-            </h1>
-
-            <p class="properties-hero__description">
-                Welcome to Estatein, where your dream property awaits
-                in every corner of our beautiful world. Explore our
-                curated selection of properties, each offering a unique
-                story and a chance to redefine your life. With categories
-                to suit every dreamer, your journey begins here.
-            </p>
+            <?php
+            $APPLICATION->IncludeComponent(
+                'bitrix:main.include',
+                '',
+                [
+                    'AREA_FILE_SHOW' => 'file',
+                    'PATH' => '/local/include/pages/properties/hero-content.php',
+                    'EDIT_TEMPLATE' => '',
+                ]
+            );
+            ?>
         </div>
     </div>
 
@@ -135,7 +135,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </form>
     </div>
 </section>
-    <section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider
+<section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider
     data-slider-slides-desktop="3" data-slider-slides-tablet="2" data-slider-slides-mobile="1"
     data-slider-group-desktop="1" data-slider-group-tablet="1" data-slider-group-mobile="1"
     data-slider-space-desktop="30" data-slider-space-tablet="20" data-slider-space-mobile="16" data-slider-loop="false">
@@ -144,15 +144,17 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             height="30" aria-hidden="true" />
 
         <header class="properties-listings__header">
-            <h2 class="properties-listings__title" id="properties-listings-title">
-                Discover a World of Possibilities
-            </h2>
-
-            <p class="properties-listings__description">
-                Our portfolio of properties is as diverse as your dreams.
-                Explore the following categories to find the perfect
-                property that resonates with your vision of home.
-            </p>
+            <?php
+            $APPLICATION->IncludeComponent(
+                'bitrix:main.include',
+                '',
+                [
+                    'AREA_FILE_SHOW' => 'file',
+                    'PATH' => '/local/include/pages/properties/listings-content.php',
+                    'EDIT_TEMPLATE' => '',
+                ]
+            );
+            ?>
         </header>
 
         <div class="properties-listings__slider slider swiper" data-js-slider-swiper aria-label="Available properties">
@@ -443,208 +445,209 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </footer>
     </div>
 </section>
-    <section class="property-inquiry" id="inquiry" aria-labelledby="property-inquiry-title">
-  <div class="property-inquiry__container container">
-    <img class="property-inquiry__decoration" src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" width="69"
-      height="30" aria-hidden="true" />
+<section class="property-inquiry" id="inquiry" aria-labelledby="property-inquiry-title">
+    <div class="property-inquiry__container container">
+        <img class="property-inquiry__decoration" src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" width="69"
+            height="30" aria-hidden="true" />
 
-    <header class="property-inquiry__header">
-      <h2 class="property-inquiry__title" id="property-inquiry-title">
-        Let's Make it Happen
-      </h2>
+        <header class="property-inquiry__header">
+            <?php
+            $APPLICATION->IncludeComponent(
+                'bitrix:main.include',
+                '',
+                [
+                    'AREA_FILE_SHOW' => 'file',
+                    'PATH' => '/local/include/pages/properties/inquiry-content.php',
+                    'EDIT_TEMPLATE' => '',
+                ]
+            );
+            ?>
+        </header>
 
-      <p class="property-inquiry__description">
-        Ready to take the first step toward your dream property?
-        Fill out the form below, and our real estate experts will
-        work closely with you to understand your needs, arrange
-        viewings, and guide you through the process.
-      </p>
-    </header>
+        <form class="property-inquiry__form" data-js-form action="" method="post" novalidate>
+            <div class="property-inquiry__grid">
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-first-name">
+                        First Name
+                    </label>
 
-    <form class="property-inquiry__form" data-js-form action="" method="post" novalidate>
-      <div class="property-inquiry__grid">
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-first-name">
-            First Name
-          </label>
+                    <input class="form-field__control" id="inquiry-first-name" name="first-name" type="text"
+                        placeholder="Enter First Name" autocomplete="given-name" required />
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <input class="form-field__control" id="inquiry-first-name" name="first-name" type="text"
-            placeholder="Enter First Name" autocomplete="given-name" required />
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-last-name">
+                        Last Name
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-last-name">
-            Last Name
-          </label>
+                    <input class="form-field__control" id="inquiry-last-name" name="last-name" type="text"
+                        placeholder="Enter Last Name" autocomplete="family-name" required />
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <input class="form-field__control" id="inquiry-last-name" name="last-name" type="text"
-            placeholder="Enter Last Name" autocomplete="family-name" required />
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-email">
+                        Email
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-email">
-            Email
-          </label>
+                    <input class="form-field__control" id="inquiry-email" name="email" type="email" placeholder="Enter your Email"
+                        autocomplete="email" inputmode="email" required />
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <input class="form-field__control" id="inquiry-email" name="email" type="email" placeholder="Enter your Email"
-            autocomplete="email" inputmode="email" required />
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-phone">
+                        Phone
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-phone">
-            Phone
-          </label>
+                    <input class="form-field__control" id="inquiry-phone" name="phone" type="tel" placeholder="Enter Phone Number"
+                        autocomplete="tel" inputmode="tel" required />
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <input class="form-field__control" id="inquiry-phone" name="phone" type="tel" placeholder="Enter Phone Number"
-            autocomplete="tel" inputmode="tel" required />
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-location">
+                        Preferred Location
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-location">
-            Preferred Location
-          </label>
+                    <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-location"
+                        name="location" data-select-theme="form">
+                        <option value="">Select Location</option>
+                        <option value="new-york">New York</option>
+                        <option value="california">California</option>
+                        <option value="florida">Florida</option>
+                    </select>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-location"
-            name="location" data-select-theme="form">
-            <option value="">Select Location</option>
-            <option value="new-york">New York</option>
-            <option value="california">California</option>
-            <option value="florida">Florida</option>
-          </select>
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-type">
+                        Property Type
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-type">
-            Property Type
-          </label>
+                    <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-type"
+                        name="property-type" data-select-theme="form" required>
+                        <option value="">Select Property Type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="villa">Villa</option>
+                    </select>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-type"
-            name="property-type" data-select-theme="form" required>
-            <option value="">Select Property Type</option>
-            <option value="house">House</option>
-            <option value="apartment">Apartment</option>
-            <option value="villa">Villa</option>
-          </select>
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-bathrooms">
+                        No. of Bathrooms
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-bathrooms">
-            No. of Bathrooms
-          </label>
+                    <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-bathrooms"
+                        name="bathrooms" data-select-theme="form">
+                        <option value="">Select no. of Bathrooms</option>
+                        <option value="1">1 Bathroom</option>
+                        <option value="2">2 Bathrooms</option>
+                        <option value="3">3 Bathrooms</option>
+                        <option value="4-plus">4 or more</option>
+                    </select>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-bathrooms"
-            name="bathrooms" data-select-theme="form">
-            <option value="">Select no. of Bathrooms</option>
-            <option value="1">1 Bathroom</option>
-            <option value="2">2 Bathrooms</option>
-            <option value="3">3 Bathrooms</option>
-            <option value="4-plus">4 or more</option>
-          </select>
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field">
+                    <label class="form-field__label" for="inquiry-bedrooms">
+                        No. of Bedrooms
+                    </label>
 
-        <div class="form-field">
-          <label class="form-field__label" for="inquiry-bedrooms">
-            No. of Bedrooms
-          </label>
+                    <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-bedrooms"
+                        name="bedrooms" data-select-theme="form">
+                        <option value="">Select no. of Bedrooms</option>
+                        <option value="1">1 Bedroom</option>
+                        <option value="2">2 Bedrooms</option>
+                        <option value="3">3 Bedrooms</option>
+                        <option value="4-plus">4 or more</option>
+                    </select>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-bedrooms"
-            name="bedrooms" data-select-theme="form">
-            <option value="">Select no. of Bedrooms</option>
-            <option value="1">1 Bedroom</option>
-            <option value="2">2 Bedrooms</option>
-            <option value="3">3 Bedrooms</option>
-            <option value="4-plus">4 or more</option>
-          </select>
-          <div data-js-form-field-errors></div>
-        </div>
+                <div class="form-field form-field--budget">
+                    <label class="form-field__label" for="inquiry-budget">
+                        Budget
+                    </label>
 
-        <div class="form-field form-field--budget">
-          <label class="form-field__label" for="inquiry-budget">
-            Budget
-          </label>
+                    <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-budget"
+                        name="budget" data-select-theme="form" required>
+                        <option value="">Select Budget</option>
+                        <option value="0-250000">Up to $250,000</option>
+                        <option value="250000-500000">$250,000–$500,000</option>
+                        <option value="500000-plus">$500,000 and above</option>
+                    </select>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-budget"
-            name="budget" data-select-theme="form" required>
-            <option value="">Select Budget</option>
-            <option value="0-250000">Up to $250,000</option>
-            <option value="250000-500000">$250,000–$500,000</option>
-            <option value="500000-plus">$500,000 and above</option>
-          </select>
-          <div data-js-form-field-errors></div>
-        </div>
+                <fieldset class="contact-method">
+                    <legend class="contact-method__legend">
+                        Preferred Contact Method
+                    </legend>
 
-        <fieldset class="contact-method">
-          <legend class="contact-method__legend">
-            Preferred Contact Method
-          </legend>
+                    <div class="contact-method__options">
+                        <label class="contact-method__option">
+                            <img class="contact-method__icon" src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.5%204.5C1.5%202.84315%202.84315%201.5%204.5%201.5H5.87163C6.732%201.5%207.48197%202.08556%207.69064%202.92025L8.79644%207.34343C8.97941%208.0753%208.70594%208.84555%208.10242%209.29818L6.8088%2010.2684C6.67447%2010.3691%206.64527%2010.5167%206.683%2010.6197C7.81851%2013.7195%2010.2805%2016.1815%2013.3803%2017.317C13.4833%2017.3547%2013.6309%2017.3255%2013.7316%2017.1912L14.7018%2015.8976C15.1545%2015.2941%2015.9247%2015.0206%2016.6566%2015.2036L21.0798%2016.3094C21.9144%2016.518%2022.5%2017.268%2022.5%2018.1284V19.5C22.5%2021.1569%2021.1569%2022.5%2019.5%2022.5H17.25C8.55151%2022.5%201.5%2015.4485%201.5%206.75V4.5Z'%20fill='white'/%3e%3c/svg%3e" alt="" width="24" height="24"
+                                aria-hidden="true" />
 
-          <div class="contact-method__options">
-            <label class="contact-method__option">
-              <img class="contact-method__icon" src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.5%204.5C1.5%202.84315%202.84315%201.5%204.5%201.5H5.87163C6.732%201.5%207.48197%202.08556%207.69064%202.92025L8.79644%207.34343C8.97941%208.0753%208.70594%208.84555%208.10242%209.29818L6.8088%2010.2684C6.67447%2010.3691%206.64527%2010.5167%206.683%2010.6197C7.81851%2013.7195%2010.2805%2016.1815%2013.3803%2017.317C13.4833%2017.3547%2013.6309%2017.3255%2013.7316%2017.1912L14.7018%2015.8976C15.1545%2015.2941%2015.9247%2015.0206%2016.6566%2015.2036L21.0798%2016.3094C21.9144%2016.518%2022.5%2017.268%2022.5%2018.1284V19.5C22.5%2021.1569%2021.1569%2022.5%2019.5%2022.5H17.25C8.55151%2022.5%201.5%2015.4485%201.5%206.75V4.5Z'%20fill='white'/%3e%3c/svg%3e" alt="" width="24" height="24"
-                aria-hidden="true" />
+                            <span class="contact-method__text">
+                                Enter Your Number
+                            </span>
 
-              <span class="contact-method__text">
-                Enter Your Number
-              </span>
+                            <input class="contact-method__radio" type="radio" name="contact-method" value="phone"
+                                aria-label="Contact me by phone" checked />
+                        </label>
 
-              <input class="contact-method__radio" type="radio" name="contact-method" value="phone"
-                aria-label="Contact me by phone" checked />
-            </label>
+                        <label class="contact-method__option">
+                            <img class="contact-method__icon" src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.5%208.6691V17.25C1.5%2018.9069%202.84315%2020.25%204.5%2020.25H19.5C21.1569%2020.25%2022.5%2018.9069%2022.5%2017.25V8.6691L13.5723%2014.1631C12.6081%2014.7564%2011.3919%2014.7564%2010.4277%2014.1631L1.5%208.6691Z'%20fill='white'/%3e%3cpath%20d='M22.5%206.90783V6.75C22.5%205.09315%2021.1569%203.75%2019.5%203.75H4.5C2.84315%203.75%201.5%205.09315%201.5%206.75V6.90783L11.2139%2012.8856C11.696%2013.1823%2012.304%2013.1823%2012.7861%2012.8856L22.5%206.90783Z'%20fill='white'/%3e%3c/svg%3e" alt="" width="24" height="24"
+                                aria-hidden="true" />
 
-            <label class="contact-method__option">
-              <img class="contact-method__icon" src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.5%208.6691V17.25C1.5%2018.9069%202.84315%2020.25%204.5%2020.25H19.5C21.1569%2020.25%2022.5%2018.9069%2022.5%2017.25V8.6691L13.5723%2014.1631C12.6081%2014.7564%2011.3919%2014.7564%2010.4277%2014.1631L1.5%208.6691Z'%20fill='white'/%3e%3cpath%20d='M22.5%206.90783V6.75C22.5%205.09315%2021.1569%203.75%2019.5%203.75H4.5C2.84315%203.75%201.5%205.09315%201.5%206.75V6.90783L11.2139%2012.8856C11.696%2013.1823%2012.304%2013.1823%2012.7861%2012.8856L22.5%206.90783Z'%20fill='white'/%3e%3c/svg%3e" alt="" width="24" height="24"
-                aria-hidden="true" />
+                            <span class="contact-method__text">
+                                Enter Your Email
+                            </span>
 
-              <span class="contact-method__text">
-                Enter Your Email
-              </span>
+                            <input class="contact-method__radio" type="radio" name="contact-method" value="email"
+                                aria-label="Contact me by email" />
+                        </label>
+                    </div>
+                </fieldset>
 
-              <input class="contact-method__radio" type="radio" name="contact-method" value="email"
-                aria-label="Contact me by email" />
-            </label>
-          </div>
-        </fieldset>
+                <div class="form-field form-field--wide">
+                    <label class="form-field__label" for="inquiry-message">
+                        Message
+                    </label>
 
-        <div class="form-field form-field--wide">
-          <label class="form-field__label" for="inquiry-message">
-            Message
-          </label>
+                    <textarea class="form-field__control form-field__control--textarea" id="inquiry-message" name="message"
+                        placeholder="Enter your Message here..." rows="5" required></textarea>
+                    <div data-js-form-field-errors></div>
+                </div>
+            </div>
 
-          <textarea class="form-field__control form-field__control--textarea" id="inquiry-message" name="message"
-            placeholder="Enter your Message here..." rows="5" required></textarea>
-          <div data-js-form-field-errors></div>
-        </div>
-      </div>
+            <div class="property-inquiry__footer">
+                <div class="agreement">
+                    <input class="agreement__checkbox visually-hidden" type="checkbox" id="inquiry-privacy-policy"
+                        name="privacy_agreement" required />
 
-      <div class="property-inquiry__footer">
-        <div class="agreement">
-          <input class="agreement__checkbox visually-hidden" type="checkbox" id="inquiry-privacy-policy"
-            name="privacy_agreement" required />
+                    <label class="agreement__label" for="inquiry-privacy-policy">
+                        I agree with
+                        <span class="agreement__link">
+                            Terms of Use
+                        </span>
+                        and
+                        <span class="agreement__link">
+                            Privacy Policy
+                        </span>
+                    </label>
+                    <div data-js-form-field-errors></div>
+                </div>
 
-          <label class="agreement__label" for="inquiry-privacy-policy">
-            I agree with
-            <span class="agreement__link">
-              Terms of Use
-            </span>
-            and
-            <span class="agreement__link">
-              Privacy Policy
-            </span>
-          </label>
-          <div data-js-form-field-errors></div>
-        </div>
-
-        <button class="property-inquiry__submit button button--accent" type="submit">
-          Send Your Message
-        </button>
-      </div>
-    </form>
-  </div>
+                <button class="property-inquiry__submit button button--accent" type="submit">
+                    Send Your Message
+                </button>
+            </div>
+        </form>
+    </div>
 </section>
