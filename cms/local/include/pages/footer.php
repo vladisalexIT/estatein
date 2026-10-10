@@ -1,6 +1,6 @@
 <?php
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
-  die();
+    die();
 }
 ?>
 </main>
@@ -9,20 +9,15 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   <section class="footer__cta" aria-labelledby="footer-cta-title">
     <div class="footer__cta-container container">
       <div class="footer__cta-content">
-        <div class="footer__cta-content">
-          <?php
-          $APPLICATION->IncludeComponent(
-            'bitrix:main.include',
-            '',
-            [
-              'AREA_FILE_SHOW' => 'file',
-              'PATH' => '/local/include/common/footer-cta-content.php',
-              'EDIT_TEMPLATE' => '',
-            ],
-            false
-          );
-          ?>
-        </div>
+        <h2 class="footer__cta-title" id="footer-cta-title">
+          Start Your Real Estate Journey Today
+        </h2>
+        <p class="footer__cta-text">
+          Your dream property is just a click away.
+          Whether you're looking for a new home, a strategic investment, or expert real estate advice,
+          Estatein is here to assist you every step of the way. Take the first step towards your real estate goals
+          and explore our available properties or get in touch with our team for personalized assistance.
+        </p>
       </div>
       <a class="footer__cta-btn button button--accent" href="/properties/">
         Explore Properties
@@ -59,25 +54,72 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </form>
       </div>
 
-      <?php
-      $APPLICATION->IncludeComponent(
-        'bitrix:menu',
-        'footer-menu',
-        [
-          'ROOT_MENU_TYPE' => 'footer',
-          'MAX_LEVEL' => '1',
-          'CHILD_MENU_TYPE' => 'footer',
-          'USE_EXT' => 'N',
-          'DELAY' => 'N',
-          'ALLOW_MULTI_SELECT' => 'N',
-          'MENU_CACHE_TYPE' => 'A',
-          'MENU_CACHE_TIME' => '3600',
-          'MENU_CACHE_USE_GROUPS' => 'Y',
-          'MENU_CACHE_GET_VARS' => [],
-        ],
-        false
-      );
-      ?>
+      <nav class="footer__nav nav-footer" aria-label="Footer navigation">
+        <div class="nav-footer__col">
+          <p class="nav-footer__title">Home</p>
+          <ul class="nav-footer__list">
+            <li><a class="nav-footer__link" href="/#hero">Hero Section</a></li>
+            <li><a class="nav-footer__link" href="/#features">Features</a></li>
+            <li><a class="nav-footer__link" href="/#properties">Properties</a></li>
+            <li><a class="nav-footer__link" href="/#testimonials">Testimonials</a></li>
+            <li><a class="nav-footer__link" href="/#faq">FAQ’s</a></li>
+          </ul>
+        </div>
+        <div class="nav-footer__col">
+          <p class="nav-footer__title">About Us</p>
+          <ul class="nav-footer__list">
+            <li>
+              <a class="nav-footer__link" href="/about/#about-hero">
+                Our Story
+              </a>
+            </li>
+            <li><a href="/about/#about-achievements" class="nav-footer__link">Our Works</a></li>
+            <li><a href="/about/#about-process" class="nav-footer__link">How It Works</a></li>
+            <li><a href="/about/#about-team" class="nav-footer__link">Our Team</a></li>
+            <li><a href="/about/#about-clients" class="nav-footer__link">Our Clients</a></li>
+          </ul>
+        </div>
+        <div class="nav-footer__col">
+          <p class="nav-footer__title">Properties</p>
+          <ul class="nav-footer__list">
+            <li>
+              <a class="nav-footer__link" href="/properties/#property-listings">
+                Portfolio
+              </a>
+            </li>
+            <li><a href="/properties/#property-listings" class="nav-footer__link">Categories</a></li>
+          </ul>
+        </div>
+        <div class="nav-footer__col">
+          <p class="nav-footer__title">Services</p>
+          <ul class="nav-footer__list">
+            <li><a href="/services/#valuation-mastery" class="nav-footer__link">Valuation Mastery</a></li>
+            <li><a href="/services/#strategic-marketing" class="nav-footer__link">Strategic Marketing</a></li>
+            <li><a href="/services/#negotiation-wizardry" class="nav-footer__link">Negotiation Wizardry</a></li>
+            <li><a href="/services/#closing-success" class="nav-footer__link">Closing Success</a></li>
+            <li>
+              <a class="nav-footer__link" href="/services/#services-management">
+                Property Management
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="nav-footer__col">
+          <p class="nav-footer__title">Contact Us</p>
+          <ul class="nav-footer__list">
+            <li>
+              <a class="nav-footer__link" href="/contacts/#contact-form">
+                Contact Form
+              </a>
+            </li>
+            <li>
+              <a class="nav-footer__link" href="/contacts/#offices">
+                Our Offices
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
     </div>
   </div>
@@ -89,7 +131,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           © 2026 Estatein. All Rights Reserved.
         </p>
 
-
+        
       </div>
 
       <nav class="footer__soc1als soc1als" aria-label="Social media">
@@ -116,14 +158,16 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   class="thank-you-overlay"
   id="thank-you-overlay"
   aria-labelledby="thank-you-title"
-  aria-describedby="thank-you-text">
+  aria-describedby="thank-you-text"
+>
   <div class="thank-you-modal">
     <button
       class="thank-you-modal__timer"
       type="button"
       data-modal-timer
       aria-label="Turn off automatic closing"
-      title="Turn off automatic closing">
+      title="Turn off automatic closing"
+    >
       Closes in 10s
     </button>
 
@@ -133,17 +177,20 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       alt=""
       width="50"
       height="24"
-      aria-hidden="true" />
+      aria-hidden="true"
+    />
 
     <h2
       class="thank-you-modal__title"
-      id="thank-you-title">
+      id="thank-you-title"
+    >
       Thank You for Getting in Touch!
     </h2>
 
     <p
       class="thank-you-modal__text"
-      id="thank-you-text">
+      id="thank-you-text"
+    >
       Your details have been collected successfully.
       This is a demo submission; no message has been sent.
     </p>
@@ -152,11 +199,11 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       class="thank-you-modal__close button button--accent"
       id="close-thank-you-btn"
       type="button"
-      autofocus>
+      autofocus
+    >
       Close
     </button>
   </div>
 </dialog>
 </body>
-
 </html>

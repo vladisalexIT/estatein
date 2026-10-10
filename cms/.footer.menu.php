@@ -1,0 +1,141 @@
+<?php
+
+$aMenuLinks = [
+    [
+        'Hero Section',
+        '/#hero',
+        [],
+        ['GROUP' => 'home'],
+        '',
+    ],
+    [
+        'Features',
+        '/#features',
+        [],
+        ['GROUP' => 'home'],
+        '',
+    ],
+    [
+        'Properties',
+        '/#properties',
+        [],
+        ['GROUP' => 'home'],
+        '',
+    ],
+    [
+        'Testimonials',
+        '/#testimonials',
+        [],
+        ['GROUP' => 'home'],
+        '',
+    ],
+    [
+        'FAQ’s',
+        '/#faq',
+        [],
+        ['GROUP' => 'home'],
+        '',
+    ],
+
+    [
+        'Our Story',
+        '/about/#about-hero',
+        [],
+        ['GROUP' => 'about'],
+        '',
+    ],
+    [
+        'Our Works',
+        '/about/#about-achievements',
+        [],
+        ['GROUP' => 'about'],
+        '',
+    ],
+    [
+        'How It Works',
+        '/about/#about-process',
+        [],
+        ['GROUP' => 'about'],
+        '',
+    ],
+    [
+        'Our Team',
+        '/about/#about-team',
+        [],
+        ['GROUP' => 'about'],
+        '',
+    ],
+    [
+        'Our Clients',
+        '/about/#about-clients',
+        [],
+        ['GROUP' => 'about'],
+        '',
+    ],
+
+    [
+        'Portfolio',
+        '/properties/#property-listings',
+        [],
+        ['GROUP' => 'properties'],
+        '',
+    ],
+    [
+        'Categories',
+        '/properties/#property-listings',
+        [],
+        ['GROUP' => 'properties'],
+        '',
+    ],
+
+    [
+        'Valuation Mastery',
+        '/services/#valuation-mastery',
+        [],
+        ['GROUP' => 'services'],
+        '',
+    ],
+    [
+        'Strategic Marketing',
+        '/services/#strategic-marketing',
+        [],
+        ['GROUP' => 'services'],
+        '',
+    ],
+    [
+        'Negotiation Wizardry',
+        '/services/#negotiation-wizardry',
+        [],
+        ['GROUP' => 'services'],
+        '',
+    ],
+    [
+        'Closing Success',
+        '/services/#closing-success',
+        [],
+        ['GROUP' => 'services'],
+        '',
+    ],
+    [
+        'Property Management',
+        '/services/#services-management',
+        [],
+        ['GROUP' => 'services'],
+        '',
+    ],
+
+    [
+        'Contact Form',
+        '/contacts/#contact-form',
+        [],
+        ['GROUP' => 'contacts'],
+        '',
+    ],
+    [
+        'Our Offices',
+        '/contacts/#offices',
+        [],
+        ['GROUP' => 'contacts'],
+        '',
+    ],
+];

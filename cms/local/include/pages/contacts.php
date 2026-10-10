@@ -1,8 +1,12 @@
 <?php
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
-    die();
+  die();
 }
+
+$estateinContacts = require $_SERVER['DOCUMENT_ROOT']
+  . '/local/include/site/contacts.php';
 ?>
+
 <section class="contact-hero" id="contact-hero" aria-labelledby="contact-hero-title">
   <div class="contact-hero__container container">
     <header class="contact-hero__header">
@@ -22,7 +26,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
   <ul class="contact-hero__list" aria-label="Estatein contact options">
     <li class="contact-hero__item">
-      <a class="contact-card" href="mailto:info@estatein.com" aria-label="Email Estatein at info@estatein.com">
+      <a
+        class="contact-card"
+        href="<?= htmlspecialcharsbx('mailto:' . $estateinContacts['email']) ?>"
+        aria-label="<?= htmlspecialcharsbx('Email Estatein at ' . $estateinContacts['email']) ?>">
         <svg class="contact-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M6.375 27.625 27.625 6.375M27.625 22.3125V6.375H11.6875" stroke="currentColor" stroke-width="2"
@@ -35,14 +42,16 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </span>
 
         <span class="contact-card__title">
-          info@estatein.com
+          <?= htmlspecialcharsbx($estateinContacts['email']) ?>
         </span>
       </a>
     </li>
 
     <li class="contact-hero__item">
-      <a class="contact-card" href="tel:+11234567890"
-        aria-label="Call Estatein at plus one, one two three, four five six, seven eight nine zero">
+      <a
+        class="contact-card"
+        href="<?= htmlspecialcharsbx('tel:' . $estateinContacts['phone_href']) ?>"
+        aria-label="<?= htmlspecialcharsbx('Call Estatein at ' . $estateinContacts['phone_display']) ?>">
         <svg class="contact-card__arrow" width="34" height="34" viewBox="0 0 34 34" fill="none"
           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M6.375 27.625 27.625 6.375M27.625 22.3125V6.375H11.6875" stroke="currentColor" stroke-width="2"
@@ -55,7 +64,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </span>
 
         <span class="contact-card__title">
-          +1 (123) 456-7890
+          <?= htmlspecialcharsbx($estateinContacts['phone_display']) ?>
         </span>
       </a>
     </li>
@@ -101,19 +110,19 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <nav class="contact-card__socials-wrapper" aria-label="Estatein social media">
           <ul class="contact-card__socials-list">
             <li>
-              <a class="contact-card__social-link" href="#" target="_blank" rel="noopener noreferrer">
+              <a class="contact-card__social-link" href="https://vk.ru/vladhasmatrix" target="_blank" rel="noopener noreferrer">
                 Instagram
               </a>
             </li>
 
             <li>
-              <a class="contact-card__social-link" href="#" target="_blank" rel="noopener noreferrer">
+              <a class="contact-card__social-link" href="https://vk.ru/vladhasmatrix" target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>
             </li>
 
             <li>
-              <a class="contact-card__social-link" href="#" target="_blank" rel="noopener noreferrer">
+              <a class="contact-card__social-link" href="https://vk.ru/vladhasmatrix" target="_blank" rel="noopener noreferrer">
                 Facebook
               </a>
             </li>
@@ -123,11 +132,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     </li>
   </ul>
 </section>
-    <section
+<section
   class="contacts-form"
   id="contact-form"
-  aria-labelledby="contacts-form-title"
->
+  aria-labelledby="contacts-form-title">
   <div class="contacts-form__container container">
     <img
       class="contacts-form__decoration"
@@ -137,14 +145,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       height="30"
       loading="lazy"
       decoding="async"
-      aria-hidden="true"
-    />
+      aria-hidden="true" />
 
     <header class="contacts-form__header">
       <h2
         class="contacts-form__title"
-        id="contacts-form-title"
-      >
+        id="contacts-form-title">
         Let's Connect
       </h2>
 
@@ -162,14 +168,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       action=""
       method="post"
       autocomplete="on"
-      novalidate
-    >
+      novalidate>
       <div class="form-grid__fields">
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-first-name"
-          >
+            for="contacts-first-name">
             First Name
           </label>
 
@@ -180,16 +184,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             type="text"
             placeholder="Enter First Name"
             autocomplete="given-name"
-            required
-          />
+            required />
           <div data-js-form-field-errors></div>
         </div>
 
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-last-name"
-          >
+            for="contacts-last-name">
             Last Name
           </label>
 
@@ -200,16 +202,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             type="text"
             placeholder="Enter Last Name"
             autocomplete="family-name"
-            required
-          />
+            required />
           <div data-js-form-field-errors></div>
         </div>
 
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-email"
-          >
+            for="contacts-email">
             Email
           </label>
 
@@ -221,16 +221,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             placeholder="Enter your Email"
             autocomplete="email"
             inputmode="email"
-            required
-          />
+            required />
           <div data-js-form-field-errors></div>
         </div>
 
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-phone"
-          >
+            for="contacts-phone">
             Phone
           </label>
 
@@ -242,16 +240,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             placeholder="Enter Phone Number"
             autocomplete="tel"
             inputmode="tel"
-            required
-          />
+            required />
           <div data-js-form-field-errors></div>
         </div>
 
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-inquiry-type"
-          >
+            for="contacts-inquiry-type">
             Inquiry Type
           </label>
 
@@ -261,9 +257,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               id="contacts-inquiry-type"
               name="inquiry_type"
               required
-              data-select-theme="form"
-            >
-              <option value="" selected >
+              data-select-theme="form">
+              <option value="" selected>
                 Select Inquiry Type
               </option>
               <option value="buy">
@@ -287,15 +282,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
+              aria-hidden="true">
               <path
                 d="m19.5 8.25-7.5 7.5-7.5-7.5"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+                stroke-linejoin="round" />
             </svg>
           </div>
           <div data-js-form-field-errors></div>
@@ -304,8 +297,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <div class="form-grid__item">
           <label
             class="form-grid__label"
-            for="contacts-source"
-          >
+            for="contacts-source">
             How Did You Hear About Us?
           </label>
 
@@ -314,9 +306,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               class="form-grid__select js-custom-select"
               id="contacts-source"
               name="source"
-              data-select-theme="form"
-            >
-              <option value="" selected >
+              data-select-theme="form">
+              <option value="" selected>
                 Select
               </option>
               <option value="google">
@@ -340,15 +331,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
+              aria-hidden="true">
               <path
                 d="m19.5 8.25-7.5 7.5-7.5-7.5"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+                stroke-linejoin="round" />
             </svg>
           </div>
           <div data-js-form-field-errors></div>
@@ -357,8 +346,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <div class="form-grid__item form-grid__item--textarea">
           <label
             class="form-grid__label"
-            for="contacts-message"
-          >
+            for="contacts-message">
             Message
           </label>
 
@@ -368,8 +356,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             name="message"
             placeholder="Enter your Message here..."
             rows="6"
-            required
-          ></textarea>
+            required></textarea>
           <div data-js-form-field-errors></div>
         </div>
       </div>
@@ -381,13 +368,11 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             type="checkbox"
             id="contacts-privacy-policy"
             name="privacy_agreement"
-            required
-          />
+            required />
 
           <label
             class="form-grid__checkbox-label"
-            for="contacts-privacy-policy"
-          >
+            for="contacts-privacy-policy">
             I agree with
             <span class="form-grid__footer-link">
               Terms of Use
@@ -402,20 +387,18 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
         <button
           class="form-grid__submit-btn"
-          type="submit"
-        >
+          type="submit">
           Send Your Message
         </button>
       </div>
     </form>
   </div>
 </section>
-    <section
+<section
   class="contacts-offices"
   id="offices"
   aria-labelledby="contacts-offices-title"
-  data-js-office-tabs
->
+  data-js-office-tabs>
   <div class="contacts-offices__container container">
     <img
       class="contacts-offices__decoration"
@@ -425,14 +408,12 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       height="30"
       loading="lazy"
       decoding="async"
-      aria-hidden="true"
-    />
+      aria-hidden="true" />
 
     <header class="contacts-offices__header">
       <h2
         class="contacts-offices__title"
-        id="contacts-offices-title"
-      >
+        id="contacts-offices-title">
         Discover Our Office Locations
       </h2>
 
@@ -449,8 +430,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       <ul
         class="tabs-offices__list"
         role="tablist"
-        aria-label="Estatein office categories"
-      >
+        aria-label="Estatein office categories">
         <li class="tabs-offices__item" role="presentation">
           <button
             class="tabs-offices__btn is-active"
@@ -460,8 +440,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             aria-selected="true"
             aria-controls="offices-panel"
             tabindex="0"
-            data-office-filter="all"
-          >
+            data-office-filter="all">
             All
           </button>
         </li>
@@ -475,8 +454,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             aria-selected="false"
             aria-controls="offices-panel"
             tabindex="-1"
-            data-office-filter="regional"
-          >
+            data-office-filter="regional">
             Regional
           </button>
         </li>
@@ -490,8 +468,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             aria-selected="false"
             aria-controls="offices-panel"
             tabindex="-1"
-            data-office-filter="international"
-          >
+            data-office-filter="international">
             International
           </button>
         </li>
@@ -503,13 +480,11 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       id="offices-panel"
       role="tabpanel"
       aria-labelledby="office-tab-all"
-      tabindex="0"
-    >
+      tabindex="0">
       <ul class="contacts-offices__list">
         <li
           class="contacts-offices__item office-card"
-          data-office-category="headquarters"
-        >
+          data-office-category="headquarters">
           <div class="office-card__body">
             <span class="office-card__type">
               Main Headquarters
@@ -529,35 +504,31 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           <address class="office-card__contacts">
             <a
               class="office-card__contact-tag"
-              href="mailto:info@estatein.com"
-            >
+              href="<?= htmlspecialcharsbx('mailto:' . $estateinContacts['email']) ?>">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.25%207.22425V14.375C1.25%2015.7557%202.36929%2016.875%203.75%2016.875H16.25C17.6307%2016.875%2018.75%2015.7557%2018.75%2014.375V7.22425L11.3102%2011.8026C10.5067%2012.297%209.49327%2012.297%208.68976%2011.8026L1.25%207.22425Z'%20fill='white'/%3e%3cpath%20d='M18.75%205.75652V5.625C18.75%204.24429%2017.6307%203.125%2016.25%203.125H3.75C2.36929%203.125%201.25%204.24429%201.25%205.625V5.75652L9.34488%2010.738C9.74664%2010.9852%2010.2534%2010.9852%2010.6551%2010.738L18.75%205.75652Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
-                info@estatein.com
+                <?= htmlspecialcharsbx($estateinContacts['email']) ?>
               </span>
             </a>
 
             <a
               class="office-card__contact-tag"
-              href="tel:+11234567890"
-            >
+              href="<?= htmlspecialcharsbx('tel:' . $estateinContacts['phone_href']) ?>">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.25%203.75C1.25%202.36929%202.36929%201.25%203.75%201.25H4.89302C5.61%201.25%206.23498%201.73796%206.40887%202.43354L7.33037%206.11952C7.48284%206.72942%207.25495%207.37129%206.75202%207.74849L5.674%208.557C5.56206%208.64096%205.53772%208.7639%205.56917%208.84974C6.51542%2011.4329%208.5671%2013.4846%2011.1503%2014.4308C11.2361%2014.4623%2011.359%2014.4379%2011.443%2014.326L12.2515%2013.248C12.6287%2012.7451%2013.2706%2012.5172%2013.8805%2012.6696L17.5665%2013.5911C18.262%2013.765%2018.75%2014.39%2018.75%2015.107V16.25C18.75%2017.6307%2017.6307%2018.75%2016.25%2018.75H14.375C7.12626%2018.75%201.25%2012.8737%201.25%205.625V3.75Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
-                +1 (123) 456-7890
+                <?= htmlspecialcharsbx($estateinContacts['phone_display']) ?>
               </span>
             </a>
 
@@ -565,16 +536,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               class="office-card__contact-tag"
               href="https://www.google.com/maps/search/?api=1&query=123+Estatein+Plaza+Metropolis"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9.61646%2018.6259C9.64163%2018.6405%209.66141%2018.6517%209.67542%2018.6596L9.69869%2018.6726C9.88441%2018.7745%2010.1148%2018.7738%2010.3007%2018.6729L10.3246%2018.6596C10.3386%2018.6517%2010.3584%2018.6405%2010.3835%2018.6259C10.4339%2018.5967%2010.5058%2018.5542%2010.5963%2018.4985C10.7771%2018.3872%2011.0323%2018.223%2011.3372%2018.0076C11.9459%2017.5776%2012.7581%2016.9395%2013.5721%2016.1061C15.1922%2014.4474%2016.875%2011.9551%2016.875%208.75C16.875%204.95304%2013.797%201.875%2010%201.875C6.20304%201.875%203.125%204.95304%203.125%208.75C3.125%2011.9551%204.80777%2014.4474%206.42788%2016.1061C7.24188%2016.9395%208.05409%2017.5776%208.66282%2018.0076C8.96771%2018.223%209.22295%2018.3872%209.40375%2018.4985C9.49419%2018.5542%209.56612%2018.5967%209.61646%2018.6259ZM10%2011.25C11.3807%2011.25%2012.5%2010.1307%2012.5%208.75C12.5%207.36929%2011.3807%206.25%2010%206.25C8.61929%206.25%207.5%207.36929%207.5%208.75C7.5%2010.1307%208.61929%2011.25%2010%2011.25Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
                 Metropolis
               </span>
@@ -585,16 +554,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             class="office-card__button"
             href="https://www.google.com/maps/search/?api=1&query=123+Estatein+Plaza+Metropolis"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             Get Direction
           </a>
         </li>
 
         <li
           class="contacts-offices__item office-card"
-          data-office-category="regional"
-        >
+          data-office-category="regional">
           <div class="office-card__body">
             <span class="office-card__type">
               Regional Offices
@@ -615,35 +582,31 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           <address class="office-card__contacts">
             <a
               class="office-card__contact-tag"
-              href="mailto:info@estatein.com"
-            >
+              href="<?= htmlspecialcharsbx('mailto:' . $estateinContacts['email']) ?>">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.25%207.22425V14.375C1.25%2015.7557%202.36929%2016.875%203.75%2016.875H16.25C17.6307%2016.875%2018.75%2015.7557%2018.75%2014.375V7.22425L11.3102%2011.8026C10.5067%2012.297%209.49327%2012.297%208.68976%2011.8026L1.25%207.22425Z'%20fill='white'/%3e%3cpath%20d='M18.75%205.75652V5.625C18.75%204.24429%2017.6307%203.125%2016.25%203.125H3.75C2.36929%203.125%201.25%204.24429%201.25%205.625V5.75652L9.34488%2010.738C9.74664%2010.9852%2010.2534%2010.9852%2010.6551%2010.738L18.75%205.75652Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
-                info@estatein.com
+                <?= htmlspecialcharsbx($estateinContacts['email']) ?>
               </span>
             </a>
 
             <a
               class="office-card__contact-tag"
-              href="tel:+11234567890"
-            >
+              href="<?= htmlspecialcharsbx('tel:' . $estateinContacts['phone_href']) ?>">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.25%203.75C1.25%202.36929%202.36929%201.25%203.75%201.25H4.89302C5.61%201.25%206.23498%201.73796%206.40887%202.43354L7.33037%206.11952C7.48284%206.72942%207.25495%207.37129%206.75202%207.74849L5.674%208.557C5.56206%208.64096%205.53772%208.7639%205.56917%208.84974C6.51542%2011.4329%208.5671%2013.4846%2011.1503%2014.4308C11.2361%2014.4623%2011.359%2014.4379%2011.443%2014.326L12.2515%2013.248C12.6287%2012.7451%2013.2706%2012.5172%2013.8805%2012.6696L17.5665%2013.5911C18.262%2013.765%2018.75%2014.39%2018.75%2015.107V16.25C18.75%2017.6307%2017.6307%2018.75%2016.25%2018.75H14.375C7.12626%2018.75%201.25%2012.8737%201.25%205.625V3.75Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
-                +1 (123) 456-7890
+                <?= htmlspecialcharsbx($estateinContacts['phone_display']) ?>
               </span>
             </a>
 
@@ -651,16 +614,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               class="office-card__contact-tag"
               href="https://www.google.com/maps/search/?api=1&query=456+Urban+Avenue+Metropolis"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               <img
                 class="office-card__contact-icon"
                 src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9.61646%2018.6259C9.64163%2018.6405%209.66141%2018.6517%209.67542%2018.6596L9.69869%2018.6726C9.88441%2018.7745%2010.1148%2018.7738%2010.3007%2018.6729L10.3246%2018.6596C10.3386%2018.6517%2010.3584%2018.6405%2010.3835%2018.6259C10.4339%2018.5967%2010.5058%2018.5542%2010.5963%2018.4985C10.7771%2018.3872%2011.0323%2018.223%2011.3372%2018.0076C11.9459%2017.5776%2012.7581%2016.9395%2013.5721%2016.1061C15.1922%2014.4474%2016.875%2011.9551%2016.875%208.75C16.875%204.95304%2013.797%201.875%2010%201.875C6.20304%201.875%203.125%204.95304%203.125%208.75C3.125%2011.9551%204.80777%2014.4474%206.42788%2016.1061C7.24188%2016.9395%208.05409%2017.5776%208.66282%2018.0076C8.96771%2018.223%209.22295%2018.3872%209.40375%2018.4985C9.49419%2018.5542%209.56612%2018.5967%209.61646%2018.6259ZM10%2011.25C11.3807%2011.25%2012.5%2010.1307%2012.5%208.75C12.5%207.36929%2011.3807%206.25%2010%206.25C8.61929%206.25%207.5%207.36929%207.5%208.75C7.5%2010.1307%208.61929%2011.25%2010%2011.25Z'%20fill='white'/%3e%3c/svg%3e"
                 alt=""
                 width="20"
                 height="20"
-                aria-hidden="true"
-              />
+                aria-hidden="true" />
               <span class="office-card__contact-value">
                 Metropolis
               </span>
@@ -671,8 +632,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             class="office-card__button"
             href="https://www.google.com/maps/search/?api=1&query=456+Urban+Avenue+Metropolis"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             Get Direction
           </a>
         </li>
@@ -681,14 +641,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       <p
         class="contacts-offices__empty"
         data-js-offices-empty
-        hidden
-      >
+        hidden>
         No offices are available in this category yet.
       </p>
     </div>
   </div>
 </section>
-    <section class="contacts-gallery" id="contacts-gallery" aria-labelledby="contacts-gallery-title">
+<section class="contacts-gallery" id="contacts-gallery" aria-labelledby="contacts-gallery-title">
   <div class="contacts-gallery__container container">
 
     <div class="contacts-gallery__box">
@@ -698,7 +657,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <li class="contacts-gallery-grid__item contacts-gallery-grid__item--office">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/gallery-office-laptop-DS6yG2SP.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/gallery-office-B9-MjSc1.webp" alt="Estatein open space office with modern workstations" width="718" height="342" loading="lazy">
             </picture>
@@ -706,7 +665,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-1">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-1-laptop-CDSkEdGC.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-1-2RMZxMQ6.webp" alt="Four Estatein professionals smiling in business suits" width="554" height="212" loading="lazy">
             </picture>
@@ -714,7 +673,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-2">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-2-laptop-D0YbfjTn.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-2-UjUMwwr2.webp" alt="Estatein team meeting at a large conference table top view" width="554" height="318" loading="lazy">
             </picture>
@@ -722,7 +681,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-3">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-3-laptop-DMoQHAjv.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-3-BuNO3V4U.webp" alt="Three corporate team members smiling in the office" width="262" height="318" loading="lazy">
             </picture>
@@ -730,7 +689,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-4">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-4-laptop-BuaAYy9g.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-4-DydF-bls.webp" alt="Estatein corporate partners posing for a photo" width="262" height="318" loading="lazy">
             </picture>
@@ -751,7 +710,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <div class="contacts-gallery-info__handshake">
             <picture class="contacts-gallery-grid__picture">
-              
+
               <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/gallery-handshake-laptop-Cuttj2d1.webp">
               <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/gallery-handshake-jjgCqmPn.webp" alt="Man and woman shaking hands in agreement during a business meeting" width="554" height="388" loading="lazy">
             </picture>

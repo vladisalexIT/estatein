@@ -394,7 +394,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__social-link"
-            href="#"
+            href="https://vk.ru/vladhasmatrix"
             aria-label="Max Mitchell on Twitter"
           >
             <img
@@ -448,7 +448,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__social-link"
-            href="#"
+            href="https://vk.ru/vladhasmatrix"
             aria-label="Sarah Jenkins on Twitter"
           >
             <img
@@ -467,7 +467,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__contact-link"
-            href="/contacts/?agent=max-mitchell#contact-form"
+            href="/contacts/?agent=sarah-jenkins#contact-form"
             aria-label="Send a message to Sarah Jenkins"
           >
             <span class="team-card__contact-text">
@@ -502,7 +502,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__social-link"
-            href="#"
+            href="https://vk.ru/vladhasmatrix"
             aria-label="David Roberts on Twitter"
           >
             <img
@@ -521,7 +521,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__contact-link"
-            href="/contacts/?agent=max-mitchell#contact-form"
+            href="/contacts/?agent=david-roberts#contact-form"
             aria-label="Send a message to David Roberts"
           >
             <span class="team-card__contact-text">
@@ -556,7 +556,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__social-link"
-            href="#"
+            href="https://vk.ru/vladhasmatrix"
             aria-label="Elena Rostova on Twitter"
           >
             <img
@@ -575,7 +575,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
           <a
             class="team-card__contact-link"
-            href="/contacts/?agent=max-mitchell#contact-form"
+            href="/contacts/?agent=elena-rostova#contact-form"
             aria-label="Send a message to Elena Rostova"
           >
             <span class="team-card__contact-text">
@@ -662,6 +662,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -737,6 +738,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -811,6 +813,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -886,6 +889,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -960,6 +964,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -1035,6 +1040,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -1109,6 +1115,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -1184,6 +1191,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -1258,6 +1266,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
@@ -1333,6 +1342,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   class="client-card__link"
                   href="/properties/#property-listings"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span>View Related Properties</span>
                   <span class="visually-hidden">
