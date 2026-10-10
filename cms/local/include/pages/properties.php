@@ -2,7 +2,18 @@
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+
+$estateinConfig = require $_SERVER['DOCUMENT_ROOT']
+    . '/local/config/estatein.php';
+
+require_once $_SERVER['DOCUMENT_ROOT']
+    . '/local/include/estatein/property-data.php';
+
+$estateinAllProperties = estateinGetProperties(
+    (int)($estateinConfig['properties_iblock_id'] ?? 0)
+);
 ?>
+
 <section class="properties-hero" aria-labelledby="properties-hero-title">
     <div class="properties-hero__intro">
         <div class="properties-hero__container container">
@@ -158,264 +169,15 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </header>
 
         <div class="properties-listings__slider slider swiper" data-js-slider-swiper aria-label="Available properties">
-            <ul class="swiper-wrapper" role="list">
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/seaside-serenity-villa-j9R8ufbp.webp"
-                            alt="Seaside Serenity Villa with a swimming pool" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                Coastal Escapes — Where Waves Beckon
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Seaside Serenity Villa
-                            </h3>
-
-                            <p class="property-card__description">
-                                A stunning 4-bedroom, 3-bathroom villa in a
-                                peaceful suburban neighborhood...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $550,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Seaside Serenity Villa">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/metropolitan-haven-vj8lBgFz.webp"
-                            alt="Modern Metropolitan Haven apartment interior" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                Urban Oasis — Life in the Heart of the City
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Metropolitan Haven
-                            </h3>
-
-                            <p class="property-card__description">
-                                A chic and fully-furnished 2-bedroom apartment
-                                with panoramic city views...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $550,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Metropolitan Haven">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/rustic-retreat-cottage-CT2jpoR6.webp"
-                            alt="Rustic Retreat Cottage exterior" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                Countryside Charm — Escape to Nature's Embrace
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Rustic Retreat Cottage
-                            </h3>
-
-                            <p class="property-card__description">
-                                An elegant 3-bedroom cottage located in a quiet
-                                and welcoming community...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $550,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Rustic Retreat Cottage">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/seaside-serenity-villa-j9R8ufbp.webp"
-                            alt="Modern villa with outdoor recreation area" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                Coastal Living — Designed for Relaxation
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Coastal Elegance
-                            </h3>
-
-                            <p class="property-card__description">
-                                A sophisticated coastal residence designed for
-                                comfort, privacy and relaxed living...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $620,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Coastal Elegance">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/metropolitan-haven-vj8lBgFz.webp"
-                            alt="Contemporary city apartment" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                City Living — Everything Within Reach
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Urban Vista Apartment
-                            </h3>
-
-                            <p class="property-card__description">
-                                A contemporary city apartment with elegant
-                                finishes and convenient access to local amenities...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $480,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Urban Vista Apartment">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
-
-                <li class="slider__slide swiper-slide">
-                    <article class="property-card">
-                        <img class="property-card__image"
-                            src="/local/templates/estatein/assets/rustic-retreat-cottage-CT2jpoR6.webp"
-                            alt="Comfortable countryside cottage" width="512" height="318" loading="lazy"
-                            decoding="async" />
-
-                        <div class="property-card__body">
-                            <p class="property-card__eyebrow">
-                                Rural Retreat — Surrounded by Nature
-                            </p>
-
-                            <h3 class="property-card__title">
-                                Countryside Haven
-                            </h3>
-
-                            <p class="property-card__description">
-                                A comfortable countryside home surrounded by
-                                greenery and designed for peaceful family living...
-                                <a class="property-card__description-link" href="/property-details/">
-                                    Read More
-                                </a>
-                            </p>
-
-                            <div class="property-card__footer">
-                                <p class="property-card__price">
-                                    <span class="property-card__price-label">
-                                        Price
-                                    </span>
-                                    <strong class="property-card__price-value">
-                                        $395,000
-                                    </strong>
-                                </p>
-
-                                <a class="property-card__button button button--accent" href="/property-details/"
-                                    aria-label="View details for Countryside Haven">
-                                    View Property Details
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </li>
+            <ul class="swiper-wrapper">
+                <?php foreach ($estateinAllProperties as $estateinProperty): ?>
+                    <li class="swiper-slide">
+                        <?php
+                        include $_SERVER['DOCUMENT_ROOT']
+                            . '/local/include/estatein/property-card.php';
+                        ?>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
 
