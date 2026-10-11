@@ -12,6 +12,216 @@ require_once $_SERVER['DOCUMENT_ROOT']
 $estateinAllProperties = estateinGetProperties(
     (int)($estateinConfig['properties_iblock_id'] ?? 0)
 );
+
+$estateinReadGet = static function (string $name): string {
+    $value = $_GET[$name] ?? '';
+
+    return is_string($value)
+        ? trim($value)
+        : '';
+};
+
+$estateinNormalizeOption = static function (string $value): string {
+    $value = mb_strtolower(trim($value), 'UTF-8');
+    $value = preg_replace('/[\s_]+/u', '-', $value);
+
+    return preg_replace('/[^a-z0-9-]/', '', $value);
+};
+
+$estateinAllowedFilters = [
+    'location' => [
+        '',
+        'new-york',
+        'california',
+        'florida',
+    ],
+    'type' => [
+        '',
+        'house',
+        'apartment',
+        'villa',
+    ],
+    'price' => [
+        '',
+        '0-250000',
+        '250000-500000',
+        '500000-plus',
+    ],
+    'size' => [
+        '',
+        'small',
+        'medium',
+        'large',
+    ],
+    'build-year' => [
+        '',
+        '2020-plus',
+        '2010-2019',
+        'before-2010',
+    ],
+];
+
+$estateinFilters = [
+    'query' => mb_substr(
+        $estateinReadGet('query'),
+        0,
+        100,
+        'UTF-8'
+    ),
+];
+
+foreach ($estateinAllowedFilters as $name => $allowedValues) {
+    $value = $estateinReadGet($name);
+
+    $estateinFilters[$name] = in_array(
+        $value,
+        $allowedValues,
+        true
+    )
+        ? $value
+        : '';
+}
+
+$estateinProperties = array_values(
+    array_filter(
+        $estateinAllProperties,
+        static function (array $property) use (
+            $estateinFilters,
+            $estateinNormalizeOption
+        ): bool {
+            if ($estateinFilters['query'] !== '') {
+                $searchText = mb_strtolower(
+                    implode(
+                        ' ',
+                        array_filter([
+                            $property['title'] ?? '',
+                            $property['description'] ?? '',
+                            $property['type'] ?? '',
+                            $property['location'] ?? '',
+                        ])
+                    ),
+                    'UTF-8'
+                );
+
+                $query = mb_strtolower(
+                    $estateinFilters['query'],
+                    'UTF-8'
+                );
+
+                if (mb_stripos($searchText, $query) === false) {
+                    return false;
+                }
+            }
+
+            if (
+                $estateinFilters['location'] !== '' &&
+                $estateinNormalizeOption(
+                    (string)($property['location'] ?? '')
+                ) !== $estateinFilters['location']
+            ) {
+                return false;
+            }
+
+            if (
+                $estateinFilters['type'] !== '' &&
+                $estateinNormalizeOption(
+                    (string)($property['type'] ?? '')
+                ) !== $estateinFilters['type']
+            ) {
+                return false;
+            }
+
+            if ($estateinFilters['price'] !== '') {
+                $price = $property['price_value'] ?? null;
+
+                if ($price === null) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['price'] === '0-250000' &&
+                    $price > 250000
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['price'] === '250000-500000' &&
+                    ($price < 250000 || $price > 500000)
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['price'] === '500000-plus' &&
+                    $price < 500000
+                ) {
+                    return false;
+                }
+            }
+
+            if ($estateinFilters['size'] !== '') {
+                $size = $property['size_value'] ?? null;
+
+                if ($size === null) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['size'] === 'small' &&
+                    $size > 1000
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['size'] === 'medium' &&
+                    ($size <= 1000 || $size > 2500)
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['size'] === 'large' &&
+                    $size <= 2500
+                ) {
+                    return false;
+                }
+            }
+
+            if ($estateinFilters['build-year'] !== '') {
+                $buildYear = $property['build_year'] ?? null;
+
+                if ($buildYear === null) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['build-year'] === '2020-plus' &&
+                    $buildYear < 2020
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['build-year'] === '2010-2019' &&
+                    ($buildYear < 2010 || $buildYear > 2019)
+                ) {
+                    return false;
+                }
+
+                if (
+                    $estateinFilters['build-year'] === 'before-2010' &&
+                    $buildYear >= 2010
+                ) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    )
+);
 ?>
 
 <section class="properties-hero" aria-labelledby="properties-hero-title">
@@ -32,16 +242,24 @@ $estateinAllProperties = estateinGetProperties(
     </div>
 
     <div class="properties-search container">
-        <form class="properties-search__form" data-js-form data-form-kind="search" action="/properties/"
-            method="get" role="search" novalidate>
+        <form class="properties-search__form"
+            action="<?= htmlspecialcharsbx(SITE_DIR . 'properties/') ?>"
+            method="get"
+            role="search">
             <div class="properties-search__primary">
                 <label class="properties-search__input-wrapper" for="properties-search-query">
                     <span class="visually-hidden">
                         Search for a property
                     </span>
 
-                    <input class="properties-search__input" id="properties-search-query" name="query" type="search"
-                        placeholder="Search For A Property" autocomplete="off" maxlength="100" />
+                    <input class="properties-search__input"
+                        id="properties-search-query"
+                        name="query"
+                        type="search"
+                        placeholder="Search For A Property"
+                        autocomplete="off"
+                        maxlength="100"
+                        value="<?= htmlspecialcharsbx($estateinFilters['query']) ?>" />
                 </label>
 
                 <button class="properties-search__submit button button--accent" type="submit">
@@ -64,10 +282,18 @@ $estateinAllProperties = estateinGetProperties(
 
                     <select class="properties-search__select js-custom-select" id="property-location" name="location"
                         aria-label="Location">
-                        <option value="">Location</option>
-                        <option value="new-york">New York</option>
-                        <option value="california">California</option>
-                        <option value="florida">Florida</option>
+                        <option value="" <?= $estateinFilters['location'] === '' ? ' selected' : '' ?>>
+                            Location
+                        </option>
+                        <option value="new-york" <?= $estateinFilters['location'] === 'new-york' ? ' selected' : '' ?>>
+                            New York
+                        </option>
+                        <option value="california" <?= $estateinFilters['location'] === 'california' ? ' selected' : '' ?>>
+                            California
+                        </option>
+                        <option value="florida" <?= $estateinFilters['location'] === 'florida' ? ' selected' : '' ?>>
+                            Florida
+                        </option>
                     </select>
                 </div>
 
@@ -81,10 +307,18 @@ $estateinAllProperties = estateinGetProperties(
 
                     <select class="properties-search__select js-custom-select" id="property-type" name="type"
                         aria-label="Property type">
-                        <option value="">Property Type</option>
-                        <option value="house">House</option>
-                        <option value="apartment">Apartment</option>
-                        <option value="villa">Villa</option>
+                        <option value="" <?= $estateinFilters['type'] === '' ? ' selected' : '' ?>>
+                            Property Type
+                        </option>
+                        <option value="house" <?= $estateinFilters['type'] === 'house' ? ' selected' : '' ?>>
+                            House
+                        </option>
+                        <option value="apartment" <?= $estateinFilters['type'] === 'apartment' ? ' selected' : '' ?>>
+                            Apartment
+                        </option>
+                        <option value="villa" <?= $estateinFilters['type'] === 'villa' ? ' selected' : '' ?>>
+                            Villa
+                        </option>
                     </select>
                 </div>
 
@@ -98,12 +332,16 @@ $estateinAllProperties = estateinGetProperties(
 
                     <select class="properties-search__select js-custom-select" id="property-price" name="price"
                         aria-label="Price range">
-                        <option value="">Pricing Range</option>
-                        <option value="0-250000">Up to $250,000</option>
-                        <option value="250000-500000">
+                        <option value="" <?= $estateinFilters['price'] === '' ? ' selected' : '' ?>>
+                            Pricing Range
+                        </option>
+                        <option value="0-250000" <?= $estateinFilters['price'] === '0-250000' ? ' selected' : '' ?>>
+                            Up to $250,000
+                        </option>
+                        <option value="250000-500000" <?= $estateinFilters['price'] === '250000-500000' ? ' selected' : '' ?>>
                             $250,000–$500,000
                         </option>
-                        <option value="500000-plus">
+                        <option value="500000-plus" <?= $estateinFilters['price'] === '500000-plus' ? ' selected' : '' ?>>
                             $500,000 and above
                         </option>
                     </select>
@@ -119,10 +357,18 @@ $estateinAllProperties = estateinGetProperties(
 
                     <select class="properties-search__select js-custom-select" id="property-size" name="size"
                         aria-label="Property size">
-                        <option value="">Property Size</option>
-                        <option value="small">Up to 1,000 sq ft</option>
-                        <option value="medium">1,000–2,500 sq ft</option>
-                        <option value="large">2,500 sq ft and above</option>
+                        <option value="" <?= $estateinFilters['size'] === '' ? ' selected' : '' ?>>
+                            Property Size
+                        </option>
+                        <option value="small" <?= $estateinFilters['size'] === 'small' ? ' selected' : '' ?>>
+                            Up to 1,000 sq ft
+                        </option>
+                        <option value="medium" <?= $estateinFilters['size'] === 'medium' ? ' selected' : '' ?>>
+                            1,000–2,500 sq ft
+                        </option>
+                        <option value="large" <?= $estateinFilters['size'] === 'large' ? ' selected' : '' ?>>
+                            2,500 sq ft and above
+                        </option>
                     </select>
                 </div>
 
@@ -136,10 +382,18 @@ $estateinAllProperties = estateinGetProperties(
 
                     <select class="properties-search__select js-custom-select" id="property-build-year"
                         name="build-year" aria-label="Build year">
-                        <option value="">Build Year</option>
-                        <option value="2020-plus">2020 and newer</option>
-                        <option value="2010-2019">2010–2019</option>
-                        <option value="before-2010">Before 2010</option>
+                        <option value="" <?= $estateinFilters['build-year'] === '' ? ' selected' : '' ?>>
+                            Build Year
+                        </option>
+                        <option value="2020-plus" <?= $estateinFilters['build-year'] === '2020-plus' ? ' selected' : '' ?>>
+                            2020 and newer
+                        </option>
+                        <option value="2010-2019" <?= $estateinFilters['build-year'] === '2010-2019' ? ' selected' : '' ?>>
+                            2010–2019
+                        </option>
+                        <option value="before-2010" <?= $estateinFilters['build-year'] === 'before-2010' ? ' selected' : '' ?>>
+                            Before 2010
+                        </option>
                     </select>
                 </div>
             </div>
@@ -168,43 +422,57 @@ $estateinAllProperties = estateinGetProperties(
             ?>
         </header>
 
-        <div class="properties-listings__slider slider swiper" data-js-slider-swiper aria-label="Available properties">
-            <ul class="swiper-wrapper">
-                <?php foreach ($estateinAllProperties as $estateinProperty): ?>
-                    <li class="swiper-slide">
-                        <?php
-                        include $_SERVER['DOCUMENT_ROOT']
-                            . '/local/include/estatein/property-card.php';
-                        ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-
-        <footer class="properties-listings__footer slider__footer">
-            <p class="slider__counter" aria-live="polite" aria-atomic="true">
-                <span class="slider__counter-current" data-js-slider-current>
-                    01
-                </span>
-                <span aria-hidden="true"> of </span>
-                <span class="visually-hidden">of</span>
-                <span data-js-slider-total>01</span>
-            </p>
-
-            <div class="slider__navigation" aria-label="Property slider controls">
-                <button class="slider__button slider__button--previous" type="button" data-js-slider-prev>
-                    <span class="visually-hidden">
-                        Previous property
-                    </span>
-                </button>
-
-                <button class="slider__button slider__button--next" type="button" data-js-slider-next>
-                    <span class="visually-hidden">
-                        Next property
-                    </span>
-                </button>
+        <?php if ($estateinProperties): ?>
+            <div class="properties-listings__slider slider swiper" data-js-slider-swiper aria-label="Available properties">
+                <ul class="swiper-wrapper">
+                    <?php foreach ($estateinProperties as $estateinProperty): ?>
+                        <li class="swiper-slide">
+                            <?php
+                            include $_SERVER['DOCUMENT_ROOT']
+                                . '/local/include/estatein/property-card.php';
+                            ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
-        </footer>
+            <footer class="properties-listings__footer slider__footer">
+                <p class="slider__counter" aria-live="polite" aria-atomic="true">
+                    <span class="slider__counter-current" data-js-slider-current>
+                        01
+                    </span>
+                    <span aria-hidden="true"> of </span>
+                    <span class="visually-hidden">of</span>
+                    <span data-js-slider-total>01</span>
+                </p>
+
+                <div class="slider__navigation" aria-label="Property slider controls">
+                    <button class="slider__button slider__button--previous" type="button" data-js-slider-prev>
+                        <span class="visually-hidden">
+                            Previous property
+                        </span>
+                    </button>
+
+                    <button class="slider__button slider__button--next" type="button" data-js-slider-next>
+                        <span class="visually-hidden">
+                            Next property
+                        </span>
+                    </button>
+                </div>
+            </footer>
+        <?php else: ?>
+            <div
+                class="properties-listings__empty"
+                role="status"
+                aria-live="polite">
+                <p class="properties-listings__empty-title">
+                    No properties found
+                </p>
+
+                <p class="properties-listings__empty-text">
+                    Try changing the search criteria to see more properties.
+                </p>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 <section class="property-inquiry" id="inquiry" aria-labelledby="property-inquiry-title">

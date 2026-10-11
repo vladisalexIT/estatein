@@ -16,7 +16,9 @@ if (!function_exists('estateinGetPropertyValue')) {
                 continue;
             }
 
-            $value = $properties[$code]['VALUE'] ?? '';
+            $value = $properties[$code]['VALUE_ENUM']
+                ?? $properties[$code]['VALUE']
+                ?? '';
 
             if (is_array($value)) {
                 $value = implode(', ', $value);
@@ -74,6 +76,31 @@ if (!function_exists('estateinFormatPrice')) {
             '.',
             ','
         );
+    }
+}
+
+if (!function_exists('estateinGetNumericPropertyValue')) {
+    function estateinGetNumericPropertyValue(
+        array $properties,
+        array $codes
+    ): ?float {
+        $value = estateinGetPropertyValue($properties, $codes);
+
+        if ($value === '') {
+            return null;
+        }
+
+        $digits = preg_replace(
+            '/[^\d.]/',
+            '',
+            str_replace(',', '', $value)
+        );
+
+        if ($digits === '' || !is_numeric($digits)) {
+            return null;
+        }
+
+        return (float)$digits;
     }
 }
 
@@ -199,6 +226,35 @@ if (!function_exists('estateinGetProperties')) {
                 ),
                 'type' => $propertyType,
                 'price' => estateinFormatPrice($price),
+                'price_value' => estateinGetNumericPropertyValue(
+                    $elementProperties,
+                    [
+                        'PRICE',
+                        'PROPERTY_PRICE',
+                        'COST',
+                    ]
+                ),
+                'location' => estateinGetPropertyValue(
+                    $elementProperties,
+                    [
+                        'LOCATION',
+                    ]
+                ),
+                'size_value' => estateinGetNumericPropertyValue(
+                    $elementProperties,
+                    [
+                        'SIZE',
+                        'PROPERTY_SIZE',
+                        'AREA',
+                    ]
+                ),
+                'build_year' => estateinGetNumericPropertyValue(
+                    $elementProperties,
+                    [
+                        'BUILD_YEAR',
+                        'YEAR_BUILT',
+                    ]
+                ),
                 'url' => SITE_DIR . 'property-details/',
             ];
         }

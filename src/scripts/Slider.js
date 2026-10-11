@@ -268,11 +268,43 @@ class Slider {
 
 class SliderCollection {
     constructor() {
-        document
-            .querySelectorAll('[data-js-slider]')
-            .forEach((rootElement) => {
-                new Slider(rootElement)
-            })
+        this.init(document)
+
+        document.addEventListener(
+            'estatein:property-listings-updated',
+            (event) => {
+                const rootElement =
+                    event.detail?.rootElement
+
+                if (rootElement) {
+                    this.init(rootElement)
+                }
+            }
+        )
+    }
+
+    init(scope) {
+        const rootElements =
+            scope instanceof Element &&
+                scope.matches('[data-js-slider]')
+                ? [scope]
+                : scope.querySelectorAll(
+                    '[data-js-slider]'
+                )
+
+        rootElements.forEach((rootElement) => {
+            if (
+                rootElement.dataset.sliderInitialized ===
+                'true'
+            ) {
+                return
+            }
+
+            rootElement.dataset.sliderInitialized =
+                'true'
+
+            new Slider(rootElement)
+        })
     }
 }
 

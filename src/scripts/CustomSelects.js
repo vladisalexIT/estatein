@@ -42,6 +42,8 @@ export default class CustomSelects {
                 removeItemButton: false,
             })
 
+            select._estateinChoices = instance
+
             const choicesElement = select.closest('.choices')
 
             if (!choicesElement) {
