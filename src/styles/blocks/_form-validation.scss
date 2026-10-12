@@ -73,3 +73,21 @@
     cursor: wait;
   }
 }
+// A trap for automated submissions; never shown to visitors.
+.form-honeypot {
+  display: none !important;
+}
+
+.form-submission-error:not([hidden]) {
+  width: 100%;
+  margin-top: rem(16);
+}
+
+.form-subscribe__agreement {
+  margin-top: rem(12);
+
+  .agreement__label {
+    font-size: fluid(16, 14);
+    line-height: 1.5;
+  }
+}

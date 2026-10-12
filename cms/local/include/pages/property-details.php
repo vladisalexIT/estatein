@@ -794,7 +794,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       </div>
 
       <div class="property-details-inquiry__form-card">
-        <form class="property-details-inquiry__form" data-js-form action="" method="post" autocomplete="on" novalidate>
+        <form class="property-details-inquiry__form" data-js-form action="/local/ajax/estatein-form.php" method="post" autocomplete="on" novalidate>
+<?php $estateinFormType = 'property_details'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+
           <div class="property-details-inquiry__fields">
             <div class="form-field">
               <label class="form-field__label" for="property-details-first-name">
@@ -802,7 +804,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               </label>
 
               <input class="form-field__control" id="property-details-first-name" name="first_name" type="text"
-                placeholder="Enter First Name" autocomplete="given-name" required />
+                placeholder="Enter First Name" autocomplete="given-name" required maxlength="100" />
               <div data-js-form-field-errors></div>
             </div>
 
@@ -812,7 +814,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               </label>
 
               <input class="form-field__control" id="property-details-last-name" name="last_name" type="text"
-                placeholder="Enter Last Name" autocomplete="family-name" required />
+                placeholder="Enter Last Name" autocomplete="family-name" required maxlength="100" />
               <div data-js-form-field-errors></div>
             </div>
 
@@ -822,7 +824,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               </label>
 
               <input class="form-field__control" id="property-details-email" name="email" type="email"
-                placeholder="Enter your Email" autocomplete="email" inputmode="email" required />
+                placeholder="Enter your Email" autocomplete="email" inputmode="email" required maxlength="254" />
               <div data-js-form-field-errors></div>
             </div>
 
@@ -831,7 +833,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 Phone
               </label>
               <input class="form-field__control" id="property-details-phone" name="phone" type="tel"
-                placeholder="Enter Phone Number" autocomplete="tel" inputmode="tel" required />
+                placeholder="Enter Phone Number" autocomplete="tel" inputmode="tel" required maxlength="25" />
               <div data-js-form-field-errors></div>
             </div>
 
@@ -865,7 +867,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               </label>
 
               <textarea class="form-field__control form-field__control--textarea" id="property-details-message"
-                name="message" placeholder="Enter your Message here..." rows="5" required></textarea>
+                name="message" placeholder="Enter your Message here..." rows="5" required maxlength="5000"></textarea>
               <div data-js-form-field-errors></div>
             </div>
           </div>
@@ -892,7 +894,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Send Your Message
             </button>
           </div>
-        </form>
+        
+      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+</form>
       </div>
     </div>
   </div>

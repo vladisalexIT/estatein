@@ -494,15 +494,17 @@ $estateinProperties = array_values(
             ?>
         </header>
 
-        <form class="property-inquiry__form" data-js-form action="" method="post" novalidate>
+        <form class="property-inquiry__form" data-js-form action="/local/ajax/estatein-form.php" method="post" novalidate>
+<?php $estateinFormType = 'property_inquiry'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+
             <div class="property-inquiry__grid">
                 <div class="form-field">
                     <label class="form-field__label" for="inquiry-first-name">
                         First Name
                     </label>
 
-                    <input class="form-field__control" id="inquiry-first-name" name="first-name" type="text"
-                        placeholder="Enter First Name" autocomplete="given-name" required />
+                    <input class="form-field__control" id="inquiry-first-name" name="first_name" type="text"
+                        placeholder="Enter First Name" autocomplete="given-name" required maxlength="100" />
                     <div data-js-form-field-errors></div>
                 </div>
 
@@ -511,8 +513,8 @@ $estateinProperties = array_values(
                         Last Name
                     </label>
 
-                    <input class="form-field__control" id="inquiry-last-name" name="last-name" type="text"
-                        placeholder="Enter Last Name" autocomplete="family-name" required />
+                    <input class="form-field__control" id="inquiry-last-name" name="last_name" type="text"
+                        placeholder="Enter Last Name" autocomplete="family-name" required maxlength="100" />
                     <div data-js-form-field-errors></div>
                 </div>
 
@@ -522,7 +524,7 @@ $estateinProperties = array_values(
                     </label>
 
                     <input class="form-field__control" id="inquiry-email" name="email" type="email" placeholder="Enter your Email"
-                        autocomplete="email" inputmode="email" required />
+                        autocomplete="email" inputmode="email" required maxlength="254" />
                     <div data-js-form-field-errors></div>
                 </div>
 
@@ -532,7 +534,7 @@ $estateinProperties = array_values(
                     </label>
 
                     <input class="form-field__control" id="inquiry-phone" name="phone" type="tel" placeholder="Enter Phone Number"
-                        autocomplete="tel" inputmode="tel" required />
+                        autocomplete="tel" inputmode="tel" required maxlength="25" />
                     <div data-js-form-field-errors></div>
                 </div>
 
@@ -557,7 +559,7 @@ $estateinProperties = array_values(
                     </label>
 
                     <select class="form-field__control form-field__control--select js-custom-select" id="inquiry-type"
-                        name="property-type" data-select-theme="form" required>
+                        name="property_type" data-select-theme="form" required>
                         <option value="">Select Property Type</option>
                         <option value="house">House</option>
                         <option value="apartment">Apartment</option>
@@ -627,7 +629,7 @@ $estateinProperties = array_values(
                                 Enter Your Number
                             </span>
 
-                            <input class="contact-method__radio" type="radio" name="contact-method" value="phone"
+                            <input class="contact-method__radio" type="radio" name="contact_method" value="phone"
                                 aria-label="Contact me by phone" checked />
                         </label>
 
@@ -639,7 +641,7 @@ $estateinProperties = array_values(
                                 Enter Your Email
                             </span>
 
-                            <input class="contact-method__radio" type="radio" name="contact-method" value="email"
+                            <input class="contact-method__radio" type="radio" name="contact_method" value="email"
                                 aria-label="Contact me by email" />
                         </label>
                     </div>
@@ -651,7 +653,7 @@ $estateinProperties = array_values(
                     </label>
 
                     <textarea class="form-field__control form-field__control--textarea" id="inquiry-message" name="message"
-                        placeholder="Enter your Message here..." rows="5" required></textarea>
+                        placeholder="Enter your Message here..." rows="5" required maxlength="5000"></textarea>
                     <div data-js-form-field-errors></div>
                 </div>
             </div>
@@ -678,6 +680,8 @@ $estateinProperties = array_values(
                     Send Your Message
                 </button>
             </div>
-        </form>
+        
+      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+</form>
     </div>
 </section>

@@ -33,8 +33,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           <img class="logo__image" src="/local/templates/estatein/assets/logo-C2oo80JO.svg" alt="Estatein — Home" width="160" height="48">
         </a>
 
-        <form class="footer__form form-subscribe" data-js-form data-form-kind="newsletter" action="" method="post"
+        <form class="footer__form form-subscribe" data-js-form data-form-kind="newsletter" action="/local/ajax/estatein-form.php" method="post"
           novalidate>
+<?php $estateinFormType = 'newsletter'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+
           <label class="visually-hidden" for="footer-subscribe-email">
             Email address
           </label>
@@ -44,14 +46,22 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               aria-hidden="true">
 
             <input class="form-subscribe__input" id="footer-subscribe-email" name="email" type="email"
-              placeholder="Enter Your Email" autocomplete="email" inputmode="email" required>
+              placeholder="Enter Your Email" autocomplete="email" inputmode="email" required maxlength="254">
 
             <button class="form-subscribe__submit" type="submit" aria-label="Subscribe to the newsletter">
               <img src="data:image/svg+xml,%3csvg%20width='30'%20height='30'%20viewBox='0%200%2030%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M26.7843%203.22287C26.1593%202.58412%2025.2343%202.34787%2024.3718%202.59787L4.25928%208.40912C3.34928%208.66162%202.70428%209.38287%202.53053%2010.2979C2.35303%2011.2304%202.97303%2012.4154%203.78303%2012.9104L10.0718%2016.7504C10.7168%2017.1454%2011.5493%2017.0466%2012.083%2016.5116L19.2843%209.31037C19.6468%208.93412%2020.2468%208.93412%2020.6093%209.31037C20.9718%209.67162%2020.9718%2010.2604%2020.6093%2010.6354L13.3955%2017.8366C12.8605%2018.3716%2012.7605%2019.2016%2013.1543%2019.8479L16.9968%2026.1604C17.4468%2026.9091%2018.2218%2027.3354%2019.0718%2027.3354C19.1718%2027.3354%2019.2843%2027.3354%2019.3843%2027.3216C20.3593%2027.1979%2021.1343%2026.5341%2021.4218%2025.5966L27.3843%205.63537C27.6468%204.78537%2027.4093%203.86037%2026.7843%203.22287Z'%20fill='white'/%3e%3cpath%20opacity='0.4'%20d='M11.8145%2023.928C12.1795%2024.2942%2012.1795%2024.888%2011.8145%2025.2542L10.107%2026.9605C9.92448%2027.1442%209.68448%2027.2355%209.44448%2027.2355C9.20448%2027.2355%208.96448%2027.1442%208.78198%2026.9605C8.41573%2026.5942%208.41573%2026.0017%208.78198%2025.6355L10.4882%2023.928C10.8545%2023.563%2011.4482%2023.563%2011.8145%2023.928ZM10.8349%2019.193C11.1999%2019.5592%2011.1999%2020.153%2010.8349%2020.5192L9.12736%2022.2255C8.94486%2022.4092%208.70486%2022.5005%208.46486%2022.5005C8.22486%2022.5005%207.98486%2022.4092%207.80236%2022.2255C7.43611%2021.8592%207.43611%2021.2667%207.80236%2020.9005L9.50861%2019.193C9.87486%2018.828%2010.4686%2018.828%2010.8349%2019.193ZM6.13336%2017.7025C6.49836%2018.0687%206.49836%2018.6625%206.13336%2019.0287L4.42586%2020.735C4.24336%2020.9187%204.00336%2021.01%203.76336%2021.01C3.52336%2021.01%203.28336%2020.9187%203.10086%2020.735C2.73461%2020.3687%202.73461%2019.7762%203.10086%2019.41L4.80711%2017.7025C5.17336%2017.3375%205.76711%2017.3375%206.13336%2017.7025Z'%20fill='white'/%3e%3c/svg%3e" alt="" width="24" height="24" aria-hidden="true">
             </button>
           </div>
           <div data-js-form-field-errors></div>
-        </form>
+        
+          <div class="agreement form-subscribe__agreement">
+            <input class="agreement__checkbox visually-hidden" type="checkbox" id="footer-subscribe-consent" name="privacy_agreement" required>
+            <label class="agreement__label" for="footer-subscribe-consent">I agree to be contacted about Estatein updates.</label>
+            <div data-js-form-field-errors></div>
+          </div>
+
+      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+</form>
       </div>
 
       <nav class="footer__nav nav-footer" aria-label="Footer navigation">

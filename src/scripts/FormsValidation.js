@@ -6,15 +6,11 @@ export default class FormsValidation {
   successMessages = {
     inquiry: {
       title: 'Thank You for Getting in Touch!',
-      text: 'Your details have been collected successfully. This is a demo submission; no message has been sent.',
+      text: 'Your request has been received. Our team will contact you shortly.',
     },
     newsletter: {
-      title: 'Thanks for Your Interest!',
-      text: 'Your email address has been collected successfully. This is a demo; no newsletter subscription has been created.',
-    },
-    search: {
-      title: 'Demo Search Completed',
-      text: 'Your search criteria have been collected successfully. This demo does not filter the property listings.',
+      title: 'Thank You for Your Interest!',
+      text: 'Your request for Estatein updates has been received.',
     },
   }
 
@@ -54,9 +50,6 @@ export default class FormsValidation {
       return wrapper.querySelector(this.errorSelector)
     }
 
-    if (field.type === 'search') {
-      return field.form.querySelector('[data-search-errors]')
-    }
 
     return null
   }
@@ -119,19 +112,6 @@ export default class FormsValidation {
       field.setCustomValidity('Please complete this field.')
     }
 
-    if (
-      field.type === 'search' &&
-      field.form.dataset.formKind === 'search'
-    ) {
-      const hasFilter = [...field.form.querySelectorAll('select')]
-        .some((select) => !select.disabled && select.value !== '')
-
-      if (!field.value.trim() && !hasFilter) {
-        field.setCustomValidity(
-          'Enter a search term or choose a filter.',
-        )
-      }
-    }
 
     const { validity } = field
 
@@ -235,14 +215,6 @@ export default class FormsValidation {
       if (!this.isField(target)) return
 
       this.validateField(target)
-
-      if (form.dataset.formKind === 'search') {
-        const query = form.querySelector('input[type="search"]')
-
-        if (query?.getAttribute('aria-invalid') === 'true') {
-          this.validateField(query)
-        }
-      }
     })
 
     form.addEventListener('reset', () => {
@@ -259,28 +231,26 @@ export default class FormsValidation {
     })
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault()
 
     const form = event.currentTarget
 
     if (form.dataset.submitting === 'true') return
 
+    const status = form.querySelector('[data-js-form-submit-error]')
+    if (status) {
+      status.hidden = true
+      status.textContent = ''
+    }
+
     const invalidFields = this.getFields(form).filter((field) => {
       this.trimValue(field)
-
       return !this.validateField(field)
     })
 
     if (invalidFields.length) {
-      const control = this.getVisibleControl(invalidFields[0])
-
-      control.focus({ preventScroll: true })
-      control.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-
+      this.focusField(invalidFields[0])
       return
     }
 
@@ -289,13 +259,8 @@ export default class FormsValidation {
     const button = form.querySelector('button[type="submit"]')
     const buttonLabel = button?.querySelector('span') ?? button
     const originalText = buttonLabel?.textContent
-
-    if (import.meta.env.DEV) {
-      console.info(
-        'Demo form submission:',
-        Object.fromEntries(formData.entries()),
-      )
-    }
+    let firstInvalidField = null
+    let success = false
 
     form.dataset.submitting = 'true'
     form.setAttribute('aria-busy', 'true')
@@ -303,34 +268,76 @@ export default class FormsValidation {
 
     if (button) {
       button.disabled = true
-
-      if (kind !== 'newsletter') {
-        buttonLabel.textContent =
-          kind === 'search' ? 'Searching...' : 'Sending...'
-      }
+      if (kind !== 'newsletter') buttonLabel.textContent = 'Sending...'
     }
 
-    window.setTimeout(() => {
-      if (kind !== 'search') {
-        form.reset()
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+        headers: { Accept: 'application/json' },
+      })
+
+      const contentType = response.headers.get('content-type') ?? ''
+      if (!contentType.includes('application/json')) {
+        throw new Error('Unable to send your request. Please try again later.')
       }
 
+      const result = await response.json()
+
+      if (!response.ok || result.success !== true) {
+        const fields = this.getFields(form)
+        for (const [name, message] of Object.entries(result.errors ?? {})) {
+          const field = fields.find((item) => item.name === name)
+          if (!field || typeof message !== 'string') continue
+          this.showError(field, message)
+          firstInvalidField ??= field
+        }
+
+        throw new Error(
+          typeof result.message === 'string'
+            ? result.message
+            : 'Unable to send your request. Please try again later.',
+        )
+      }
+
+      form.reset()
+      success = true
+    } catch (error) {
+      if (status) {
+        status.textContent = error instanceof TypeError
+          ? 'Connection error. Please check your connection and try again.'
+          : error.message || 'Unable to send your request. Please try again later.'
+        status.hidden = false
+      }
+    } finally {
       delete form.dataset.submitting
       form.removeAttribute('aria-busy')
       form.inert = false
 
       if (button) {
         button.disabled = false
-
-        if (kind !== 'newsletter') {
-          buttonLabel.textContent = originalText
-        }
+        if (kind !== 'newsletter') buttonLabel.textContent = originalText
       }
+    }
 
-      const message =
-        this.successMessages[kind] ?? this.successMessages.inquiry
+    if (success) {
+      this.modal.open(
+        this.successMessages[kind] ?? this.successMessages.inquiry,
+        button,
+      )
+    } else if (firstInvalidField) {
+      this.focusField(firstInvalidField)
+    } else if (status && !status.hidden) {
+      status.focus({ preventScroll: true })
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }
 
-      this.modal.open(message, button)
-    }, 800)
+  focusField(field) {
+    const control = this.getVisibleControl(field)
+    control.focus({ preventScroll: true })
+    control.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 }

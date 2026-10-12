@@ -3,6 +3,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
 return array(
-    'css' => array('assets/main-Cu6THKRg.css'),
-    'js' => array('assets/main-28ry-DpI.js'),
+    'css' => array('assets/main-D59neYjL.css'),
+    'js' => array('assets/main-Bje_Uorm.js'),
 );

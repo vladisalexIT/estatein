@@ -164,10 +164,12 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
     <form
       class="contacts-form__body form-grid"
       data-js-form
-      action=""
+      action="/local/ajax/estatein-form.php"
       method="post"
       autocomplete="on"
       novalidate>
+<?php $estateinFormType = 'contacts'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+
       <div class="form-grid__fields">
         <div class="form-grid__item">
           <label
@@ -183,7 +185,7 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
             type="text"
             placeholder="Enter First Name"
             autocomplete="given-name"
-            required />
+            required maxlength="100" />
           <div data-js-form-field-errors></div>
         </div>
 
@@ -201,7 +203,7 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
             type="text"
             placeholder="Enter Last Name"
             autocomplete="family-name"
-            required />
+            required maxlength="100" />
           <div data-js-form-field-errors></div>
         </div>
 
@@ -220,7 +222,7 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
             placeholder="Enter your Email"
             autocomplete="email"
             inputmode="email"
-            required />
+            required maxlength="254" />
           <div data-js-form-field-errors></div>
         </div>
 
@@ -239,7 +241,7 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
             placeholder="Enter Phone Number"
             autocomplete="tel"
             inputmode="tel"
-            required />
+            required maxlength="25" />
           <div data-js-form-field-errors></div>
         </div>
 
@@ -355,7 +357,7 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
             name="message"
             placeholder="Enter your Message here..."
             rows="6"
-            required></textarea>
+            required maxlength="5000"></textarea>
           <div data-js-form-field-errors></div>
         </div>
       </div>
@@ -390,7 +392,9 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
           Send Your Message
         </button>
       </div>
-    </form>
+    
+      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+</form>
   </div>
 </section>
 <section
