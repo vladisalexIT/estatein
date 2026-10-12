@@ -151,9 +151,20 @@ try {
     if ($iblockId <= 0 || !\Bitrix\Main\Loader::includeModule('iblock')) {
         estateinRespond(503, ['success' => false, 'message' => 'The form service is not configured yet.']);
     }
-    $iblock = CIBlock::GetByID($iblockId)->Fetch();
+    $iblock = CIBlock::GetList(
+        [],
+        [
+            'ID' => $iblockId,
+            'ACTIVE' => 'Y',
+            'CHECK_PERMISSIONS' => 'N',
+        ]
+    )->Fetch();
+
     if (!$iblock || $iblock['CODE'] !== 'estatein_requests') {
-        estateinRespond(503, ['success' => false, 'message' => 'The form service is not configured correctly.']);
+        estateinRespond(503, [
+            'success' => false,
+            'message' => 'The form service is not configured correctly.',
+        ]);
     }
     $existingProperties = [];
     $propertyResult = CIBlockProperty::GetList([], ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y']);
@@ -167,11 +178,19 @@ try {
     }
 
     $labels = [
-        'first_name' => 'First name', 'last_name' => 'Last name', 'email' => 'Email',
-        'phone' => 'Phone', 'inquiry_type' => 'Inquiry type', 'source' => 'Source',
-        'location' => 'Location', 'property_type' => 'Property type',
-        'bathrooms' => 'Bathrooms', 'bedrooms' => 'Bedrooms', 'budget' => 'Budget',
-        'contact_method' => 'Contact method', 'selected_property' => 'Selected property',
+        'first_name' => 'First name',
+        'last_name' => 'Last name',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'inquiry_type' => 'Inquiry type',
+        'source' => 'Source',
+        'location' => 'Location',
+        'property_type' => 'Property type',
+        'bathrooms' => 'Bathrooms',
+        'bedrooms' => 'Bedrooms',
+        'budget' => 'Budget',
+        'contact_method' => 'Contact method',
+        'selected_property' => 'Selected property',
         'message' => 'Message',
     ];
     $lines = ['Form: ' . $titles[$type]];
