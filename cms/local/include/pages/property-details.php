@@ -853,9 +853,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                   <option value="Urban Vista Apartment, Chicago, Illinois">Urban Vista Apartment, Chicago, Illinois
                   </option>
                   <option value="Countryside Haven, Austin, Texas">Countryside Haven, Austin, Texas</option>
-                  <option value="Modern Loft, Los Angeles, CA">Modern Loft, Los Angeles, CA</option>
-                  <option value="Mountain View Estate, Boulder, CO">Mountain View Estate, Boulder, CO</option>
-                  <option value="Desert Oasis Villa, Phoenix, Arizona">Desert Oasis Villa, Phoenix, Arizona</option>
                 </select>
               </div>
               <div data-js-form-field-errors></div>

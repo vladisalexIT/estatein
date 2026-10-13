@@ -99,9 +99,6 @@ try {
                 'Coastal Elegance, Miami, Florida',
                 'Urban Vista Apartment, Chicago, Illinois',
                 'Countryside Haven, Austin, Texas',
-                'Modern Loft, Los Angeles, CA',
-                'Mountain View Estate, Boulder, CO',
-                'Desert Oasis Villa, Phoenix, Arizona'
             ],
         ];
     }

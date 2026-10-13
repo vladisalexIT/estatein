@@ -9,20 +9,18 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   <section class="footer__cta" aria-labelledby="footer-cta-title">
     <div class="footer__cta-container container">
       <div class="footer__cta-content">
-        <div class="footer__cta-content">
-          <?php
-          $APPLICATION->IncludeComponent(
-            'bitrix:main.include',
-            '',
-            [
-              'AREA_FILE_SHOW' => 'file',
-              'PATH' => '/local/include/common/footer-cta-content.php',
-              'EDIT_TEMPLATE' => '',
-            ],
-            false
-          );
-          ?>
-        </div>
+        <?php
+        $APPLICATION->IncludeComponent(
+          'bitrix:main.include',
+          '',
+          [
+            'AREA_FILE_SHOW' => 'file',
+            'PATH' => '/local/include/common/footer-cta-content.php',
+            'EDIT_TEMPLATE' => '',
+          ],
+          false
+        );
+        ?>
       </div>
       <a class="footer__cta-btn button button--accent" href="/properties/">
         Explore Properties
@@ -40,7 +38,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
         <form class="footer__form form-subscribe" data-js-form data-form-kind="newsletter" action="/local/ajax/estatein-form.php" method="post"
           novalidate>
-<?php $estateinFormType = 'newsletter'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+          <?php $estateinFormType = 'newsletter';
+          require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
 
           <label class="visually-hidden" for="footer-subscribe-email">
             Email address
@@ -58,15 +57,15 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             </button>
           </div>
           <div data-js-form-field-errors></div>
-        
+
           <div class="agreement form-subscribe__agreement">
             <input class="agreement__checkbox visually-hidden" type="checkbox" id="footer-subscribe-consent" name="privacy_agreement" required>
             <label class="agreement__label" for="footer-subscribe-consent">I agree to be contacted about Estatein updates.</label>
             <div data-js-form-field-errors></div>
           </div>
 
-      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
-</form>
+          <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+        </form>
       </div>
 
       <?php
