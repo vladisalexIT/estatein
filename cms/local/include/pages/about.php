@@ -12,6 +12,13 @@ require_once $_SERVER['DOCUMENT_ROOT']
 $estateinAboutTeam = estateinGetAboutTeam(
   (int)($estateinConfig['about_team_iblock_id'] ?? 0)
 );
+
+require_once $_SERVER['DOCUMENT_ROOT']
+  . '/local/include/estatein/about-clients-data.php';
+
+$estateinAboutClients = estateinGetAboutClients(
+  (int)($estateinConfig['about_clients_iblock_id'] ?? 0)
+);
 ?>
 
 <section class="about-hero" aria-labelledby="about-hero-title" id="about-hero">
@@ -359,34 +366,35 @@ $estateinAboutTeam = estateinGetAboutTeam(
     </ol>
   </div>
 </section>
-<section
-  class="about-team"
-  id="about-team"
-  aria-labelledby="about-team-title">
-  <div class="about-team__container container">
-    <header class="about-team__header">
-      <img
-        class="about-team__decoration"
-        src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_89_6057)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73237%2023.2843%200.0167236%2015%200.0167236C6.71573%200.0167236%200%206.73237%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_89_6057)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_89_6057)'%3e%3cpath%20d='M64.2%2019.2048C66.5196%2019.2048%2068.4%2017.3244%2068.4%2015.0048C68.4%2012.6852%2066.5196%2010.8048%2064.2%2010.8048C61.8804%2010.8048%2060%2012.6852%2060%2015.0048C60%2017.3244%2061.8804%2019.2048%2064.2%2019.2048Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4001C62.3194%2023.4001%2064.1998%2021.5197%2064.1998%2019.2001C64.1998%2016.8805%2062.3194%2015.0001%2059.9998%2015.0001C57.6802%2015.0001%2055.7998%2016.8805%2055.7998%2019.2001C55.7998%2021.5197%2057.6802%2023.4001%2059.9998%2023.4001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2023.4001C70.7198%2023.4001%2072.6002%2021.5197%2072.6002%2019.2001C72.6002%2016.8805%2070.7198%2015.0001%2068.4002%2015.0001C66.0806%2015.0001%2064.2002%2016.8805%2064.2002%2019.2001C64.2002%2021.5197%2066.0806%2023.4001%2068.4002%2023.4001Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015.0001C62.3194%2015.0001%2064.1998%2013.1197%2064.1998%2010.8001C64.1998%208.4805%2062.3194%206.6001%2059.9998%206.6001C57.6802%206.6001%2055.7998%208.4805%2055.7998%2010.8001C55.7998%2013.1197%2057.6802%2015.0001%2059.9998%2015.0001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2015.0001C70.7198%2015.0001%2072.6002%2013.1197%2072.6002%2010.8001C72.6002%208.4805%2070.7198%206.6001%2068.4002%206.6001C66.0806%206.6001%2064.2002%208.4805%2064.2002%2010.8001C64.2002%2013.1197%2066.0806%2015.0001%2068.4002%2015.0001Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_89_6057'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_89_6057'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_89_6057'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-        alt=""
-        width="68"
-        height="30"
-        aria-hidden="true">
 
-      <?php
-      $APPLICATION->IncludeComponent(
-        'bitrix:main.include',
-        '',
-        [
-          'AREA_FILE_SHOW' => 'file',
-          'PATH' => '/local/include/pages/about/team-content.php',
-          'EDIT_TEMPLATE' => '',
-        ]
-      );
-      ?>
-    </header>
+<?php if ($estateinAboutTeam): ?>
+  <section
+    class="about-team"
+    id="about-team"
+    aria-labelledby="about-team-title">
+    <div class="about-team__container container">
+      <header class="about-team__header">
+        <img
+          class="about-team__decoration"
+          src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_89_6057)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73237%2023.2843%200.0167236%2015%200.0167236C6.71573%200.0167236%200%206.73237%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_89_6057)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_89_6057)'%3e%3cpath%20d='M64.2%2019.2048C66.5196%2019.2048%2068.4%2017.3244%2068.4%2015.0048C68.4%2012.6852%2066.5196%2010.8048%2064.2%2010.8048C61.8804%2010.8048%2060%2012.6852%2060%2015.0048C60%2017.3244%2061.8804%2019.2048%2064.2%2019.2048Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4001C62.3194%2023.4001%2064.1998%2021.5197%2064.1998%2019.2001C64.1998%2016.8805%2062.3194%2015.0001%2059.9998%2015.0001C57.6802%2015.0001%2055.7998%2016.8805%2055.7998%2019.2001C55.7998%2021.5197%2057.6802%2023.4001%2059.9998%2023.4001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2023.4001C70.7198%2023.4001%2072.6002%2021.5197%2072.6002%2019.2001C72.6002%2016.8805%2070.7198%2015.0001%2068.4002%2015.0001C66.0806%2015.0001%2064.2002%2016.8805%2064.2002%2019.2001C64.2002%2021.5197%2066.0806%2023.4001%2068.4002%2023.4001Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015.0001C62.3194%2015.0001%2064.1998%2013.1197%2064.1998%2010.8001C64.1998%208.4805%2062.3194%206.6001%2059.9998%206.6001C57.6802%206.6001%2055.7998%208.4805%2055.7998%2010.8001C55.7998%2013.1197%2057.6802%2015.0001%2059.9998%2015.0001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2015.0001C70.7198%2015.0001%2072.6002%2013.1197%2072.6002%2010.8001C72.6002%208.4805%2070.7198%206.6001%2068.4002%206.6001C66.0806%206.6001%2064.2002%208.4805%2064.2002%2010.8001C64.2002%2013.1197%2066.0806%2015.0001%2068.4002%2015.0001Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_89_6057'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_89_6057'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_89_6057'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+          alt=""
+          width="68"
+          height="30"
+          aria-hidden="true">
 
-    <?php if ($estateinAboutTeam): ?>
+        <?php
+        $APPLICATION->IncludeComponent(
+          'bitrix:main.include',
+          '',
+          [
+            'AREA_FILE_SHOW' => 'file',
+            'PATH' => '/local/include/pages/about/team-content.php',
+            'EDIT_TEMPLATE' => '',
+          ]
+        );
+        ?>
+      </header>
+
       <ul class="about-team__list" role="list">
         <?php foreach ($estateinAboutTeam as $estateinTeamMember): ?>
           <li class="about-team__item">
@@ -450,817 +458,174 @@ $estateinAboutTeam = estateinGetAboutTeam(
           </li>
         <?php endforeach; ?>
       </ul>
-    <?php endif; ?>
-  </div>
-</section>
-<section
-  class="about-clients"
-  id="about-clients"
-  aria-labelledby="about-clients-title">
-  <div class="about-clients__container container">
-    <header class="about-clients__header">
-      <div
-        class="about-clients__decoration"
-        aria-hidden="true">
-        <img
-          src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_181_3354)'%3e%3cpath%20d='M15%2030.0165C23.2843%2030.0165%2030%2023.3008%2030%2015.0165C30%206.73225%2023.2843%200.0166016%2015%200.0166016C6.71573%200.0166016%200%206.73225%200%2015.0165C0%2023.3008%206.71573%2030.0165%2015%2030.0165Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_181_3354)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_181_3354)'%3e%3cpath%20d='M64.2%2019.2047C66.5196%2019.2047%2068.4%2017.3243%2068.4%2015.0047C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0047C60%2017.3243%2061.8804%2019.2047%2064.2%2019.2047Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2023.4C70.7198%2023.4%2072.6002%2021.5196%2072.6002%2019.2C72.6002%2016.8804%2070.7198%2015%2068.4002%2015C66.0806%2015%2064.2002%2016.8804%2064.2002%2019.2C64.2002%2021.5196%2066.0806%2023.4%2068.4002%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015.0001C62.3194%2015.0001%2064.1998%2013.1197%2064.1998%2010.8001C64.1998%208.4805%2062.3194%206.6001%2059.9998%206.6001C57.6802%206.6001%2055.7998%208.4805%2055.7998%2010.8001C55.7998%2013.1197%2057.6802%2015.0001%2059.9998%2015.0001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2015.0001C70.7198%2015.0001%2072.6002%2013.1197%2072.6002%2010.8001C72.6002%208.4805%2070.7198%206.6001%2068.4002%206.6001C66.0806%206.6001%2064.2002%208.4805%2064.2002%2010.8001C64.2002%2013.1197%2066.0806%2015.0001%2068.4002%2015.0001Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_181_3354'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_181_3354'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_181_3354'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-          alt=""
-          width="68"
-          height="30">
-      </div>
-
-      <?php
-      $APPLICATION->IncludeComponent(
-        'bitrix:main.include',
-        '',
-        [
-          'AREA_FILE_SHOW' => 'file',
-          'PATH' => '/local/include/pages/about/clients-content.php',
-          'EDIT_TEMPLATE' => '',
-        ]
-      );
-      ?>
-    </header>
-
-    <div
-      class="about-clients__slider slider"
-      data-js-slider
-      data-slider-slides-mobile="1"
-      data-slider-slides-tablet="2"
-      data-slider-slides-desktop="2"
-      data-slider-group-mobile="1"
-      data-slider-group-tablet="2"
-      data-slider-group-desktop="2"
-      data-slider-loop="false">
-      <div
-        class="slider__body swiper"
-        data-js-slider-swiper
-        aria-label="Valued clients">
-        <ul class="swiper-wrapper" role="list">
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2019</p>
-                  <h3 class="client-card__title">
-                    ABC Corporation
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for ABC Corporation, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Luxury Home Development
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's expertise in finding the perfect
-                    office space for our expanding operations
-                    was invaluable. They truly understand our
-                    business needs.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2018</p>
-                  <h3 class="client-card__title">
-                    GreenTech Enterprises
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for GreenTech Enterprises, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Retail Space
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's ability to identify prime retail
-                    locations helped us expand our brand presence.
-                    They are a trusted partner in our growth.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2019</p>
-                  <h3 class="client-card__title">
-                    ABC Corporation
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for ABC Corporation, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Luxury Home Development
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's expertise in finding the perfect
-                    office space for our expanding operations
-                    was invaluable. They truly understand our
-                    business needs.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2018</p>
-                  <h3 class="client-card__title">
-                    GreenTech Enterprises
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for GreenTech Enterprises, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Retail Space
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's ability to identify prime retail
-                    locations helped us expand our brand presence.
-                    They are a trusted partner in our growth.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2019</p>
-                  <h3 class="client-card__title">
-                    ABC Corporation
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for ABC Corporation, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Luxury Home Development
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's expertise in finding the perfect
-                    office space for our expanding operations
-                    was invaluable. They truly understand our
-                    business needs.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2018</p>
-                  <h3 class="client-card__title">
-                    GreenTech Enterprises
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for GreenTech Enterprises, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Retail Space
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's ability to identify prime retail
-                    locations helped us expand our brand presence.
-                    They are a trusted partner in our growth.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2019</p>
-                  <h3 class="client-card__title">
-                    ABC Corporation
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for ABC Corporation, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Luxury Home Development
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's expertise in finding the perfect
-                    office space for our expanding operations
-                    was invaluable. They truly understand our
-                    business needs.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2018</p>
-                  <h3 class="client-card__title">
-                    GreenTech Enterprises
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for GreenTech Enterprises, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Retail Space
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's ability to identify prime retail
-                    locations helped us expand our brand presence.
-                    They are a trusted partner in our growth.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2019</p>
-                  <h3 class="client-card__title">
-                    ABC Corporation
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for ABC Corporation, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Luxury Home Development
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's expertise in finding the perfect
-                    office space for our expanding operations
-                    was invaluable. They truly understand our
-                    business needs.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-
-
-          <li class="slider__slide swiper-slide">
-            <article class="client-card">
-              <header class="client-card__header">
-                <div class="client-card__meta">
-                  <p class="client-card__date">Since 2018</p>
-                  <h3 class="client-card__title">
-                    GreenTech Enterprises
-                  </h3>
-                </div>
-
-                <a
-                  class="client-card__link"
-                  href="/properties/#property-listings"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span>View Related Properties</span>
-                  <span class="visually-hidden">
-                    for GreenTech Enterprises, opens in a new tab
-                  </span>
-                </a>
-              </header>
-
-              <dl class="client-card__details">
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Domain</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Commercial Real Estate
-                  </dd>
-                </div>
-
-                <div class="client-card__detail">
-                  <dt class="client-card__term">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                      alt=""
-                      width="16"
-                      height="16"
-                      aria-hidden="true">
-                    <span>Category</span>
-                  </dt>
-                  <dd class="client-card__value">
-                    Retail Space
-                  </dd>
-                </div>
-              </dl>
-
-              <div class="client-card__review">
-                <p class="client-card__review-title">
-                  What They Said
-                  <span aria-hidden="true">🤗</span>
-                </p>
-
-                <blockquote class="client-card__quote">
-                  <p>
-                    Estatein's ability to identify prime retail
-                    locations helped us expand our brand presence.
-                    They are a trusted partner in our growth.
-                  </p>
-                </blockquote>
-              </div>
-            </article>
-          </li>
-        </ul>
-      </div>
-
-      <footer class="slider__footer">
-        <p
-          class="slider__counter"
-          aria-live="polite"
-          aria-atomic="true">
-          <span
-            class="slider__counter-current"
-            data-js-slider-current>
-            01
-          </span>
-          <span aria-hidden="true"> of </span>
-          <span class="visually-hidden">of</span>
-          <span data-js-slider-total>01</span>
-        </p>
-
-        <div
-          class="slider__navigation"
-          aria-label="Client slider controls">
-          <button
-            class="slider__button slider__button--previous"
-            type="button"
-            data-js-slider-prev>
-            <span class="visually-hidden">
-              Previous clients
-            </span>
-          </button>
-
-          <button
-            class="slider__button slider__button--next"
-            type="button"
-            data-js-slider-next>
-            <span class="visually-hidden">
-              Next clients
-            </span>
-          </button>
-        </div>
-      </footer>
     </div>
-  </div>
-</section>
+  </section>
+<?php endif; ?>
+
+
+<?php if ($estateinAboutClients): ?>
+  <section
+    class="about-clients"
+    id="about-clients"
+    aria-labelledby="about-clients-title">
+    <div class="about-clients__container container">
+      <header class="about-clients__header">
+        <div
+          class="about-clients__decoration"
+          aria-hidden="true">
+          <img
+            src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_181_3354)'%3e%3cpath%20d='M15%2030.0165C23.2843%2030.0165%2030%2023.3008%2030%2015.0165C30%206.73225%2023.2843%200.0166016%2015%200.0166016C6.71573%200.0166016%200%206.73225%200%2015.0165C0%2023.3008%206.71573%2030.0165%2015%2030.0165Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_181_3354)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_181_3354)'%3e%3cpath%20d='M64.2%2019.2047C66.5196%2019.2047%2068.4%2017.3243%2068.4%2015.0047C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0047C60%2017.3243%2061.8804%2019.2047%2064.2%2019.2047Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2023.4C70.7198%2023.4%2072.6002%2021.5196%2072.6002%2019.2C72.6002%2016.8804%2070.7198%2015%2068.4002%2015C66.0806%2015%2064.2002%2016.8804%2064.2002%2019.2C64.2002%2021.5196%2066.0806%2023.4%2068.4002%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015.0001C62.3194%2015.0001%2064.1998%2013.1197%2064.1998%2010.8001C64.1998%208.4805%2062.3194%206.6001%2059.9998%206.6001C57.6802%206.6001%2055.7998%208.4805%2055.7998%2010.8001C55.7998%2013.1197%2057.6802%2015.0001%2059.9998%2015.0001Z'%20fill='%23141414'/%3e%3cpath%20d='M68.4002%2015.0001C70.7198%2015.0001%2072.6002%2013.1197%2072.6002%2010.8001C72.6002%208.4805%2070.7198%206.6001%2068.4002%206.6001C66.0806%206.6001%2064.2002%208.4805%2064.2002%2010.8001C64.2002%2013.1197%2066.0806%2015.0001%2068.4002%2015.0001Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_181_3354'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_181_3354'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_181_3354'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+            alt=""
+            width="68"
+            height="30">
+        </div>
+
+        <?php
+        $APPLICATION->IncludeComponent(
+          'bitrix:main.include',
+          '',
+          [
+            'AREA_FILE_SHOW' => 'file',
+            'PATH' => '/local/include/pages/about/clients-content.php',
+            'EDIT_TEMPLATE' => '',
+          ]
+        );
+        ?>
+      </header>
+
+      <div
+        class="about-clients__slider slider"
+        data-js-slider
+        data-slider-slides-mobile="1"
+        data-slider-slides-tablet="2"
+        data-slider-slides-desktop="2"
+        data-slider-group-mobile="1"
+        data-slider-group-tablet="2"
+        data-slider-group-desktop="2"
+        data-slider-loop="false">
+        <div
+          class="slider__body swiper"
+          data-js-slider-swiper
+          aria-label="Valued clients">
+          <ul class="swiper-wrapper" role="list">
+            <?php foreach ($estateinAboutClients as $estateinClient): ?>
+              <li class="slider__slide swiper-slide">
+                <article class="client-card">
+                  <header class="client-card__header">
+                    <div class="client-card__meta">
+                      <?php if ($estateinClient['since_year'] !== ''): ?>
+                        <p class="client-card__date">
+                          Since <?= htmlspecialcharsbx($estateinClient['since_year']) ?>
+                        </p>
+                      <?php endif; ?>
+                      <h3 class="client-card__title">
+                        <?= htmlspecialcharsbx($estateinClient['name']) ?>
+                      </h3>
+                    </div>
+
+                    <?php if ($estateinClient['link_url'] !== ''): ?>
+                      <a
+                        class="client-card__link"
+                        href="<?= htmlspecialcharsbx($estateinClient['link_url']) ?>">
+                        <span>View Related Properties</span>
+                        <span class="visually-hidden">
+                          for <?= htmlspecialcharsbx($estateinClient['name']) ?>
+                        </span>
+                      </a>
+                    <?php endif; ?>
+                  </header>
+
+                  <dl class="client-card__details">
+                    <div class="client-card__detail">
+                      <dt class="client-card__term">
+                        <img
+                          src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+                          alt=""
+                          width="16"
+                          height="16"
+                          aria-hidden="true">
+                        <span>Domain</span>
+                      </dt>
+                      <dd class="client-card__value">
+                        <?= htmlspecialcharsbx($estateinClient['domain']) ?>
+                      </dd>
+                    </div>
+
+                    <div class="client-card__detail">
+                      <dt class="client-card__term">
+                        <img
+                          src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
+                          alt=""
+                          width="16"
+                          height="16"
+                          aria-hidden="true">
+                        <span>Category</span>
+                      </dt>
+                      <dd class="client-card__value">
+                        <?= htmlspecialcharsbx($estateinClient['category']) ?>
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <?php if ($estateinClient['quote'] !== ''): ?>
+                    <div class="client-card__review">
+                      <p class="client-card__review-title">
+                        What They Said 🤗
+                      </p>
+
+                      <blockquote class="client-card__quote">
+                        <p>
+                          <?= nl2br(
+                            htmlspecialcharsbx($estateinClient['quote'])
+                          ) ?>
+                        </p>
+                      </blockquote>
+                    </div>
+                  <?php endif; ?>
+                </article>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+
+        <footer class="slider__footer">
+          <p
+            class="slider__counter"
+            aria-live="polite"
+            aria-atomic="true">
+            <span
+              class="slider__counter-current"
+              data-js-slider-current>
+              01
+            </span>
+            <span aria-hidden="true"> of </span>
+            <span class="visually-hidden">of</span>
+            <span data-js-slider-total>01</span>
+          </p>
+
+          <div
+            class="slider__navigation"
+            aria-label="Client slider controls">
+            <button
+              class="slider__button slider__button--previous"
+              type="button"
+              data-js-slider-prev>
+              <span class="visually-hidden">
+                Previous clients
+              </span>
+            </button>
+
+            <button
+              class="slider__button slider__button--next"
+              type="button"
+              data-js-slider-next>
+              <span class="visually-hidden">
+                Next clients
+              </span>
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+<?php endif; ?>
