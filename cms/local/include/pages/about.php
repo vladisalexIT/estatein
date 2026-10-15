@@ -41,30 +41,32 @@ $estateinAboutClients = estateinGetAboutClients(
       );
       ?>
 
-      <dl class="about-hero__stats">
-        <div class="about-hero__stats-item">
-          <dt class="about-hero__stats-value">200+</dt>
-          <dd class="about-hero__stats-label">Happy Customers</dd>
-        </div>
-        <div class="about-hero__stats-item">
-          <dt class="about-hero__stats-value">10k+</dt>
-          <dd class="about-hero__stats-label">Properties For Clients</dd>
-        </div>
-        <div class="about-hero__stats-item">
-          <dt class="about-hero__stats-value">16+</dt>
-          <dd class="about-hero__stats-label">Years of Experience</dd>
-        </div>
-      </dl>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:main.include',
+        '',
+        [
+          'AREA_FILE_SHOW' => 'file',
+          'PATH' => '/local/include/pages/about/hero-stats.php',
+          'EDIT_TEMPLATE' => '',
+        ]
+      );
+      ?>
     </div>
 
     <div class="about-hero__banner">
       <div class="about-hero__image-wrapper">
-        <picture class="about-hero__picture">
-          <source type="image/webp" media="(max-width: 767px)" srcset="/local/templates/estatein/assets/hero-768-Dd4E12iH.webp">
-          <source type="image/webp" media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/hero-1440-D_JsPT7S.webp">
-          <img class="about-hero__image" src="/local/templates/estatein/assets/hero-1920-DvEig8G_.webp"
-            alt="Hand holding a model of a modern house" width="920" height="764" fetchpriority="high">
-        </picture>
+        <?php
+        $APPLICATION->IncludeComponent(
+          'bitrix:main.include',
+          '',
+          [
+            'AREA_FILE_SHOW' => 'file',
+            'PATH' => '/local/include/pages/about/hero-image.php',
+            'EDIT_TEMPLATE' => '',
+          ]
+        );
+        ?>
       </div>
     </div>
 
