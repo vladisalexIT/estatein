@@ -7,4 +7,5 @@ return [
     'properties_iblock_id' => 1,
     'requests_iblock_id' => 2,
     'faq_iblock_id' => 4,
+    'about_team_iblock_id' => 5,
 ];
