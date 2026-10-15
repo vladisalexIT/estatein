@@ -9,4 +9,5 @@ return [
     'faq_iblock_id' => 4,
     'about_team_iblock_id' => 5,
     'about_clients_iblock_id' => 6,
+    'achievements_iblock_id' => 7,
 ];

@@ -19,6 +19,9 @@ require_once $_SERVER['DOCUMENT_ROOT']
 $estateinAboutClients = estateinGetAboutClients(
   (int)($estateinConfig['about_clients_iblock_id'] ?? 0)
 );
+
+$estateinConfig = require $_SERVER['DOCUMENT_ROOT']
+  . '/local/config/estatein.php';
 ?>
 
 <section class="about-hero" aria-labelledby="about-hero-title" id="about-hero">
@@ -141,40 +144,65 @@ $estateinAboutClients = estateinGetAboutClients(
       ?>
     </header>
 
-    <div class="about-achievements__grid">
-      <article class="about-achievements__card achievement-card">
-        <h3 class="achievement-card__title">
-          3+ Years of Excellence
-        </h3>
+    <?php
+    $APPLICATION->IncludeComponent(
+      'bitrix:news.list',
+      'about-achievements',
+      [
+        'IBLOCK_TYPE' => '',
+        'IBLOCK_ID' => (int) $estateinConfig['achievements_iblock_id'],
 
-        <p class="achievement-card__text">
-          With over 3 years in the industry, we've amassed a wealth of knowledge
-          and experience, becoming a go-to resource for all things real estate.
-        </p>
-      </article>
+        'NEWS_COUNT' => '50',
 
-      <article class="about-achievements__card achievement-card">
-        <h3 class="achievement-card__title">
-          Happy Clients
-        </h3>
+        'SORT_BY1' => 'SORT',
+        'SORT_ORDER1' => 'ASC',
+        'SORT_BY2' => 'ID',
+        'SORT_ORDER2' => 'ASC',
 
-        <p class="achievement-card__text">
-          Our greatest achievement is the satisfaction of our clients. Their
-          success stories fuel our passion for what we do.
-        </p>
-      </article>
+        'FILTER_NAME' => '',
+        'FIELD_CODE' => [
+          'ID',
+          'NAME',
+          'PREVIEW_TEXT',
+        ],
+        'PROPERTY_CODE' => [],
 
-      <article class="about-achievements__card achievement-card">
-        <h3 class="achievement-card__title">
-          Industry Recognition
-        </h3>
+        'CHECK_DATES' => 'Y',
 
-        <p class="achievement-card__text">
-          We've earned the respect of our peers and industry leaders, with
-          accolades and awards that reflect our commitment to excellence.
-        </p>
-      </article>
-    </div>
+        'DISPLAY_DATE' => 'N',
+        'DISPLAY_NAME' => 'Y',
+        'DISPLAY_PICTURE' => 'N',
+        'DISPLAY_PREVIEW_TEXT' => 'Y',
+
+        'PREVIEW_TRUNCATE_LEN' => '',
+        'DETAIL_URL' => '',
+        'HIDE_LINK_WHEN_NO_DETAIL' => 'Y',
+
+        'PARENT_SECTION' => '',
+        'PARENT_SECTION_CODE' => '',
+        'INCLUDE_SUBSECTIONS' => 'N',
+
+        'SET_TITLE' => 'N',
+        'SET_BROWSER_TITLE' => 'N',
+        'SET_META_KEYWORDS' => 'N',
+        'SET_META_DESCRIPTION' => 'N',
+        'SET_LAST_MODIFIED' => 'N',
+
+        'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+        'ADD_SECTIONS_CHAIN' => 'N',
+
+        'CACHE_TYPE' => 'A',
+        'CACHE_TIME' => '36000000',
+        'CACHE_FILTER' => 'N',
+        'CACHE_GROUPS' => 'Y',
+
+        'DISPLAY_TOP_PAGER' => 'N',
+        'DISPLAY_BOTTOM_PAGER' => 'N',
+        'PAGER_SHOW_ALWAYS' => 'N',
+      ],
+      false
+    );
+    ?>
   </div>
 </section>
 <section
