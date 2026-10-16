@@ -233,91 +233,73 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
       ?>
     </header>
 
-    <ol class="about-process__list">
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            Discover a World of Possibilities
-          </h3>
+    <?php
+    $aboutProcessIblockId = (int)(
+      $estateinConfig['about_process_iblock_id'] ?? 0
+    );
 
-          <p class="about-process__card-description">
-            Your journey begins with exploring our carefully curated property
-            listings. Use our intuitive search tools to filter properties based
-            on your preferences, including location, type, size, and budget.
-          </p>
-        </div>
-      </li>
+    if ($aboutProcessIblockId > 0) {
+      $APPLICATION->IncludeComponent(
+        'bitrix:news.list',
+        'about-process',
+        [
+          'IBLOCK_ID' => $aboutProcessIblockId,
+          'NEWS_COUNT' => '1000',
 
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            Narrowing Down Your Choices
-          </h3>
+          'SORT_BY1' => 'SORT',
+          'SORT_ORDER1' => 'ASC',
+          'SORT_BY2' => 'ID',
+          'SORT_ORDER2' => 'ASC',
 
-          <p class="about-process__card-description">
-            Once you've found properties that catch your eye, save them to your
-            account or make a shortlist. This allows you to compare and revisit
-            your favorites as you make your decision.
-          </p>
-        </div>
-      </li>
+          'FILTER_NAME' => '',
+          'FIELD_CODE' => [
+            'ID',
+            'IBLOCK_ID',
+            'NAME',
+            'PREVIEW_TEXT',
+            'PREVIEW_TEXT_TYPE',
+          ],
+          'PROPERTY_CODE' => [],
 
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            Personalized Guidance
-          </h3>
+          'CHECK_DATES' => 'Y',
+          'CHECK_PERMISSIONS' => 'Y',
 
-          <p class="about-process__card-description">
-            Have questions about a property or need more information? Our
-            dedicated team of real estate experts is just a call or message
-            away.
-          </p>
-        </div>
-      </li>
+          'PARENT_SECTION' => '',
+          'PARENT_SECTION_CODE' => '',
+          'INCLUDE_SUBSECTIONS' => 'N',
 
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            See It for Yourself
-          </h3>
+          'DETAIL_URL' => '',
+          'HIDE_LINK_WHEN_NO_DETAIL' => 'Y',
 
-          <p class="about-process__card-description">
-            Arrange viewings of the properties you're interested in. We'll
-            coordinate with the property owners and accompany you to ensure you
-            get a firsthand look at your potential new home.
-          </p>
-        </div>
-      </li>
+          'DISPLAY_DATE' => 'N',
+          'DISPLAY_NAME' => 'Y',
+          'DISPLAY_PICTURE' => 'N',
+          'DISPLAY_PREVIEW_TEXT' => 'Y',
+          'PREVIEW_TRUNCATE_LEN' => '',
 
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            Making Informed Decisions
-          </h3>
+          'SET_TITLE' => 'N',
+          'SET_BROWSER_TITLE' => 'N',
+          'SET_META_KEYWORDS' => 'N',
+          'SET_META_DESCRIPTION' => 'N',
+          'SET_LAST_MODIFIED' => 'N',
 
-          <p class="about-process__card-description">
-            Before making an offer, our team will assist you with due diligence,
-            including property inspections, legal checks, and market analysis.
-            We want you to be fully informed and confident in your choice.
-          </p>
-        </div>
-      </li>
+          'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+          'ADD_SECTIONS_CHAIN' => 'N',
 
-      <li class="about-process__item">
-        <div class="about-process__card">
-          <h3 class="about-process__card-title">
-            Getting the Best Deal
-          </h3>
+          'DISPLAY_TOP_PAGER' => 'N',
+          'DISPLAY_BOTTOM_PAGER' => 'N',
 
-          <p class="about-process__card-description">
-            We'll help you negotiate the best terms and prepare your offer. Our
-            goal is to secure the property at the right price and on favorable
-            terms.
-          </p>
-        </div>
-      </li>
-    </ol>
+          'CACHE_TYPE' => 'A',
+          'CACHE_TIME' => '36000000',
+          'CACHE_FILTER' => 'N',
+          'CACHE_GROUPS' => 'Y',
+
+          'AJAX_MODE' => 'N',
+        ],
+        false
+      );
+    }
+    ?>
   </div>
 </section>
 
