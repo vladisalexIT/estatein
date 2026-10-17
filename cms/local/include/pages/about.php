@@ -6,22 +6,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
   . '/local/config/estatein.php';
 
-require_once $_SERVER['DOCUMENT_ROOT']
-  . '/local/include/estatein/about-team-data.php';
-
-$estateinAboutTeam = estateinGetAboutTeam(
-  (int)($estateinConfig['about_team_iblock_id'] ?? 0)
+$estateinAboutTeamIblockId = (int)(
+  $estateinConfig['about_team_iblock_id'] ?? 0
 );
 
-require_once $_SERVER['DOCUMENT_ROOT']
-  . '/local/include/estatein/about-clients-data.php';
-
-$estateinAboutClients = estateinGetAboutClients(
-  (int)($estateinConfig['about_clients_iblock_id'] ?? 0)
+$estateinAboutClientsIblockId = (int)(
+  $estateinConfig['about_clients_iblock_id'] ?? 0
 );
 
-$estateinConfig = require $_SERVER['DOCUMENT_ROOT']
-  . '/local/config/estatein.php';
 ?>
 
 <section class="about-hero" aria-labelledby="about-hero-title" id="about-hero">
@@ -303,7 +295,7 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
   </div>
 </section>
 
-<?php if ($estateinAboutTeam): ?>
+<?php if ($estateinAboutTeamIblockId > 0): ?>
   <section
     class="about-team"
     id="about-team"
@@ -331,75 +323,63 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
         ?>
       </header>
 
-      <ul class="about-team__list" role="list">
-        <?php foreach ($estateinAboutTeam as $estateinTeamMember): ?>
-          <li class="about-team__item">
-            <article class="team-card">
-              <div class="team-card__media">
-                <img
-                  class="team-card__image"
-                  src="<?= htmlspecialcharsbx($estateinTeamMember['image']) ?>"
-                  alt="<?= htmlspecialcharsbx($estateinTeamMember['name']) ?>"
-                  width="317"
-                  height="253"
-                  loading="lazy"
-                  decoding="async">
-              </div>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:news.list',
+        'about-team',
+        [
+          'IBLOCK_ID' => $estateinAboutTeamIblockId,
+          'NEWS_COUNT' => '100',
 
-              <?php if ($estateinTeamMember['social_url'] !== ''): ?>
-                <a
-                  class="team-card__social-link"
-                  href="<?= htmlspecialcharsbx($estateinTeamMember['social_url']) ?>"
-                  aria-label="Social profile of <?= htmlspecialcharsbx($estateinTeamMember['name']) ?>" target="_blank">
-                  <img
-                    src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M7.55016%2021.75C16.6045%2021.75%2021.5583%2014.2467%2021.5583%207.74186C21.5583%207.53092%2021.5536%207.3153%2021.5442%207.10436C22.5079%206.40746%2023.3395%205.54425%2024%204.5553C23.1025%204.9546%2022.1496%205.21538%2021.1739%205.32874C22.2013%204.71291%2022.9705%203.74547%2023.3391%202.60577C22.3726%203.17856%2021.3156%203.58261%2020.2134%203.80061C19.4708%203.01156%2018.489%202.48912%2017.4197%202.31405C16.3504%202.13899%2015.2532%202.32105%2014.2977%202.8321C13.3423%203.34314%2012.5818%204.15471%2012.1338%205.14131C11.6859%206.12792%2011.5754%207.23462%2011.8195%208.2903C9.86249%208.19209%207.94794%207.6837%206.19998%206.7981C4.45203%205.91249%202.90969%204.66944%201.67297%203.14952C1.0444%204.23324%200.852057%205.51565%201.13503%206.73609C1.418%207.95654%202.15506%209.02345%203.19641%209.71999C2.41463%209.69517%201.64998%209.48468%200.965625%209.10592V9.16686C0.964925%2010.3041%201.3581%2011.4066%202.07831%2012.2868C2.79852%2013.167%203.80132%2013.7706%204.91625%2013.995C4.19206%2014.1931%203.43198%2014.222%202.69484%2014.0794C3.00945%2015.0574%203.62157%2015.9129%204.44577%2016.5263C5.26997%2017.1398%206.26512%2017.4806%207.29234%2017.5012C5.54842%2018.8711%203.39417%2019.6141%201.17656%2019.6106C0.783287%2019.61%200.390399%2019.5859%200%2019.5384C2.25286%2020.9837%204.87353%2021.7514%207.55016%2021.75Z'%20fill='white'/%3e%3c/svg%3e"
-                    alt=""
-                    width="20"
-                    height="20"
-                    aria-hidden="true">
-                </a>
-              <?php endif; ?>
+          'SORT_BY1' => 'SORT',
+          'SORT_ORDER1' => 'ASC',
+          'SORT_BY2' => 'ID',
+          'SORT_ORDER2' => 'ASC',
 
-              <div class="team-card__info">
-                <h3 class="team-card__name">
-                  <?= htmlspecialcharsbx($estateinTeamMember['name']) ?>
-                </h3>
+          'FILTER_NAME' => '',
+          'CHECK_DATES' => 'Y',
+          'CHECK_PERMISSIONS' => 'Y',
 
-                <?php if ($estateinTeamMember['position'] !== ''): ?>
-                  <p class="team-card__role">
-                    <?= htmlspecialcharsbx($estateinTeamMember['position']) ?>
-                  </p>
-                <?php endif; ?>
-              </div>
+          'FIELD_CODE' => [
+            'ID',
+            'IBLOCK_ID',
+            'NAME',
+          ],
 
-              <?php if ($estateinTeamMember['contact_url'] !== ''): ?>
-                <a
-                  class="team-card__contact-link"
-                  href="<?= htmlspecialcharsbx($estateinTeamMember['contact_url']) ?>"
-                  aria-label="Send a message to <?= htmlspecialcharsbx($estateinTeamMember['name']) ?>">
-                  <span class="team-card__contact-text">
-                    Say Hello <span aria-hidden="true">👋</span>
-                  </span>
+          'PROPERTY_CODE' => [
+            'POSITION',
+            'PHOTO',
+            'SOCIAL_URL',
+            'CONTACT_URL',
+          ],
 
-                  <span class="team-card__contact-icon" aria-hidden="true">
-                    <img
-                      src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M21.4274%202.5783C20.9274%202.0673%2020.1874%201.8783%2019.4974%202.0783L3.40742%206.7273C2.67942%206.9293%202.16342%207.5063%202.02442%208.2383C1.88242%208.9843%202.37842%209.9323%203.02642%2010.3283L8.05742%2013.4003C8.57342%2013.7163%209.23942%2013.6373%209.66642%2013.2093L15.4274%207.4483C15.7174%207.1473%2016.1974%207.1473%2016.4874%207.4483C16.7774%207.7373%2016.7774%208.2083%2016.4874%208.5083L10.7164%2014.2693C10.2884%2014.6973%2010.2084%2015.3613%2010.5234%2015.8783L13.5974%2020.9283C13.9574%2021.5273%2014.5774%2021.8683%2015.2574%2021.8683C15.3374%2021.8683%2015.4274%2021.8683%2015.5074%2021.8573C16.2874%2021.7583%2016.9074%2021.2273%2017.1374%2020.4773L21.9074%204.5083C22.1174%203.8283%2021.9274%203.0883%2021.4274%202.5783Z'%20fill='white'/%3e%3cpath%20opacity='0.4'%20d='M9.45139%2019.1423C9.74339%2019.4353%209.74339%2019.9103%209.45139%2020.2033L8.08539%2021.5683C7.93939%2021.7153%207.74739%2021.7883%207.55539%2021.7883C7.36339%2021.7883%207.17139%2021.7153%207.02539%2021.5683C6.73239%2021.2753%206.73239%2020.8013%207.02539%2020.5083L8.39039%2019.1423C8.68339%2018.8503%209.15839%2018.8503%209.45139%2019.1423ZM8.66769%2015.3543C8.95969%2015.6473%208.95969%2016.1223%208.66769%2016.4153L7.30169%2017.7803C7.15569%2017.9273%206.96369%2018.0003%206.77169%2018.0003C6.57969%2018.0003%206.38769%2017.9273%206.24169%2017.7803C5.94869%2017.4873%205.94869%2017.0133%206.24169%2016.7203L7.60669%2015.3543C7.89969%2015.0623%208.37469%2015.0623%208.66769%2015.3543ZM4.90649%2014.1619C5.19849%2014.4549%205.19849%2014.9299%204.90649%2015.2229L3.54049%2016.5879C3.39449%2016.7349%203.20249%2016.8079%203.01049%2016.8079C2.81849%2016.8079%202.62649%2016.7349%202.48049%2016.5879C2.18749%2016.2949%202.18749%2015.8209%202.48049%2015.5279L3.84549%2014.1619C4.13849%2013.8699%204.61349%2013.8699%204.90649%2014.1619Z'%20fill='white'/%3e%3c/svg%3e"
-                      alt=""
-                      width="18"
-                      height="18">
-                  </span>
-                </a>
-              <?php endif; ?>
-            </article>
-          </li>
-        <?php endforeach; ?>
-      </ul>
+          'DETAIL_URL' => '',
+          'SET_TITLE' => 'N',
+          'SET_BROWSER_TITLE' => 'N',
+          'SET_META_KEYWORDS' => 'N',
+          'SET_META_DESCRIPTION' => 'N',
+          'SET_STATUS_404' => 'N',
+
+          'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+          'ADD_SECTIONS_CHAIN' => 'N',
+
+          'DISPLAY_TOP_PAGER' => 'N',
+          'DISPLAY_BOTTOM_PAGER' => 'N',
+          'PAGER_SHOW_ALL' => 'Y',
+
+          'CACHE_TYPE' => 'A',
+          'CACHE_TIME' => '36000000',
+          'CACHE_GROUPS' => 'Y',
+        ],
+        false
+      );
+      ?>
     </div>
   </section>
 <?php endif; ?>
 
 
-<?php if ($estateinAboutClients): ?>
+<?php if ($estateinAboutClientsIblockId > 0): ?>
   <section
     class="about-clients"
     id="about-clients"
@@ -429,139 +409,77 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
         ?>
       </header>
 
-      <div
-        class="about-clients__slider slider"
-        data-js-slider
-        data-slider-slides-mobile="1"
-        data-slider-slides-tablet="2"
-        data-slider-slides-desktop="2"
-        data-slider-group-mobile="1"
-        data-slider-group-tablet="2"
-        data-slider-group-desktop="2"
-        data-slider-loop="false">
-        <div
-          class="slider__body swiper"
-          data-js-slider-swiper
-          aria-label="Valued clients">
-          <ul class="swiper-wrapper" role="list">
-            <?php foreach ($estateinAboutClients as $estateinClient): ?>
-              <li class="slider__slide swiper-slide">
-                <article class="client-card">
-                  <header class="client-card__header">
-                    <div class="client-card__meta">
-                      <?php if ($estateinClient['since_year'] !== ''): ?>
-                        <p class="client-card__date">
-                          Since <?= htmlspecialcharsbx($estateinClient['since_year']) ?>
-                        </p>
-                      <?php endif; ?>
-                      <h3 class="client-card__title">
-                        <?= htmlspecialcharsbx($estateinClient['name']) ?>
-                      </h3>
-                    </div>
+      <?php
+      $APPLICATION->IncludeComponent(
+        'bitrix:news.list',
+        'about-clients',
+        [
+          'IBLOCK_TYPE' => '',
+          'IBLOCK_ID' => $estateinAboutClientsIblockId,
+          'NEWS_COUNT' => '100',
 
-                    <?php if ($estateinClient['link_url'] !== ''): ?>
-                      <a
-                        class="client-card__link"
-                        href="<?= htmlspecialcharsbx($estateinClient['link_url']) ?>">
-                        <span>View Related Properties</span>
-                        <span class="visually-hidden">
-                          for <?= htmlspecialcharsbx($estateinClient['name']) ?>
-                        </span>
-                      </a>
-                    <?php endif; ?>
-                  </header>
+          'SORT_BY1' => 'SORT',
+          'SORT_ORDER1' => 'ASC',
+          'SORT_BY2' => 'ID',
+          'SORT_ORDER2' => 'ASC',
 
-                  <dl class="client-card__details">
-                    <div class="client-card__detail">
-                      <dt class="client-card__term">
-                        <img
-                          src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%206C3.75%204.75736%204.75736%203.75%206%203.75H8.25C9.49264%203.75%2010.5%204.75736%2010.5%206V8.25C10.5%209.49264%209.49264%2010.5%208.25%2010.5H6C4.75736%2010.5%203.75%209.49264%203.75%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75%2015.75C3.75%2014.5074%204.75736%2013.5%206%2013.5H8.25C9.49264%2013.5%2010.5%2014.5074%2010.5%2015.75V18C10.5%2019.2426%209.49264%2020.25%208.25%2020.25H6C4.75736%2020.25%203.75%2019.2426%203.75%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%206C13.5%204.75736%2014.5074%203.75%2015.75%203.75H18C19.2426%203.75%2020.25%204.75736%2020.25%206V8.25C20.25%209.49264%2019.2426%2010.5%2018%2010.5H15.75C14.5074%2010.5%2013.5%209.49264%2013.5%208.25V6Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M13.5%2015.75C13.5%2014.5074%2014.5074%2013.5%2015.75%2013.5H18C19.2426%2013.5%2020.25%2014.5074%2020.25%2015.75V18C20.25%2019.2426%2019.2426%2020.25%2018%2020.25H15.75C14.5074%2020.25%2013.5%2019.2426%2013.5%2018V15.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                          alt=""
-                          width="16"
-                          height="16"
-                          aria-hidden="true">
-                        <span>Domain</span>
-                      </dt>
-                      <dd class="client-card__value">
-                        <?= htmlspecialcharsbx($estateinClient['domain']) ?>
-                      </dd>
-                    </div>
+          'FILTER_NAME' => '',
+          'CHECK_DATES' => 'Y',
+          'CHECK_PERMISSIONS' => 'Y',
 
-                    <div class="client-card__detail">
-                      <dt class="client-card__term">
-                        <img
-                          src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M3.75%2013.5L14.25%202.25L12%2010.5H20.25L9.75%2021.75L12%2013.5H3.75Z'%20stroke='%23999999'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e"
-                          alt=""
-                          width="16"
-                          height="16"
-                          aria-hidden="true">
-                        <span>Category</span>
-                      </dt>
-                      <dd class="client-card__value">
-                        <?= htmlspecialcharsbx($estateinClient['category']) ?>
-                      </dd>
-                    </div>
-                  </dl>
+          'FIELD_CODE' => [
+            'ID',
+            'IBLOCK_ID',
+            'NAME',
+            'PREVIEW_TEXT',
+            'PREVIEW_TEXT_TYPE',
+          ],
 
-                  <?php if ($estateinClient['quote'] !== ''): ?>
-                    <div class="client-card__review">
-                      <p class="client-card__review-title">
-                        What They Said 🤗
-                      </p>
+          'PROPERTY_CODE' => [
+            'SINCE_YEAR',
+            'DOMAIN',
+            'CATEGORY',
+            'LINK_URL',
+          ],
 
-                      <blockquote class="client-card__quote">
-                        <p>
-                          <?= nl2br(
-                            htmlspecialcharsbx($estateinClient['quote'])
-                          ) ?>
-                        </p>
-                      </blockquote>
-                    </div>
-                  <?php endif; ?>
-                </article>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
+          'PARENT_SECTION' => '',
+          'PARENT_SECTION_CODE' => '',
+          'INCLUDE_SUBSECTIONS' => 'N',
 
-        <footer class="slider__footer">
-          <p
-            class="slider__counter"
-            aria-live="polite"
-            aria-atomic="true">
-            <span
-              class="slider__counter-current"
-              data-js-slider-current>
-              01
-            </span>
-            <span aria-hidden="true"> of </span>
-            <span class="visually-hidden">of</span>
-            <span data-js-slider-total>01</span>
-          </p>
+          'DETAIL_URL' => '',
+          'HIDE_LINK_WHEN_NO_DETAIL' => 'Y',
 
-          <div
-            class="slider__navigation"
-            aria-label="Client slider controls">
-            <button
-              class="slider__button slider__button--previous"
-              type="button"
-              data-js-slider-prev>
-              <span class="visually-hidden">
-                Previous clients
-              </span>
-            </button>
+          'DISPLAY_DATE' => 'N',
+          'DISPLAY_NAME' => 'Y',
+          'DISPLAY_PICTURE' => 'N',
+          'DISPLAY_PREVIEW_TEXT' => 'Y',
+          'PREVIEW_TRUNCATE_LEN' => '',
 
-            <button
-              class="slider__button slider__button--next"
-              type="button"
-              data-js-slider-next>
-              <span class="visually-hidden">
-                Next clients
-              </span>
-            </button>
-          </div>
-        </footer>
-      </div>
+          'SET_TITLE' => 'N',
+          'SET_BROWSER_TITLE' => 'N',
+          'SET_META_KEYWORDS' => 'N',
+          'SET_META_DESCRIPTION' => 'N',
+          'SET_LAST_MODIFIED' => 'N',
+          'SET_STATUS_404' => 'N',
+          'SHOW_404' => 'N',
+
+          'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+          'ADD_SECTIONS_CHAIN' => 'N',
+
+          'DISPLAY_TOP_PAGER' => 'N',
+          'DISPLAY_BOTTOM_PAGER' => 'N',
+          'PAGER_SHOW_ALWAYS' => 'N',
+
+          'CACHE_TYPE' => 'A',
+          'CACHE_TIME' => '36000000',
+          'CACHE_FILTER' => 'N',
+          'CACHE_GROUPS' => 'Y',
+
+          'AJAX_MODE' => 'N',
+        ],
+        false
+      );
+      ?>
     </div>
   </section>
 <?php endif; ?>

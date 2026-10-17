@@ -6,12 +6,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
     . '/local/config/estatein.php';
 
-require_once $_SERVER['DOCUMENT_ROOT']
-    . '/local/include/estatein/faq-data.php';
-
-$estateinHomeFaqs = estateinGetFaqs(
-    (int)($estateinConfig['faq_iblock_id'] ?? 0)
-);
 ?>
 
 <section class="hero" aria-labelledby="hero-title" id="hero">
@@ -641,7 +635,88 @@ $estateinHomeFaqs = estateinGetFaqs(
     </div>
 </section>
 
-<?php if ($estateinHomeFaqs): ?>
+<?php
+$estateinFaqIblockId = (int)(
+    $estateinConfig['faq_iblock_id'] ?? 0
+);
+
+$estateinFaqHtml = '';
+
+if ($estateinFaqIblockId > 0) {
+    ob_start();
+
+    $APPLICATION->IncludeComponent(
+        'bitrix:news.list',
+        'home-faq',
+        [
+            'IBLOCK_ID' => $estateinFaqIblockId,
+
+            'NEWS_COUNT' => '1000',
+
+            'SORT_BY1' => 'SORT',
+            'SORT_ORDER1' => 'ASC',
+            'SORT_BY2' => 'ID',
+            'SORT_ORDER2' => 'ASC',
+
+            'CHECK_DATES' => 'Y',
+
+            'FIELD_CODE' => [
+                'NAME',
+                'DETAIL_TEXT',
+                'DETAIL_TEXT_TYPE',
+            ],
+
+            'PROPERTY_CODE' => [
+                'LINK_URL',
+            ],
+
+            'FILTER_NAME' => '',
+
+            'DETAIL_URL' => '',
+            'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
+
+            'PREVIEW_TRUNCATE_LEN' => '0',
+            'DISPLAY_DATE' => 'N',
+            'DISPLAY_NAME' => 'Y',
+            'DISPLAY_PICTURE' => 'N',
+            'DISPLAY_PREVIEW_TEXT' => 'N',
+
+            'SET_TITLE' => 'N',
+            'SET_BROWSER_TITLE' => 'N',
+            'SET_META_KEYWORDS' => 'N',
+            'SET_META_DESCRIPTION' => 'N',
+            'SET_LAST_MODIFIED' => 'N',
+
+            'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+            'ADD_SECTIONS_CHAIN' => 'N',
+
+            'PARENT_SECTION' => '',
+            'PARENT_SECTION_CODE' => '',
+            'INCLUDE_SUBSECTIONS' => 'Y',
+
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => '3600',
+            'CACHE_FILTER' => 'N',
+            'CACHE_GROUPS' => 'Y',
+
+            'DISPLAY_TOP_PAGER' => 'N',
+            'DISPLAY_BOTTOM_PAGER' => 'N',
+            'PAGER_SHOW_ALWAYS' => 'N',
+
+            'SET_STATUS_404' => 'N',
+            'SHOW_404' => 'N',
+        ],
+        false,
+        [
+            'HIDE_ICONS' => 'Y',
+        ]
+    );
+
+    $estateinFaqHtml = (string)ob_get_clean();
+}
+?>
+
+<?php if (trim($estateinFaqHtml) !== ''): ?>
     <section
         class="faq-section"
         aria-labelledby="faq-title"
@@ -686,75 +761,10 @@ $estateinHomeFaqs = estateinGetFaqs(
                 </a>
             </div>
 
-            <div
-                class="faq-section__slider slider swiper"
-                data-js-slider-swiper>
-                <ul class="swiper-wrapper">
-                    <?php foreach ($estateinHomeFaqs as $estateinFaq): ?>
-                        <li class="swiper-slide">
-                            <article class="faq-card">
-                                <div class="faq-card__content">
-                                    <h3 class="faq-card__title">
-                                        <?= htmlspecialcharsbx($estateinFaq['question']) ?>
-                                    </h3>
-
-                                    <p class="faq-card__description">
-                                        <?= $estateinFaq['answer_html'] ?>
-                                    </p>
-                                </div>
-
-                                <?php if ($estateinFaq['link_url'] !== ''): ?>
-                                    <a
-                                        class="faq-card__link button button--gray"
-                                        href="<?= htmlspecialcharsbx($estateinFaq['link_url']) ?>"
-                                        aria-label="Read more about <?= htmlspecialcharsbx($estateinFaq['question']) ?>">
-                                        Read More
-                                    </a>
-                                <?php endif; ?>
-                            </article>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <div class="faq-section__footer slider__footer">
-                <a
-                    class="slider__mobile-action button button--dark"
-                    href="/#faq">
-                    View All FAQs
-                </a>
-
-                <p
-                    class="slider__counter"
-                    aria-live="polite"
-                    aria-atomic="true">
-                    <span
-                        class="slider__counter-current"
-                        data-js-slider-current>
-                        01
-                    </span>
-                    of
-                    <span data-js-slider-total>
-                        <?= str_pad((string)count($estateinHomeFaqs), 2, '0', STR_PAD_LEFT) ?>
-                    </span>
-                </p>
-
-                <div
-                    class="slider__navigation"
-                    aria-label="FAQ slider controls">
-                    <button
-                        class="slider__button slider__button--previous"
-                        type="button"
-                        aria-label="Previous FAQ group"
-                        data-js-slider-prev></button>
-
-                    <button
-                        class="slider__button slider__button--next"
-                        type="button"
-                        aria-label="Next FAQ group"
-                        data-js-slider-next></button>
-                </div>
-            </div>
+            <?php
+            // Готовая разметка компонента: повторно не экранируем.
+            echo $estateinFaqHtml;
+            ?>
         </div>
     </section>
 <?php endif; ?>
