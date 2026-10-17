@@ -41,11 +41,18 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
         </div>
 
         <div class="hero__visual">
-            <picture>
-                <img class="hero__image" src="/local/templates/estatein/assets/hero-ZojPGZk9.webp"
-                    alt="Modern Estatein residential and business complex" width="920" height="814" fetchpriority="high"
-                    decoding="async">
-            </picture>
+            <?php
+            $APPLICATION->IncludeComponent(
+                'bitrix:main.include',
+                '',
+                [
+                    'AREA_FILE_SHOW' => 'file',
+                    'PATH' => '/local/include/home/hero-image.php',
+                    'EDIT_TEMPLATE' => '',
+                ],
+                false
+            );
+            ?>
 
             <a class="hero__round-link" href="/properties/" aria-label="Discover your dream property">
                 <svg class="hero__round-link-text" viewBox="0 0 160 160" aria-hidden="true">
