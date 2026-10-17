@@ -7,14 +7,7 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
     . '/local/config/estatein.php';
 
 require_once $_SERVER['DOCUMENT_ROOT']
-    . '/local/include/estatein/property-data.php';
-
-require_once $_SERVER['DOCUMENT_ROOT']
     . '/local/include/estatein/faq-data.php';
-
-$estateinHomeProperties = estateinGetProperties(
-    (int)($estateinConfig['properties_iblock_id'] ?? 0)
-);
 
 $estateinHomeFaqs = estateinGetFaqs(
     (int)($estateinConfig['faq_iblock_id'] ?? 0)
@@ -142,40 +135,86 @@ $estateinHomeFaqs = estateinGetFaqs(
             </a>
         </div>
 
-        <div class="properties-section__slider slider swiper" data-js-slider-swiper>
-            <ul class="swiper-wrapper">
-                <?php foreach ($estateinHomeProperties as $estateinProperty): ?>
-                    <li class="swiper-slide">
-                        <?php
-                        include $_SERVER['DOCUMENT_ROOT']
-                            . '/local/include/estatein/property-card.php';
-                        ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
+        <?php
+        $APPLICATION->IncludeComponent(
+            'bitrix:news.list',
+            'home-properties',
+            [
+                'IBLOCK_ID' => (int)(
+                    $estateinConfig['properties_iblock_id'] ?? 0
+                ),
 
-        <div class="properties-section__footer slider__footer">
-            <a class="slider__mobile-action button button--dark" href="/properties/">
-                View All Properties
-            </a>
+                'NEWS_COUNT' => '1000',
 
-            <p class="slider__counter" aria-live="polite" aria-atomic="true">
-                <span class="slider__counter-current" data-js-slider-current>
-                    01
-                </span>
-                of
-                <span data-js-slider-total>06</span>
-            </p>
+                'SORT_BY1' => 'SORT',
+                'SORT_ORDER1' => 'ASC',
+                'SORT_BY2' => 'ID',
+                'SORT_ORDER2' => 'DESC',
 
-            <div class="slider__navigation" aria-label="Featured properties slider controls">
-                <button class="slider__button slider__button--previous" type="button" aria-label="Previous property"
-                    data-js-slider-prev></button>
+                'CHECK_DATES' => 'Y',
 
-                <button class="slider__button slider__button--next" type="button" aria-label="Next property"
-                    data-js-slider-next></button>
-            </div>
-        </div>
+                'FIELD_CODE' => [
+                    'NAME',
+                    'PREVIEW_TEXT',
+                    'PREVIEW_PICTURE',
+                    'DETAIL_PICTURE',
+                ],
+
+                'PROPERTY_CODE' => [
+                    'PRICE',
+                    'PROPERTY_PRICE',
+                    'COST',
+                    'BEDROOMS',
+                    'BEDROOM_COUNT',
+                    'BEDROOM',
+                    'BATHROOMS',
+                    'BATHROOM_COUNT',
+                    'BATHROOM',
+                    'PROPERTY_TYPE',
+                    'TYPE',
+                    'PROPERTY_KIND',
+                ],
+
+                'FILTER_NAME' => '',
+
+                'DETAIL_URL' => SITE_DIR . 'property-details/',
+                'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
+
+                'ACTIVE_DATE_FORMAT' => 'd.m.Y',
+
+                'PREVIEW_TRUNCATE_LEN' => '0',
+                'DISPLAY_DATE' => 'N',
+                'DISPLAY_NAME' => 'Y',
+                'DISPLAY_PICTURE' => 'Y',
+                'DISPLAY_PREVIEW_TEXT' => 'Y',
+
+                'SET_TITLE' => 'N',
+                'SET_BROWSER_TITLE' => 'N',
+                'SET_META_KEYWORDS' => 'N',
+                'SET_META_DESCRIPTION' => 'N',
+                'SET_LAST_MODIFIED' => 'N',
+
+                'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+                'ADD_SECTIONS_CHAIN' => 'N',
+
+                'PARENT_SECTION' => '',
+                'PARENT_SECTION_CODE' => '',
+                'INCLUDE_SUBSECTIONS' => 'Y',
+
+                'CACHE_TYPE' => 'A',
+                'CACHE_TIME' => '3600',
+                'CACHE_FILTER' => 'N',
+                'CACHE_GROUPS' => 'Y',
+
+                'DISPLAY_TOP_PAGER' => 'N',
+                'DISPLAY_BOTTOM_PAGER' => 'N',
+
+                'SET_STATUS_404' => 'N',
+                'SHOW_404' => 'N',
+            ],
+            false
+        );
+        ?>
     </div>
 </section>
 <section class="testimonials-section" aria-labelledby="testimonials-title" id="testimonials" data-js-slider
