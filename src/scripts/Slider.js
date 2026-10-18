@@ -267,44 +267,138 @@ class Slider {
 }
 
 class SliderCollection {
+    selector = '[data-js-slider]'
+
+    instances = new Map()
+
     constructor() {
         this.init(document)
 
         document.addEventListener(
             'estatein:property-listings-updated',
             (event) => {
-                const rootElement =
+                const scope =
                     event.detail?.rootElement
 
-                if (rootElement) {
-                    this.init(rootElement)
+                this.removeDisconnected()
+
+                if (
+                    scope instanceof Element ||
+                    scope instanceof Document
+                ) {
+                    this.init(scope)
                 }
             }
         )
     }
 
+    destroy(rootElement) {
+        const instance =
+            this.instances.get(rootElement)
+
+        if (
+            instance?.swiper &&
+            !instance.swiper.destroyed
+        ) {
+            instance.swiper.destroy(true, true)
+        }
+
+        this.instances.delete(rootElement)
+
+        delete rootElement.dataset.sliderInitialized
+    }
+
+    removeDisconnected() {
+        for (const rootElement of this.instances.keys()) {
+            if (!rootElement.isConnected) {
+                this.destroy(rootElement)
+            }
+        }
+    }
+
     init(scope) {
-        const rootElements =
+        const rootElements = new Set()
+
+        if (
             scope instanceof Element &&
-                scope.matches('[data-js-slider]')
-                ? [scope]
-                : scope.querySelectorAll(
-                    '[data-js-slider]'
-                )
+            scope.matches(this.selector)
+        ) {
+            rootElements.add(scope)
+        }
+
+        scope.querySelectorAll(this.selector)
+            .forEach((rootElement) => {
+                rootElements.add(rootElement)
+            })
+
+        if (scope instanceof Element) {
+            const parentRoot =
+                scope.closest(this.selector)
+
+            if (parentRoot) {
+                rootElements.add(parentRoot)
+            }
+        }
 
         rootElements.forEach((rootElement) => {
-            if (
-                rootElement.dataset.sliderInitialized ===
-                'true'
-            ) {
-                return
+            this.initSlider(rootElement)
+        })
+    }
+
+    initSlider(rootElement) {
+        const swiperElement =
+            rootElement.querySelector(
+                '[data-js-slider-swiper]'
+            )
+
+        const instance =
+            this.instances.get(rootElement)
+
+        if (!swiperElement) {
+            if (instance) {
+                this.destroy(rootElement)
             }
+
+            delete rootElement.dataset.sliderInitialized
+
+            return
+        }
+
+        const hasCurrentInstance =
+            instance?.swiper &&
+            !instance.swiper.destroyed &&
+            instance.swiperElement === swiperElement
+
+        if (hasCurrentInstance) {
+            instance.slidesCount =
+                swiperElement.querySelectorAll(
+                    '.swiper-slide'
+                ).length
+
+            instance.swiper.update()
+            instance.updateCounter(instance.swiper)
+
+            return
+        }
+
+        if (instance) {
+            this.destroy(rootElement)
+        }
+
+        const newInstance = new Slider(rootElement)
+
+        if (
+            newInstance.swiper &&
+            !newInstance.swiper.destroyed
+        ) {
+            this.instances.set(
+                rootElement,
+                newInstance
+            )
 
             rootElement.dataset.sliderInitialized =
                 'true'
-
-            new Slider(rootElement)
-        })
+        }
     }
 }
 

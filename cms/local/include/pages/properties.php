@@ -108,7 +108,14 @@ $estateinProperties = array_values(
                     'UTF-8'
                 );
 
-                if (mb_stripos($searchText, $query) === false) {
+                if (
+                    mb_stripos(
+                        $searchText,
+                        $query,
+                        0,
+                        'UTF-8'
+                    ) === false
+                ) {
                     return false;
                 }
             }
@@ -222,6 +229,37 @@ $estateinProperties = array_values(
         }
     )
 );
+
+$estateinCatalogPropertyIds = array_values(
+    array_unique(
+        array_map(
+            static function (array $property): int {
+                return (int)($property['id'] ?? 0);
+            },
+            $estateinProperties
+        )
+    )
+);
+
+$estateinCatalogPropertyIds = array_values(
+    array_filter(
+        $estateinCatalogPropertyIds,
+        static function (int $id): bool {
+            return $id > 0;
+        }
+    )
+);
+
+$GLOBALS['estateinCatalogPropertiesFilter'] = [
+    'ID' => $estateinCatalogPropertyIds !== []
+        ? $estateinCatalogPropertyIds
+        : [-1],
+];
+
+$estateinCatalogNewsCount = max(
+    1,
+    count($estateinCatalogPropertyIds)
+);
 ?>
 
 <section class="properties-hero" aria-labelledby="properties-hero-title">
@@ -235,7 +273,8 @@ $estateinProperties = array_values(
                     'AREA_FILE_SHOW' => 'file',
                     'PATH' => '/local/include/pages/properties/hero-content.php',
                     'EDIT_TEMPLATE' => '',
-                ]
+                ],
+                false
             );
             ?>
         </div>
@@ -367,7 +406,7 @@ $estateinProperties = array_values(
                             1,000–2,500 sq ft
                         </option>
                         <option value="large" <?= $estateinFilters['size'] === 'large' ? ' selected' : '' ?>>
-                            2,500 sq ft and above
+                            Over 2,500 sq ft
                         </option>
                     </select>
                 </div>
@@ -400,7 +439,7 @@ $estateinProperties = array_values(
         </form>
     </div>
 </section>
-<section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider
+<section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider data-slider-counter-mode="visible-cards"
     data-slider-slides-desktop="3" data-slider-slides-tablet="2" data-slider-slides-mobile="1"
     data-slider-group-desktop="1" data-slider-group-tablet="1" data-slider-group-mobile="1"
     data-slider-space-desktop="30" data-slider-space-tablet="20" data-slider-space-mobile="16" data-slider-loop="false">
@@ -417,62 +456,107 @@ $estateinProperties = array_values(
                     'AREA_FILE_SHOW' => 'file',
                     'PATH' => '/local/include/pages/properties/listings-content.php',
                     'EDIT_TEMPLATE' => '',
-                ]
+                ],
+                false
             );
             ?>
         </header>
 
-        <?php if ($estateinProperties): ?>
-            <div class="properties-listings__slider slider swiper" data-js-slider-swiper aria-label="Available properties">
-                <ul class="swiper-wrapper">
-                    <?php foreach ($estateinProperties as $estateinProperty): ?>
-                        <li class="swiper-slide">
-                            <?php
-                            include $_SERVER['DOCUMENT_ROOT']
-                                . '/local/include/estatein/property-card.php';
-                            ?>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <footer class="properties-listings__footer slider__footer">
-                <p class="slider__counter" aria-live="polite" aria-atomic="true">
-                    <span class="slider__counter-current" data-js-slider-current>
-                        01
-                    </span>
-                    <span aria-hidden="true"> of </span>
-                    <span class="visually-hidden">of</span>
-                    <span data-js-slider-total>01</span>
-                </p>
+        <?php
+        $APPLICATION->IncludeComponent(
+            'bitrix:news.list',
+            'catalog-properties',
+            [
+                'IBLOCK_ID' => (int)(
+                    $estateinConfig['properties_iblock_id'] ?? 0
+                ),
 
-                <div class="slider__navigation" aria-label="Property slider controls">
-                    <button class="slider__button slider__button--previous" type="button" data-js-slider-prev>
-                        <span class="visually-hidden">
-                            Previous property
-                        </span>
-                    </button>
+                'NEWS_COUNT' => (string)$estateinCatalogNewsCount,
 
-                    <button class="slider__button slider__button--next" type="button" data-js-slider-next>
-                        <span class="visually-hidden">
-                            Next property
-                        </span>
-                    </button>
-                </div>
-            </footer>
-        <?php else: ?>
-            <div
-                class="properties-listings__empty"
-                role="status"
-                aria-live="polite">
-                <p class="properties-listings__empty-title">
-                    No properties found
-                </p>
+                'SORT_BY1' => 'SORT',
+                'SORT_ORDER1' => 'ASC',
+                'SORT_BY2' => 'ID',
+                'SORT_ORDER2' => 'DESC',
 
-                <p class="properties-listings__empty-text">
-                    Try changing the search criteria to see more properties.
-                </p>
-            </div>
-        <?php endif; ?>
+                'CHECK_DATES' => 'Y',
+
+                'FIELD_CODE' => [
+                    'NAME',
+                    'PREVIEW_TEXT',
+                    'PREVIEW_PICTURE',
+                    'DETAIL_PICTURE',
+                ],
+
+                'PROPERTY_CODE' => [
+                    'PRICE',
+                    'PROPERTY_PRICE',
+                    'COST',
+
+                    'BEDROOMS',
+                    'BEDROOM_COUNT',
+                    'BEDROOM',
+
+                    'BATHROOMS',
+                    'BATHROOM_COUNT',
+                    'BATHROOM',
+
+                    'PROPERTY_TYPE',
+                    'TYPE',
+                    'PROPERTY_KIND',
+
+                    'LOCATION',
+
+                    'SIZE',
+                    'PROPERTY_SIZE',
+                    'AREA',
+
+                    'BUILD_YEAR',
+                    'YEAR_BUILT',
+
+                    'CARD_LABEL',
+                ],
+
+                'FILTER_NAME' => 'estateinCatalogPropertiesFilter',
+
+                'DETAIL_URL' => SITE_DIR . 'property-details/',
+                'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
+
+                'ACTIVE_DATE_FORMAT' => 'd.m.Y',
+                'PREVIEW_TRUNCATE_LEN' => '0',
+
+                'DISPLAY_DATE' => 'N',
+                'DISPLAY_NAME' => 'Y',
+                'DISPLAY_PICTURE' => 'Y',
+                'DISPLAY_PREVIEW_TEXT' => 'Y',
+
+                'SET_TITLE' => 'N',
+                'SET_BROWSER_TITLE' => 'N',
+                'SET_META_KEYWORDS' => 'N',
+                'SET_META_DESCRIPTION' => 'N',
+                'SET_LAST_MODIFIED' => 'N',
+
+                'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+                'ADD_SECTIONS_CHAIN' => 'N',
+
+                'PARENT_SECTION' => '',
+                'PARENT_SECTION_CODE' => '',
+                'INCLUDE_SUBSECTIONS' => 'Y',
+
+                'CACHE_TYPE' => 'A',
+                'CACHE_TIME' => '3600',
+                'CACHE_FILTER' => 'Y',
+                'CACHE_GROUPS' => 'Y',
+
+                'DISPLAY_TOP_PAGER' => 'N',
+                'DISPLAY_BOTTOM_PAGER' => 'N',
+                'PAGER_SHOW_ALWAYS' => 'N',
+
+                'SET_STATUS_404' => 'N',
+                'SHOW_404' => 'N',
+            ],
+            false
+        );
+        ?>
     </div>
 </section>
 <section class="property-inquiry" id="inquiry" aria-labelledby="property-inquiry-title">
@@ -489,13 +573,15 @@ $estateinProperties = array_values(
                     'AREA_FILE_SHOW' => 'file',
                     'PATH' => '/local/include/pages/properties/inquiry-content.php',
                     'EDIT_TEMPLATE' => '',
-                ]
+                ],
+                false
             );
             ?>
         </header>
 
         <form class="property-inquiry__form" data-js-form action="/local/ajax/estatein-form.php" method="post" novalidate>
-<?php $estateinFormType = 'property_inquiry'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+            <?php $estateinFormType = 'property_inquiry';
+            require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
 
             <div class="property-inquiry__grid">
                 <div class="form-field">
@@ -680,8 +766,8 @@ $estateinProperties = array_values(
                     Send Your Message
                 </button>
             </div>
-        
-      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
-</form>
+
+            <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+        </form>
     </div>
 </section>

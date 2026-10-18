@@ -6,9 +6,18 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 if (empty($estateinProperty)) {
     return;
 }
+
+$estateinIsCatalogCard =
+    ($estateinProperty['variant'] ?? 'featured') === 'catalog';
+
+$estateinCardLabel = trim((string)(
+    $estateinProperty['eyebrow'] ?? ''
+));
 ?>
 
-<article class="property-card">
+<article class="property-card<?= $estateinIsCatalogCard
+                                    ? ' property-card--catalog'
+                                    : '' ?>">
     <img
         class="property-card__image"
         src="<?= htmlspecialcharsbx($estateinProperty['image']) ?>"
@@ -19,6 +28,14 @@ if (empty($estateinProperty)) {
         decoding="async">
 
     <div class="property-card__body">
+        <?php if (
+            $estateinIsCatalogCard
+            && $estateinCardLabel !== ''
+        ): ?>
+            <p class="property-card__eyebrow">
+                <?= htmlspecialcharsbx($estateinCardLabel) ?>
+            </p>
+        <?php endif; ?>
         <h3 class="property-card__title">
             <?= htmlspecialcharsbx($estateinProperty['title']) ?>
         </h3>
@@ -34,6 +51,7 @@ if (empty($estateinProperty)) {
             </p>
         </div>
 
+        <?php if (!$estateinIsCatalogCard): ?>
         <ul
             class="property-card__features"
             aria-label="Property characteristics">
@@ -104,6 +122,7 @@ if (empty($estateinProperty)) {
                 </span>
             </li>
         </ul>
+        <?php endif; ?>
 
         <div class="property-card__footer">
             <p class="property-card__price">

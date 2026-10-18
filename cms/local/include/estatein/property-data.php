@@ -12,26 +12,91 @@ if (!function_exists('estateinGetPropertyValue')) {
         string $default = ''
     ): string {
         foreach ($codes as $code) {
-            if (!isset($properties[$code])) {
+            $property = $properties[$code] ?? null;
+
+            if (!is_array($property)) {
                 continue;
             }
 
-            $value = $properties[$code]['VALUE_ENUM']
-                ?? $properties[$code]['VALUE']
-                ?? '';
+            $candidates = [
+                $property['~VALUE_ENUM'] ?? null,
+                $property['VALUE_ENUM'] ?? null,
+                $property['~VALUE'] ?? null,
+                $property['VALUE'] ?? null,
+            ];
 
-            if (is_array($value)) {
-                $value = implode(', ', $value);
-            }
+            foreach ($candidates as $value) {
+                if (is_array($value)) {
+                    $value = implode(
+                        ', ',
+                        array_filter(
+                            $value,
+                            static function ($item): bool {
+                                return is_scalar($item)
+                                    && trim((string)$item) !== '';
+                            }
+                        )
+                    );
+                }
 
-            $value = trim((string)$value);
+                if (!is_scalar($value)) {
+                    continue;
+                }
 
-            if ($value !== '') {
-                return $value;
+                $value = trim((string)$value);
+
+                if ($value !== '') {
+                    return $value;
+                }
             }
         }
 
         return $default;
+    }
+}
+
+if (!function_exists('estateinParseNumericValue')) {
+    function estateinParseNumericValue(string $value): ?float
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        $value = preg_replace('/^\$\s*/u', '', $value);
+
+        $value = str_replace(
+            [' ', "\xC2\xA0", "\xE2\x80\xAF"],
+            '',
+            $value
+        );
+
+        if (
+            preg_match(
+                '/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/D',
+                $value
+            ) !== 1
+        ) {
+            return null;
+        }
+
+        $number = (float)str_replace(',', '', $value);
+
+        return is_finite($number)
+            ? $number
+            : null;
+    }
+}
+
+if (!function_exists('estateinGetNumericPropertyValue')) {
+    function estateinGetNumericPropertyValue(
+        array $properties,
+        array $codes
+    ): ?float {
+        return estateinParseNumericValue(
+            estateinGetPropertyValue($properties, $codes)
+        );
     }
 }
 
@@ -64,43 +129,172 @@ if (!function_exists('estateinFormatPrice')) {
             return 'Price on request';
         }
 
-        $digits = preg_replace('/[^\d]/', '', $value);
+        $number = estateinParseNumericValue($value);
 
-        if ($digits === '') {
-            return htmlspecialcharsbx($value);
+        if ($number === null) {
+            return $value;
         }
 
+        $decimals = floor($number) === $number
+            ? 0
+            : 2;
+
         return '$' . number_format(
-            (int)$digits,
-            0,
+            $number,
+            $decimals,
             '.',
             ','
         );
     }
 }
 
-if (!function_exists('estateinGetNumericPropertyValue')) {
-    function estateinGetNumericPropertyValue(
-        array $properties,
-        array $codes
-    ): ?float {
-        $value = estateinGetPropertyValue($properties, $codes);
+if (!function_exists('estateinBuildPropertyCard')) {
+    function estateinBuildPropertyCard(
+        array $fields,
+        array $properties
+    ): ?array {
+        $id = (int)($fields['ID'] ?? 0);
 
-        if ($value === '') {
+        $title = trim((string)(
+            $fields['~NAME']
+            ?? $fields['NAME']
+            ?? ''
+        ));
+
+        $image = null;
+
+        foreach (
+            ['PREVIEW_PICTURE', 'DETAIL_PICTURE']
+            as $fieldName
+        ) {
+            $picture = $fields[$fieldName] ?? null;
+
+            if (
+                is_array($picture)
+                && !empty($picture['SRC'])
+            ) {
+                $image = $picture;
+                break;
+            }
+
+            $pictureId = is_array($picture)
+                ? (int)($picture['ID'] ?? 0)
+                : (int)$picture;
+
+            if ($pictureId <= 0) {
+                continue;
+            }
+
+            $file = CFile::GetFileArray($pictureId);
+
+            if (
+                is_array($file)
+                && !empty($file['SRC'])
+            ) {
+                $image = $file;
+                break;
+            }
+        }
+
+        if ($image === null) {
             return null;
         }
 
-        $digits = preg_replace(
-            '/[^\d.]/',
-            '',
-            str_replace(',', '', $value)
+        $imageAlt = trim((string)(
+            $image['DESCRIPTION'] ?? ''
+        ));
+
+        if ($imageAlt === '') {
+            $imageAlt = $title;
+        }
+
+        $description = trim(
+            strip_tags((string)(
+                $fields['~PREVIEW_TEXT']
+                ?? $fields['PREVIEW_TEXT']
+                ?? ''
+            ))
         );
 
-        if ($digits === '' || !is_numeric($digits)) {
-            return null;
+        if ($description === '') {
+            $description =
+                'Discover more details about this property at Estatein.';
         }
 
-        return (float)$digits;
+        $price = estateinGetPropertyValue(
+            $properties,
+            ['PRICE', 'PROPERTY_PRICE', 'COST']
+        );
+
+        $bedrooms = estateinGetPropertyValue(
+            $properties,
+            ['BEDROOMS', 'BEDROOM_COUNT', 'BEDROOM']
+        );
+
+        $bathrooms = estateinGetPropertyValue(
+            $properties,
+            ['BATHROOMS', 'BATHROOM_COUNT', 'BATHROOM']
+        );
+
+        $type = estateinGetPropertyValue(
+            $properties,
+            ['PROPERTY_TYPE', 'TYPE', 'PROPERTY_KIND'],
+            'Property'
+        );
+
+        $buildYear = estateinGetNumericPropertyValue(
+            $properties,
+            ['BUILD_YEAR', 'YEAR_BUILT']
+        );
+
+        return [
+            'id' => $id,
+            'title' => $title,
+            'description' => $description,
+            'image' => (string)$image['SRC'],
+            'image_alt' => $imageAlt,
+
+            'bedrooms' => estateinFormatFeature(
+                $bedrooms,
+                'Bedroom'
+            ),
+
+            'bathrooms' => estateinFormatFeature(
+                $bathrooms,
+                'Bathroom'
+            ),
+
+            'type' => $type,
+            'price' => estateinFormatPrice($price),
+            'price_value' => estateinParseNumericValue($price),
+
+            'location' => estateinGetPropertyValue(
+                $properties,
+                ['LOCATION']
+            ),
+
+            'size_value' => estateinGetNumericPropertyValue(
+                $properties,
+                ['SIZE', 'PROPERTY_SIZE', 'AREA']
+            ),
+
+            'build_year' => (
+                $buildYear !== null
+                && floor($buildYear) === $buildYear
+                && $buildYear >= 1
+                && $buildYear <= 9999
+            )
+                ? (int)$buildYear
+                : null,
+
+            'eyebrow' => estateinGetPropertyValue(
+                $properties,
+                ['CARD_LABEL']
+            ),
+
+
+            'url' => SITE_DIR . 'property-details/',
+        ];
     }
 }
 
@@ -108,15 +302,15 @@ if (!function_exists('estateinGetProperties')) {
     function estateinGetProperties(int $iblockId): array
     {
         if (
-            $iblockId <= 0 ||
-            !Loader::includeModule('iblock')
+            $iblockId <= 0
+            || !Loader::includeModule('iblock')
         ) {
             return [];
         }
 
-        $properties = [];
+        $cards = [];
 
-        $elementResult = CIBlockElement::GetList(
+        $result = CIBlockElement::GetList(
             [
                 'SORT' => 'ASC',
                 'ID' => 'DESC',
@@ -124,6 +318,7 @@ if (!function_exists('estateinGetProperties')) {
             [
                 'IBLOCK_ID' => $iblockId,
                 'ACTIVE' => 'Y',
+                'ACTIVE_DATE' => 'Y',
             ],
             false,
             false,
@@ -134,131 +329,22 @@ if (!function_exists('estateinGetProperties')) {
                 'PREVIEW_TEXT',
                 'PREVIEW_PICTURE',
                 'DETAIL_PICTURE',
-                'PROPERTY_*',
             ]
         );
 
-        while ($element = $elementResult->GetNextElement()) {
-            $fields = $element->GetFields();
-            $elementProperties = $element->GetProperties();
-
-            $imageId = (int)(
-                $fields['PREVIEW_PICTURE']
-                ?: $fields['DETAIL_PICTURE']
+        while (
+            $element = $result->GetNextElement(false, false)
+        ) {
+            $card = estateinBuildPropertyCard(
+                $element->GetFields(),
+                $element->GetProperties()
             );
 
-            $imagePath = $imageId > 0
-                ? CFile::GetPath($imageId)
-                : '';
-
-            if ($imagePath === '') {
-                continue;
+            if ($card !== null) {
+                $cards[] = $card;
             }
-
-            $imageFile = CFile::GetFileArray($imageId);
-
-            $imageAlt = trim((string)(
-                $imageFile['DESCRIPTION']
-                ?? $fields['NAME']
-            ));
-
-            $previewText = trim(
-                strip_tags((string)$fields['PREVIEW_TEXT'])
-            );
-
-            if ($previewText === '') {
-                $previewText =
-                    'Discover more details about this property at Estatein.';
-            }
-
-            $price = estateinGetPropertyValue(
-                $elementProperties,
-                [
-                    'PRICE',
-                    'PROPERTY_PRICE',
-                    'COST',
-                ]
-            );
-
-            $bedrooms = estateinGetPropertyValue(
-                $elementProperties,
-                [
-                    'BEDROOMS',
-                    'BEDROOM_COUNT',
-                    'BEDROOM',
-                ]
-            );
-
-            $bathrooms = estateinGetPropertyValue(
-                $elementProperties,
-                [
-                    'BATHROOMS',
-                    'BATHROOM_COUNT',
-                    'BATHROOM',
-                ]
-            );
-
-            $propertyType = estateinGetPropertyValue(
-                $elementProperties,
-                [
-                    'PROPERTY_TYPE',
-                    'TYPE',
-                    'PROPERTY_KIND',
-                ],
-                'Property'
-            );
-
-            $properties[] = [
-                'id' => (int)$fields['ID'],
-                'title' => (string)$fields['NAME'],
-                'description' => $previewText,
-                'image' => $imagePath,
-                'image_alt' => $imageAlt !== ''
-                    ? $imageAlt
-                    : (string)$fields['NAME'],
-                'bedrooms' => estateinFormatFeature(
-                    $bedrooms,
-                    'Bedroom'
-                ),
-                'bathrooms' => estateinFormatFeature(
-                    $bathrooms,
-                    'Bathroom'
-                ),
-                'type' => $propertyType,
-                'price' => estateinFormatPrice($price),
-                'price_value' => estateinGetNumericPropertyValue(
-                    $elementProperties,
-                    [
-                        'PRICE',
-                        'PROPERTY_PRICE',
-                        'COST',
-                    ]
-                ),
-                'location' => estateinGetPropertyValue(
-                    $elementProperties,
-                    [
-                        'LOCATION',
-                    ]
-                ),
-                'size_value' => estateinGetNumericPropertyValue(
-                    $elementProperties,
-                    [
-                        'SIZE',
-                        'PROPERTY_SIZE',
-                        'AREA',
-                    ]
-                ),
-                'build_year' => estateinGetNumericPropertyValue(
-                    $elementProperties,
-                    [
-                        'BUILD_YEAR',
-                        'YEAR_BUILT',
-                    ]
-                ),
-                'url' => SITE_DIR . 'property-details/',
-            ];
         }
 
-        return $properties;
+        return $cards;
     }
 }
