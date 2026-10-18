@@ -712,7 +712,7 @@ $estateinCatalogNewsCount = max(
                                 aria-hidden="true" />
 
                             <span class="contact-method__text">
-                                Enter Your Number
+                                By Phone
                             </span>
 
                             <input class="contact-method__radio" type="radio" name="contact_method" value="phone"
@@ -724,7 +724,7 @@ $estateinCatalogNewsCount = max(
                                 aria-hidden="true" />
 
                             <span class="contact-method__text">
-                                Enter Your Email
+                                By Email
                             </span>
 
                             <input class="contact-method__radio" type="radio" name="contact_method" value="email"
