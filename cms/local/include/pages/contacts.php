@@ -467,55 +467,26 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
     </div>
   </div>
 </section>
-<section class="contacts-gallery" id="contacts-gallery" aria-labelledby="contacts-gallery-title">
-  <div class="contacts-gallery__container container">
+<section
+  class="contacts-gallery"
+  id="contacts-gallery"
+  aria-labelledby="contacts-gallery-title">
 
+  <div class="contacts-gallery__container container">
     <div class="contacts-gallery__box">
 
       <div class="contacts-gallery-grid">
-        <ul class="contacts-gallery-grid__list" role="presentation">
-
-          <li class="contacts-gallery-grid__item contacts-gallery-grid__item--office">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/gallery-office-laptop-DS6yG2SP.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/gallery-office-B9-MjSc1.webp" alt="Estatein open space office with modern workstations" width="718" height="342" loading="lazy">
-            </picture>
-          </li>
-
-          <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-1">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-1-laptop-CDSkEdGC.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-1-2RMZxMQ6.webp" alt="Four Estatein professionals smiling in business suits" width="554" height="212" loading="lazy">
-            </picture>
-          </li>
-
-          <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-2">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-2-laptop-D0YbfjTn.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-2-UjUMwwr2.webp" alt="Estatein team meeting at a large conference table top view" width="554" height="318" loading="lazy">
-            </picture>
-          </li>
-
-          <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-3">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-3-laptop-DMoQHAjv.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-3-BuNO3V4U.webp" alt="Three corporate team members smiling in the office" width="262" height="318" loading="lazy">
-            </picture>
-          </li>
-
-          <li class="contacts-gallery-grid__item contacts-gallery-grid__item--team-4">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/team-4-laptop-BuaAYy9g.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/team-4-DydF-bls.webp" alt="Estatein corporate partners posing for a photo" width="262" height="318" loading="lazy">
-            </picture>
-          </li>
-
-        </ul>
+        <?php
+        $APPLICATION->IncludeComponent(
+          'bitrix:main.include',
+          '',
+          [
+            'AREA_FILE_SHOW' => 'file',
+            'PATH' => '/local/include/pages/contacts/gallery-grid.php',
+            'EDIT_TEMPLATE' => '',
+          ]
+        );
+        ?>
       </div>
 
       <div class="contacts-gallery-info">
@@ -536,11 +507,17 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
           </div>
 
           <div class="contacts-gallery-info__handshake">
-            <picture class="contacts-gallery-grid__picture">
-
-              <source media="(max-width: 1440px)" srcset="/local/templates/estatein/assets/gallery-handshake-laptop-Cuttj2d1.webp">
-              <img class="contacts-gallery-grid__img" src="/local/templates/estatein/assets/gallery-handshake-jjgCqmPn.webp" alt="Man and woman shaking hands in agreement during a business meeting" width="554" height="388" loading="lazy">
-            </picture>
+            <?php
+            $APPLICATION->IncludeComponent(
+              'bitrix:main.include',
+              '',
+              [
+                'AREA_FILE_SHOW' => 'file',
+                'PATH' => '/local/include/pages/contacts/gallery-handshake.php',
+                'EDIT_TEMPLATE' => '',
+              ]
+            );
+            ?>
           </div>
 
         </div>
