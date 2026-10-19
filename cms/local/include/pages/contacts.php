@@ -5,6 +5,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
   . '/local/include/site/contacts.php';
+
+$estateinConfig = require $_SERVER['DOCUMENT_ROOT']
+  . '/local/config/estatein.php';
 ?>
 
 <section class="contact-hero" id="contact-hero" aria-labelledby="contact-hero-title">
@@ -380,169 +383,87 @@ $estateinContacts = require $_SERVER['DOCUMENT_ROOT']
       role="tabpanel"
       aria-labelledby="office-tab-all"
       tabindex="0">
-      <ul class="contacts-offices__list">
-        <li
-          class="contacts-offices__item office-card"
-          data-office-category="headquarters">
-          <div class="office-card__body">
-            <span class="office-card__type">
-              Main Headquarters
-            </span>
+      <?php
+      $contactsOfficesIblockId = (int)(
+        $estateinConfig['contacts_offices_iblock_id'] ?? 0
+      );
 
-            <h3 class="office-card__address">
-              123 Estatein Plaza, City Center, Metropolis
-            </h3>
+      if ($contactsOfficesIblockId > 0) {
+        $APPLICATION->IncludeComponent(
+          'bitrix:news.list',
+          'contacts-offices',
+          [
+            'IBLOCK_ID' => $contactsOfficesIblockId,
+            'NEWS_COUNT' => '1000',
 
-            <p class="office-card__description">
-              Our main headquarters serve as the heart of Estatein. Located in
-              the bustling city center, this is where our core team of experts
-              operates, driving the excellence and innovation that define us.
-            </p>
-          </div>
+            'SORT_BY1' => 'SORT',
+            'SORT_ORDER1' => 'ASC',
+            'SORT_BY2' => 'ID',
+            'SORT_ORDER2' => 'ASC',
 
-          <address class="office-card__contacts">
-            <a
-              class="office-card__contact-tag"
-              href="<?= htmlspecialcharsbx('mailto:' . $estateinContacts['email']) ?>">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.25%207.22425V14.375C1.25%2015.7557%202.36929%2016.875%203.75%2016.875H16.25C17.6307%2016.875%2018.75%2015.7557%2018.75%2014.375V7.22425L11.3102%2011.8026C10.5067%2012.297%209.49327%2012.297%208.68976%2011.8026L1.25%207.22425Z'%20fill='white'/%3e%3cpath%20d='M18.75%205.75652V5.625C18.75%204.24429%2017.6307%203.125%2016.25%203.125H3.75C2.36929%203.125%201.25%204.24429%201.25%205.625V5.75652L9.34488%2010.738C9.74664%2010.9852%2010.2534%2010.9852%2010.6551%2010.738L18.75%205.75652Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                <?= htmlspecialcharsbx($estateinContacts['email']) ?>
-              </span>
-            </a>
+            'FILTER_NAME' => '',
+            'FIELD_CODE' => [
+              'ID',
+              'IBLOCK_ID',
+              'NAME',
+              'PREVIEW_TEXT',
+              'PREVIEW_TEXT_TYPE',
+            ],
+            'PROPERTY_CODE' => [
+              'ADDRESS',
+              'CITY',
+              'CATEGORY',
+            ],
 
-            <a
-              class="office-card__contact-tag"
-              href="<?= htmlspecialcharsbx('tel:' . $estateinContacts['phone_href']) ?>">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.25%203.75C1.25%202.36929%202.36929%201.25%203.75%201.25H4.89302C5.61%201.25%206.23498%201.73796%206.40887%202.43354L7.33037%206.11952C7.48284%206.72942%207.25495%207.37129%206.75202%207.74849L5.674%208.557C5.56206%208.64096%205.53772%208.7639%205.56917%208.84974C6.51542%2011.4329%208.5671%2013.4846%2011.1503%2014.4308C11.2361%2014.4623%2011.359%2014.4379%2011.443%2014.326L12.2515%2013.248C12.6287%2012.7451%2013.2706%2012.5172%2013.8805%2012.6696L17.5665%2013.5911C18.262%2013.765%2018.75%2014.39%2018.75%2015.107V16.25C18.75%2017.6307%2017.6307%2018.75%2016.25%2018.75H14.375C7.12626%2018.75%201.25%2012.8737%201.25%205.625V3.75Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                <?= htmlspecialcharsbx($estateinContacts['phone_display']) ?>
-              </span>
-            </a>
+            'CHECK_DATES' => 'Y',
+            'CHECK_PERMISSIONS' => 'Y',
 
-            <a
-              class="office-card__contact-tag"
-              href="https://www.google.com/maps/search/?api=1&query=123+Estatein+Plaza+Metropolis"
-              target="_blank"
-              rel="noopener noreferrer">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9.61646%2018.6259C9.64163%2018.6405%209.66141%2018.6517%209.67542%2018.6596L9.69869%2018.6726C9.88441%2018.7745%2010.1148%2018.7738%2010.3007%2018.6729L10.3246%2018.6596C10.3386%2018.6517%2010.3584%2018.6405%2010.3835%2018.6259C10.4339%2018.5967%2010.5058%2018.5542%2010.5963%2018.4985C10.7771%2018.3872%2011.0323%2018.223%2011.3372%2018.0076C11.9459%2017.5776%2012.7581%2016.9395%2013.5721%2016.1061C15.1922%2014.4474%2016.875%2011.9551%2016.875%208.75C16.875%204.95304%2013.797%201.875%2010%201.875C6.20304%201.875%203.125%204.95304%203.125%208.75C3.125%2011.9551%204.80777%2014.4474%206.42788%2016.1061C7.24188%2016.9395%208.05409%2017.5776%208.66282%2018.0076C8.96771%2018.223%209.22295%2018.3872%209.40375%2018.4985C9.49419%2018.5542%209.56612%2018.5967%209.61646%2018.6259ZM10%2011.25C11.3807%2011.25%2012.5%2010.1307%2012.5%208.75C12.5%207.36929%2011.3807%206.25%2010%206.25C8.61929%206.25%207.5%207.36929%207.5%208.75C7.5%2010.1307%208.61929%2011.25%2010%2011.25Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                Metropolis
-              </span>
-            </a>
-          </address>
+            'PARENT_SECTION' => '',
+            'PARENT_SECTION_CODE' => '',
+            'INCLUDE_SUBSECTIONS' => 'N',
 
-          <a
-            class="office-card__button"
-            href="https://www.google.com/maps/search/?api=1&query=123+Estatein+Plaza+Metropolis"
-            target="_blank"
-            rel="noopener noreferrer">
-            Get Direction
-          </a>
-        </li>
+            'DETAIL_URL' => '',
+            'HIDE_LINK_WHEN_NO_DETAIL' => 'Y',
 
-        <li
-          class="contacts-offices__item office-card"
-          data-office-category="regional">
-          <div class="office-card__body">
-            <span class="office-card__type">
-              Regional Offices
-            </span>
+            'DISPLAY_DATE' => 'N',
+            'DISPLAY_NAME' => 'Y',
+            'DISPLAY_PICTURE' => 'N',
+            'DISPLAY_PREVIEW_TEXT' => 'Y',
+            'PREVIEW_TRUNCATE_LEN' => '',
 
-            <h3 class="office-card__address">
-              456 Urban Avenue, Downtown District, Metropolis
-            </h3>
+            'SET_TITLE' => 'N',
+            'SET_BROWSER_TITLE' => 'N',
+            'SET_META_KEYWORDS' => 'N',
+            'SET_META_DESCRIPTION' => 'N',
+            'SET_LAST_MODIFIED' => 'N',
 
-            <p class="office-card__description">
-              Estatein's presence extends to multiple regions, each with its own
-              dynamic real estate landscape. Discover our regional offices,
-              staffed by local experts who understand the nuances of their
-              respective markets.
-            </p>
-          </div>
+            'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+            'ADD_SECTIONS_CHAIN' => 'N',
 
-          <address class="office-card__contacts">
-            <a
-              class="office-card__contact-tag"
-              href="<?= htmlspecialcharsbx('mailto:' . $estateinContacts['email']) ?>">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.25%207.22425V14.375C1.25%2015.7557%202.36929%2016.875%203.75%2016.875H16.25C17.6307%2016.875%2018.75%2015.7557%2018.75%2014.375V7.22425L11.3102%2011.8026C10.5067%2012.297%209.49327%2012.297%208.68976%2011.8026L1.25%207.22425Z'%20fill='white'/%3e%3cpath%20d='M18.75%205.75652V5.625C18.75%204.24429%2017.6307%203.125%2016.25%203.125H3.75C2.36929%203.125%201.25%204.24429%201.25%205.625V5.75652L9.34488%2010.738C9.74664%2010.9852%2010.2534%2010.9852%2010.6551%2010.738L18.75%205.75652Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                <?= htmlspecialcharsbx($estateinContacts['email']) ?>
-              </span>
-            </a>
+            'DISPLAY_TOP_PAGER' => 'N',
+            'DISPLAY_BOTTOM_PAGER' => 'N',
 
-            <a
-              class="office-card__contact-tag"
-              href="<?= htmlspecialcharsbx('tel:' . $estateinContacts['phone_href']) ?>">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.25%203.75C1.25%202.36929%202.36929%201.25%203.75%201.25H4.89302C5.61%201.25%206.23498%201.73796%206.40887%202.43354L7.33037%206.11952C7.48284%206.72942%207.25495%207.37129%206.75202%207.74849L5.674%208.557C5.56206%208.64096%205.53772%208.7639%205.56917%208.84974C6.51542%2011.4329%208.5671%2013.4846%2011.1503%2014.4308C11.2361%2014.4623%2011.359%2014.4379%2011.443%2014.326L12.2515%2013.248C12.6287%2012.7451%2013.2706%2012.5172%2013.8805%2012.6696L17.5665%2013.5911C18.262%2013.765%2018.75%2014.39%2018.75%2015.107V16.25C18.75%2017.6307%2017.6307%2018.75%2016.25%2018.75H14.375C7.12626%2018.75%201.25%2012.8737%201.25%205.625V3.75Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                <?= htmlspecialcharsbx($estateinContacts['phone_display']) ?>
-              </span>
-            </a>
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => '36000000',
+            'CACHE_FILTER' => 'N',
+            'CACHE_GROUPS' => 'Y',
 
-            <a
-              class="office-card__contact-tag"
-              href="https://www.google.com/maps/search/?api=1&query=456+Urban+Avenue+Metropolis"
-              target="_blank"
-              rel="noopener noreferrer">
-              <img
-                class="office-card__contact-icon"
-                src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9.61646%2018.6259C9.64163%2018.6405%209.66141%2018.6517%209.67542%2018.6596L9.69869%2018.6726C9.88441%2018.7745%2010.1148%2018.7738%2010.3007%2018.6729L10.3246%2018.6596C10.3386%2018.6517%2010.3584%2018.6405%2010.3835%2018.6259C10.4339%2018.5967%2010.5058%2018.5542%2010.5963%2018.4985C10.7771%2018.3872%2011.0323%2018.223%2011.3372%2018.0076C11.9459%2017.5776%2012.7581%2016.9395%2013.5721%2016.1061C15.1922%2014.4474%2016.875%2011.9551%2016.875%208.75C16.875%204.95304%2013.797%201.875%2010%201.875C6.20304%201.875%203.125%204.95304%203.125%208.75C3.125%2011.9551%204.80777%2014.4474%206.42788%2016.1061C7.24188%2016.9395%208.05409%2017.5776%208.66282%2018.0076C8.96771%2018.223%209.22295%2018.3872%209.40375%2018.4985C9.49419%2018.5542%209.56612%2018.5967%209.61646%2018.6259ZM10%2011.25C11.3807%2011.25%2012.5%2010.1307%2012.5%208.75C12.5%207.36929%2011.3807%206.25%2010%206.25C8.61929%206.25%207.5%207.36929%207.5%208.75C7.5%2010.1307%208.61929%2011.25%2010%2011.25Z'%20fill='white'/%3e%3c/svg%3e"
-                alt=""
-                width="20"
-                height="20"
-                aria-hidden="true" />
-              <span class="office-card__contact-value">
-                Metropolis
-              </span>
-            </a>
-          </address>
+            'AJAX_MODE' => 'N',
 
-          <a
-            class="office-card__button"
-            href="https://www.google.com/maps/search/?api=1&query=456+Urban+Avenue+Metropolis"
-            target="_blank"
-            rel="noopener noreferrer">
-            Get Direction
-          </a>
-        </li>
-      </ul>
-
-      <p
-        class="contacts-offices__empty"
-        data-js-offices-empty
-        hidden>
-        No offices are available in this category yet.
-      </p>
+            'CONTACT_EMAIL' => (string)(
+              $estateinContacts['email'] ?? ''
+            ),
+            'CONTACT_PHONE_DISPLAY' => (string)(
+              $estateinContacts['phone_display'] ?? ''
+            ),
+            'CONTACT_PHONE_HREF' => (string)(
+              $estateinContacts['phone_href'] ?? ''
+            ),
+          ],
+          false
+        );
+      }
+      ?>
     </div>
   </div>
 </section>

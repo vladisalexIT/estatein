@@ -34,8 +34,7 @@ class ContactsOffices {
 
     if (
       !tabElements.length ||
-      !panelElement ||
-      !itemElements.length
+      !panelElement
     ) {
       return
     }

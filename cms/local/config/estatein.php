@@ -13,4 +13,5 @@ return [
     'about_process_iblock_id' => 8,
     'site_contacts_iblock_id' => 9,
     'site_contacts_element_id' => 48,
+    'contacts_offices_iblock_id' => 10,
 ];
