@@ -11,4 +11,6 @@ return [
     'about_clients_iblock_id' => 6,
     'achievements_iblock_id' => 7,
     'about_process_iblock_id' => 8,
+    'site_contacts_iblock_id' => 9,
+    'site_contacts_element_id' => 48,
 ];
