@@ -1,0 +1,223 @@
+.property-card {
+  display: flex;
+  height: 100%;
+  padding: clamp(
+    1.25rem,
+    0.931372549rem + 1.3071895425vw,
+    2.5rem
+  );
+  flex-direction: column;
+  gap: clamp(
+    1.5rem,
+    1.4044117647rem + 0.3921568627vw,
+    1.875rem
+  );
+  border: 0.0625rem solid var(--color-dark-15);
+  border-radius: 0.75rem;
+  background-color: var(--color-dark);
+}
+.property-card__image {
+  width: 100%;
+  aspect-ratio: 512/318;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.625rem;
+}
+@media (width <= 47.99875rem) {
+  .property-card__image {
+    margin-bottom: 1.5rem;
+  }
+}
+.property-card__body {
+  display: flex;
+  min-width: 0;
+  flex-grow: 1;
+  flex-direction: column;
+}
+.property-card__eyebrow {
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 clamp(
+    1rem,
+    0.9362745098rem + 0.2614379085vw,
+    1.25rem
+  );
+  padding: clamp(
+    0.5rem,
+    0.4681372549rem + 0.1307189542vw,
+    0.625rem
+  ) clamp(
+    0.75rem,
+    0.7181372549rem + 0.1307189542vw,
+    0.875rem
+  );
+  border: 0.0625rem solid var(--color-dark-15);
+  border-radius: 1.75rem;
+  color: var(--color-light);
+  background-color: var(--color-dark-10);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+  font-size: clamp(
+    0.875rem,
+    0.8112745098rem + 0.2614379085vw,
+    1.125rem
+  );
+}
+@media (width <= 47.99875rem) {
+  .property-card__eyebrow {
+    margin-bottom: 1rem;
+  }
+}
+.property-card__title {
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: clamp(
+    1.25rem,
+    1.1862745098rem + 0.2614379085vw,
+    1.5rem
+  );
+}
+.property-card__description {
+  margin-top: clamp(
+    0.25rem,
+    0.2181372549rem + 0.1307189542vw,
+    0.375rem
+  );
+  line-height: 1.5;
+}
+.property-card__description-link {
+  color: var(--color-light);
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+.property-card__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin: clamp(
+    1.25rem,
+    1.0906862745rem + 0.6535947712vw,
+    1.875rem
+  ) 0 0;
+}
+.property-card__feature {
+  display: inline-flex;
+  min-height: clamp(
+    2.25rem,
+    2.1384803922rem + 0.4575163399vw,
+    2.6875rem
+  );
+  padding-inline: clamp(
+    0.625rem,
+    0.5612745098rem + 0.2614379085vw,
+    0.875rem
+  );
+  justify-content: center;
+  align-items: center;
+  -moz-column-gap: 0.25rem;
+       column-gap: 0.25rem;
+  border: 0.0625rem solid var(--color-dark-15);
+  border-radius: 1.75rem;
+  color: var(--color-light);
+  background-color: var(--color-dark-10);
+  font-size: clamp(
+    0.875rem,
+    0.8112745098rem + 0.2614379085vw,
+    1.125rem
+  );
+  line-height: 1;
+  white-space: nowrap;
+}
+.property-card__feature-icon {
+  flex: 0 0 auto;
+  width: clamp(
+    1.25rem,
+    1.1862745098rem + 0.2614379085vw,
+    1.5rem
+  );
+  height: clamp(
+    1.25rem,
+    1.1862745098rem + 0.2614379085vw,
+    1.5rem
+  );
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.property-card__feature-text {
+  min-width: 0;
+}
+.property-card__footer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(
+    0.75rem,
+    0.6225490196rem + 0.522875817vw,
+    1.25rem
+  );
+  margin-top: auto;
+  padding-top: clamp(
+    1.25rem,
+    1.0906862745rem + 0.6535947712vw,
+    1.875rem
+  );
+}
+@media (width <= 47.99875rem) {
+  .property-card__footer {
+    margin-top: 1.5rem;
+  }
+}
+.property-card__price {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.property-card__price-label {
+  color: var(--color-gray-60);
+  font-size: clamp(
+    0.875rem,
+    0.8112745098rem + 0.2614379085vw,
+    1.125rem
+  );
+  line-height: 1.5;
+  margin-bottom: 0.125rem;
+}
+.property-card__price-value {
+  color: var(--color-light);
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: clamp(
+    1.125rem,
+    1.0294117647rem + 0.3921568627vw,
+    1.5rem
+  );
+}
+.property-card__button {
+  max-width: clamp(
+    12.625rem,
+    11.3982843137rem + 5.0326797386vw,
+    17.4375rem
+  );
+  min-width: 0;
+  justify-self: end;
+  padding-inline: clamp(
+    0.75rem,
+    0.6225490196rem + 0.522875817vw,
+    1.25rem
+  );
+  white-space: nowrap;
+  font-size: clamp(
+    0.875rem,
+    0.8431372549rem + 0.1307189542vw,
+    1rem
+  );
+}
+@media (width <= 30.06125rem) {
+  .property-card__footer {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+    gap: 0.75rem;
+  }
+}

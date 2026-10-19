@@ -61,7 +61,7 @@
    */
   .property-card {
     gap: 0;
-    padding: fluid(30, 20);
+    padding: fluid(40, 20);
     border-radius: rem(12);
 
     &__image {
@@ -133,7 +133,7 @@
       grid-template-columns: minmax(rem(110), auto) minmax(0, 1fr);
       align-items: end;
       gap: fluid(20, 12);
-      padding-top: fluid(30, 20);
+      padding-top: fluid(20, 0);
     }
 
     &__price-label {
@@ -156,10 +156,43 @@
     &__footer {
       display: flex;
       justify-content: space-between;
+      border: none;
+    }
+
+    .slider__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: rem(30); 
+      padding: 0;
+    }
+
+    .slider__navigation {
+      display: contents; 
+    }
+
+    .slider__button--previous,
+    .slider__button--next,
+    .slider__counter {
+      margin: 0; 
+      position: static;
+      top: auto;
+      bottom: auto;
+    }
+
+    .slider__button--previous {
+      order: 1;
     }
 
     .slider__counter {
-      display: block;
+      display: flex;
+      gap: rem(6);
+      order: 2;
+    }
+
+    .slider__button--next {
+      order: 3;
     }
 
     .property-card {
