@@ -3,7 +3,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   die();
 }
 ?>
-<section class="property-gallery" id="property-gallery" aria-labelledby="property-gallery-title" data-property-gallery>
+<section class="property-gallery" id="property-gallery" aria-labelledby="property-gallery-title">
   <div class="property-gallery__container container">
     <header class="property-gallery__header">
       <div class="property-gallery__identity">
@@ -31,7 +31,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       </p>
     </header>
 
-    <div class="property-gallery__box">
+    <div class="property-gallery__box" data-property-gallery>
       <nav class="property-gallery__thumbnails" aria-label="Choose a property gallery slide">
         <ul class="property-gallery__thumbnail-list">
           <li class="property-gallery__thumbnail-item">
@@ -228,547 +228,40 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       </div>
     </div>
 
-    <div class="property-gallery__details" data-gallery-details aria-live="polite" aria-atomic="true">
-      <article class="property-gallery__info-panel is-active" data-gallery-info="0">
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
+    <div class="property-gallery__details">
+      <div class="property-gallery__info-panel">
+        <section
+          class="property-gallery__description"
+          aria-labelledby="property-description-title">
+          <?php
+          $APPLICATION->IncludeComponent(
+            'bitrix:main.include',
+            '',
+            [
+              'AREA_FILE_SHOW' => 'file',
+              'PATH' => '/local/include/pages/property-details/description-content.php',
+              'EDIT_TEMPLATE' => '',
+            ]
+          );
+          ?>
+        </section>
 
-          <p class="property-gallery__info-text">
-            Discover your own piece of paradise with the Seaside Serenity
-            Villa. With an open floor plan, breathtaking ocean views from every
-            room, and direct access to a pristine sandy beach, this property is
-            the epitome of coastal living.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Expansive oceanfront terrace for outdoor entertaining
-            </li>
-            <li class="property-gallery__amenity">
-              Gourmet kitchen with top-of-the-line appliances
-            </li>
-            <li class="property-gallery__amenity">
-              Private beach access for morning strolls and sunset views
-            </li>
-            <li class="property-gallery__amenity">
-              Master suite with a spa-inspired bathroom and ocean-facing balcony
-            </li>
-            <li class="property-gallery__amenity">
-              Private garage and ample storage space
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="1" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            The villa opens into a calm and welcoming living environment where
-            generous glazing connects the interior with the surrounding coastal
-            landscape. Every room is arranged to make daily life feel bright,
-            private, and effortless.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Floor-to-ceiling windows with panoramic natural light
-            </li>
-            <li class="property-gallery__amenity">
-              Seamless connection between the lounge and outdoor terrace
-            </li>
-            <li class="property-gallery__amenity">
-              Quiet family-oriented coastal neighborhood
-            </li>
-            <li class="property-gallery__amenity">
-              Premium stone and timber finishes throughout the home
-            </li>
-            <li class="property-gallery__amenity">
-              Separate utility and service areas
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="2" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            Designed for relaxed hosting, this layout gives the main living
-            spaces a direct relationship with the pool deck. The result is a
-            property that feels equally suitable for quiet mornings and
-            memorable gatherings.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Heated outdoor swimming pool with lounge deck
-            </li>
-            <li class="property-gallery__amenity">
-              Outdoor dining area with built-in lighting
-            </li>
-            <li class="property-gallery__amenity">
-              Private landscaped garden
-            </li>
-            <li class="property-gallery__amenity">
-              Multiple entertaining zones connected by open walkways
-            </li>
-            <li class="property-gallery__amenity">
-              Secure gated entrance
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="3" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            This view highlights the villa's connection to the water and the
-            surrounding terrain. The architectural composition balances privacy
-            with open views, creating a distinctive modern coastal residence.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Elevated outdoor dining terrace
-            </li>
-            <li class="property-gallery__amenity">
-              Uninterrupted views toward the coastline
-            </li>
-            <li class="property-gallery__amenity">
-              Private swimming pool with sun deck
-            </li>
-            <li class="property-gallery__amenity">
-              Carefully planned evening lighting
-            </li>
-            <li class="property-gallery__amenity">
-              Low-maintenance modern landscaping
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="4" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            The interior concept combines warm materials, clean lines, and
-            carefully framed views. The open living zone creates a comfortable
-            flow between the kitchen, dining area, and lounge.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Custom kitchen with premium integrated appliances
-            </li>
-            <li class="property-gallery__amenity">
-              Open-plan lounge with direct terrace access
-            </li>
-            <li class="property-gallery__amenity">
-              Natural stone flooring in the main living areas
-            </li>
-            <li class="property-gallery__amenity">
-              Designer lighting and built-in storage
-            </li>
-            <li class="property-gallery__amenity">
-              Dedicated dining area for eight guests
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="5" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            Natural textures and a restrained palette give the interior a
-            timeless feel. The living spaces are designed to remain practical
-            for everyday use while preserving the atmosphere of a luxury
-            retreat.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Soft layered lighting for day and evening comfort
-            </li>
-            <li class="property-gallery__amenity">
-              Fully equipped modern kitchen
-            </li>
-            <li class="property-gallery__amenity">
-              Flexible dining and work-from-home zone
-            </li>
-            <li class="property-gallery__amenity">
-              High-quality acoustic insulation
-            </li>
-            <li class="property-gallery__amenity">
-              Built-in climate control
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="6" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            The villa's private spaces are arranged to offer calm separation
-            from the social areas. Thoughtful planning ensures that every room
-            benefits from natural light, storage, and a strong sense of privacy.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Quiet master bedroom suite
-            </li>
-            <li class="property-gallery__amenity">
-              Spa-inspired bathroom with freestanding tub
-            </li>
-            <li class="property-gallery__amenity">
-              Private balcony with coastal views
-            </li>
-            <li class="property-gallery__amenity">
-              Generous wardrobe and storage space
-            </li>
-            <li class="property-gallery__amenity">
-              Separate guest accommodation
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="property-gallery__info-panel" data-gallery-info="7" hidden>
-        <div class="property-gallery__description">
-          <h2 class="property-gallery__info-title">
-            Description
-          </h2>
-
-          <p class="property-gallery__info-text">
-            The complete property experience brings together architecture,
-            comfort, and location. Seaside Serenity Villa is designed for
-            buyers who value privacy, refined materials, and a direct
-            relationship with the coast.
-          </p>
-
-          <dl class="property-gallery__stats">
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bedrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                04
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Bathrooms
-              </dt>
-              <dd class="property-gallery__stat-value">
-                03
-              </dd>
-            </div>
-
-            <div class="property-gallery__stat">
-              <dt class="property-gallery__stat-label">
-                Area
-              </dt>
-              <dd class="property-gallery__stat-value">
-                2,500 Square Feet
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="property-gallery__amenities">
-          <h2 class="property-gallery__info-title">
-            Key Features and Amenities
-          </h2>
-
-          <ul class="property-gallery__amenity-list">
-            <li class="property-gallery__amenity">
-              Complete indoor and outdoor entertainment arrangement
-            </li>
-            <li class="property-gallery__amenity">
-              Private pool and direct beach access
-            </li>
-            <li class="property-gallery__amenity">
-              Premium appliances and designer finishes
-            </li>
-            <li class="property-gallery__amenity">
-              Secure parking and private entrance
-            </li>
-            <li class="property-gallery__amenity">
-              Fully integrated smart-home features
-            </li>
-          </ul>
-        </div>
-      </article>
+        <section
+          class="property-gallery__amenities"
+          aria-labelledby="property-amenities-title">
+          <?php
+          $APPLICATION->IncludeComponent(
+            'bitrix:main.include',
+            '',
+            [
+              'AREA_FILE_SHOW' => 'file',
+              'PATH' => '/local/include/pages/property-details/amenities-content.php',
+              'EDIT_TEMPLATE' => '',
+            ]
+          );
+          ?>
+        </section>
+      </div>
     </div>
   </div>
 </section>
@@ -795,7 +288,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
       <div class="property-details-inquiry__form-card">
         <form class="property-details-inquiry__form" data-js-form action="/local/ajax/estatein-form.php" method="post" autocomplete="on" novalidate>
-<?php $estateinFormType = 'property_details'; require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
+          <?php $estateinFormType = 'property_details';
+          require $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/form-meta.php'; ?>
 
           <div class="property-details-inquiry__fields">
             <div class="form-field">
@@ -891,9 +385,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Send Your Message
             </button>
           </div>
-        
-      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
-</form>
+
+          <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+        </form>
       </div>
     </div>
   </div>

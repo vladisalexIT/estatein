@@ -297,11 +297,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: fluid(30, 20);
     width: 100%;
-    animation: property-gallery-info-enter 220ms ease both;
-
-    &[hidden] {
-      display: none;
-    }
   }
 
   &__description,
@@ -514,10 +509,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &__info-panel {
-      animation: none;
-    }
-
     &__thumbnail,
     &__arrow,
     &__bullet {
@@ -526,14 +517,3 @@
   }
 }
 
-@keyframes property-gallery-info-enter {
-  from {
-    opacity: 0;
-    transform: translateY(rem(8));
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
