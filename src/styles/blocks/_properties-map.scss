@@ -1,0 +1,140 @@
+@use "../helpers" as *;
+
+.properties-map-wrapper {
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+
+  &__body {
+    height: 100%;
+    padding: fluid(20, 16);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(12);
+    box-sizing: border-box;
+  }
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    border-radius: rem(8);
+    overflow: hidden;
+    background-color: #1a1a1a;
+  }
+}
+
+[data-js-properties-list].is-map-active {
+  width: min(rem(1597), 100% - rem(48)); 
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: fluid(512, 357) minmax(0, 1fr);
+  grid-template-rows: auto auto; 
+  gap: fluid(30, 20);
+  align-items: stretch; 
+  padding-bottom: fluid(110, 80);
+  box-sizing: border-box;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    width: 100%; 
+    padding-left: fluid(20, 16); 
+    padding-right: fluid(20, 16);
+  }
+
+  .properties-listings {
+    padding-bottom: 0;
+    width: 100%;
+    min-width: 0;
+    grid-row: 1;
+    grid-column: 1;
+
+    @include mobile {
+      width: 100%;
+      order: 2;
+    }
+
+    &__container {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__header,
+    &__decoration {
+      display: none; 
+    }
+
+    &__slider {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+
+  .slider__footer {
+    grid-row: 2;   
+    grid-column: 1; 
+    width: 100%;
+    margin-top: rem(30); 
+    padding: 0;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;   
+    border: none;         
+  }
+
+  .slider__navigation {
+    display: contents; 
+  }
+
+  .slider__button--previous,
+  .slider__button--next,
+  .slider__counter {
+    margin: 0; 
+    position: static;
+    top: auto;
+    bottom: auto;
+  }
+
+  .slider__button--previous {
+    order: 1; 
+  }
+
+  .slider__counter {
+    display: flex;
+    gap: rem(6);
+    order: 2; 
+  }
+
+  .slider__button--next {
+    order: 3; 
+  }
+
+  .properties-map-wrapper {
+    width: 100%; 
+    height: 100%;
+    display: block;
+    grid-row: 1;
+    grid-column: 2;
+
+    @include mobile {
+      height: rem(517); 
+    }
+
+    &__body,
+    &__container {
+      height: 100%;
+    }
+  }
+
+  .property-card--highlighted {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 rem(20) rgba(112, 59, 247, 0.25);
+    background-color: var(--color-dark-12);
+    transition: all 0.3s ease;
+  }
+}

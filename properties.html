@@ -11,7 +11,12 @@
 
   <title>Explore Properties | Estatein</title>
 
+  <script
+    src="https://api-maps.yandex.ru/2.1/?apikey=b8da4112-5f91-4145-a8cb-c60ee8974be4&lang=en_US"
+    type="text/javascript">
+  </script>
   <script type="module" src="/src/scripts/main.js"></script>
+  <script type="module" src="/src/scripts/PropertiesMap.js"></script>
 </head>
 
 <body>
@@ -20,7 +25,10 @@
 
   <main class="main" id="main-content">
     <load src="/src/html/sections/properties/hero.html" />
-    <load src="/src/html/sections/properties/listings.html" />
+    <div data-js-properties-list>
+      <load src="/src/html/sections/properties/listings.html" />
+      <load src="/src/html/sections/properties/map.html" />
+    </div>
     <load src="/src/html/sections/properties/inquiry.html" />
   </main>
 

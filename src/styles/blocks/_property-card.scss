@@ -3,19 +3,28 @@
 .property-card {
   display: flex;
   height: 100%;
-  padding: fluid(40, 24);
+  padding: fluid(40, 20);
   flex-direction: column;
-  gap: fluid(30, 20);
+  gap: fluid(30, 24);
 
   border: rem(1) solid var(--color-dark-15);
   border-radius: rem(12);
   background-color: var(--color-dark);
+
+  @include mobile {
+    // gap: 0; 
+  }
+
 
   &__image {
     width: 100%;
     aspect-ratio: 512 / 318;
     object-fit: cover;
     border-radius: rem(10);
+
+    @include mobile {
+      margin-bottom: rem(24); 
+    }
   }
 
   &__body {
@@ -34,15 +43,22 @@
     border-radius: rem(28);
     color: var(--color-light);
     background-color: var(--color-dark-10);
-    font-size: fluid(18, 14);
     line-height: 1.2;
     overflow-wrap: anywhere;
     line-height: 1.4;
+
+   @include fluid-text(18, 14);
+
+    @include mobile {
+      margin-bottom: rem(16); 
+    }
   }
 
   &__title {
-    font-size: fluid(24, 20);
+    font-weight: 600;
     line-height: 1.2;
+
+    @include fluid-text(24, 20);
   }
 
   &__description {
@@ -95,10 +111,14 @@
   &__footer {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    align-items: end;
+    align-items: center;
     gap: fluid(20, 12);
     margin-top: auto;
     padding-top: fluid(30, 20);
+
+    @include mobile {
+      margin-top: rem(24);
+    }
   }
 
   &__price {
@@ -111,24 +131,26 @@
     color: var(--color-gray-60);
     font-size: fluid(18, 14);
     line-height: 1.5;
-    margin-bottom: 4px;
+    margin-bottom: rem(2);
   }
 
   &__price-value {
     color: var(--color-light);
-    font-size: fluid(24, 18);
     font-weight: 600;
     line-height: 1.2;
+
+     @include fluid-text(24, 18);
   }
 
   &__button {
-    width: 100%;
+    // width: 100%;
     max-width: fluid(279, 202);
     min-width: 0;
     justify-self: end;
     padding-inline: fluid(20, 12);
-    font-size: fluid(16, 14);
     white-space: nowrap;
+
+    @include fluid-text(16, 14);
   }
 
   @include mobile-s {
@@ -136,10 +158,6 @@
       grid-template-columns: auto minmax(0, 1fr);
       align-items: end;
       gap: rem(12);
-    }
-
-    &__button {
-      max-width: rem(202);
     }
   }
 

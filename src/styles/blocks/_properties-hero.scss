@@ -108,11 +108,17 @@
     padding-inline: fluid(24, 15);
     font-size: fluid(18, 14);
     cursor: pointer;
+  }
 
-    img {
-      width: rem(24);
-      height: rem(24);
-      filter: brightness(0) invert(1);
+  &__submit-icon {
+    width: rem(24);
+    height: rem(24);
+    filter: brightness(0) invert(1);
+  }
+
+  &__submit-text {
+    @include mobile {
+      @include visually-hidden;
     }
   }
 
@@ -158,7 +164,7 @@
       box-shadow: 0 0 0 rem(2) rgb(112 59 247 / 14%);
     }
 
-    &::after {
+    &--select::after {
       content: "";
       position: absolute;
       top: 50%;
@@ -170,6 +176,28 @@
         contain no-repeat;
       transform: translateY(-50%);
       pointer-events: none;
+    }
+
+    &--toggle {
+      grid-column: span 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: rem(6);
+      background-color: var(--color-dark-10);
+      border: rem(1) solid var(--color-dark-15);
+      border-radius: rem(10);
+      transition: background-color var(--transition-duration) ease, border-color var(--transition-duration) ease;
+
+      @include hover {
+        background-color: var(--color-dark-12);
+        border-color: var(--color-dark-20);
+      }
+
+      @include mobile {
+        grid-column: 1 / -1; 
+        padding: rem(12);
+      }
     }
   }
 
@@ -222,30 +250,75 @@
     cursor: pointer;
 
     @include fluid-text(18, 14);
+  }
 
+  &__optgroup {
+    color: var(--color-gray-60);
+    background-color: var(--color-dark-10);
+    font-weight: 600;
+  }
 
+  &__option {
+    padding: rem(10) rem(14);
+    color: var(--color-light);
+    background-color: var(--color-dark-10);
+    font-weight: 400;
 
-    optgroup {
-      color: var(--color-gray-60);
-      background-color: var(--color-dark-10);
-      font-weight: 600;
-    }
-
-    option {
-      padding: rem(10) rem(14);
-      color: var(--color-light);
-      background-color: var(--color-dark-10);
-      font-weight: 400;
-    }
-
-    option:disabled {
+    &:disabled {
       color: var(--color-gray-60);
     }
 
-    option:checked {
+    &:checked {
       color: var(--color-light);
       background-color: var(--color-accent);
     }
+  }
+
+    &__toggle-btn {
+    grid-column: 1 / -1; 
+    justify-self: center; 
+    
+    width: auto;
+    min-height: fluid(54, 46);
+    margin-top: rem(20); 
+    padding: rem(10) rem(32); 
+    
+    background-color: var(--color-dark);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: rem(30); 
+    color: var(--color-light);
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer;
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(10);
+    transition: background-color var(--transition-duration) ease, border-color var(--transition-duration) ease, transform var(--transition-duration) ease;
+
+    @include fluid-text(16, 14);
+
+    @include hover {
+      background-color: var(--color-dark-15);
+      border-color: var(--color-dark-20);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: rem(20);
+      height: rem(20);
+      background: url("/src/assets/icons/properties/location.svg") center / contain no-repeat;
+    }
+
+    // @include mobile {
+    //   width: 100%;
+    // }
   }
 
   @include tablet {
@@ -255,10 +328,6 @@
 
     &__filters {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    &__field:last-child {
-      grid-column: 1 / -1;
     }
   }
 
@@ -273,24 +342,10 @@
       padding-inline: rem(10);
     }
 
-    &__submit {
-      width: rem(54);
-      min-width: rem(54);
-      padding: 0;
-
-      span {
-        @include visually-hidden;
-      }
-    }
-
     &__filters {
       grid-template-columns: 1fr;
       margin-top: rem(20);
       padding: rem(10);
-    }
-
-    &__field:last-child {
-      grid-column: auto;
     }
   }
 }

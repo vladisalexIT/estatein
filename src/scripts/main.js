@@ -14,6 +14,8 @@ import FormMasks from './FormMasks.js'
 import ScrollToTop from './ScrollToTop.js'
 import CustomSelects from './CustomSelects.js'
 import FormsValidation from './FormsValidation.js'
+import PropertiesMap from './PropertiesMap.js'
+import PropertyModalMap from './PropertyModalMap.js' 
 
 document.addEventListener('DOMContentLoaded', () => {
   new Header()
@@ -24,5 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new FormMasks()
   new CustomSelects()
   new FormsValidation()
+  new PropertiesMap() 
+  new PropertyModalMap()
   new ScrollToTop()
 })
