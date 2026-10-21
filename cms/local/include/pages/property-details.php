@@ -2,7 +2,80 @@
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   die();
 }
+
+$estateinDetailsConfig = require $_SERVER['DOCUMENT_ROOT']
+  . '/local/config/estatein.php';
+
+require_once $_SERVER['DOCUMENT_ROOT']
+  . '/local/include/estatein/property-details-pricing.php';
+
+$estateinDemoPricing = estateinGetDemoPropertyPricing(
+  (int)(
+    $estateinDetailsConfig['properties_iblock_id'] ?? 0
+  ),
+  (int)(
+    $estateinDetailsConfig['property_details_demo_element_id'] ?? 0
+  )
+);
+
+$estateinPricingMoney = static function (
+  ?int $cents,
+  string $class = ''
+): string {
+  $classAttribute = $class !== ''
+    ? ' class="' . htmlspecialcharsbx($class) . '"'
+    : '';
+
+  if ($cents === null) {
+    return '<span'
+      . $classAttribute
+      . '>On request</span>';
+  }
+
+  $whole = intdiv($cents, 100);
+  $fraction = $cents % 100;
+
+  $decimalPart = $fraction !== 0
+    ? '.' . str_pad(
+      (string)$fraction,
+      2,
+      '0',
+      STR_PAD_LEFT
+    )
+    : '';
+
+  $machineValue = (string)$whole . $decimalPart;
+
+  $formattedValue = '$'
+    . number_format($whole, 0, '.', ',')
+    . $decimalPart;
+
+  return '<data'
+    . $classAttribute
+    . ' value="'
+    . htmlspecialcharsbx($machineValue)
+    . '" data-currency="USD">'
+    . htmlspecialcharsbx($formattedValue)
+    . '</data>';
+};
+
+$estateinPricingPercent =
+  $estateinDemoPricing['down_payment_rate'] === null
+  ? 'On request'
+  : rtrim(
+    rtrim(
+      number_format(
+        $estateinDemoPricing['down_payment_rate'] / 100,
+        2,
+        '.',
+        ''
+      ),
+      '0'
+    ),
+    '.'
+  ) . '%';
 ?>
+
 <section class="property-gallery" id="property-gallery" aria-labelledby="property-gallery-title">
   <div class="property-gallery__container container">
     <header class="property-gallery__header">
@@ -26,7 +99,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         </span>
 
         <strong class="property-gallery__price-value">
-          $1,250,000
+          <?= $estateinPricingMoney(
+            $estateinDemoPricing['listing_price']
+          ) ?>
         </strong>
       </p>
     </header>
@@ -411,16 +486,17 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       ?>
     </header>
 
-    <aside class="pricing__note" aria-labelledby="pricing-note-label">
-      <strong class="pricing__note-label" id="pricing-note-label">
-        Note
-      </strong>
-
-      <p class="pricing__note-text">
-        The figures provided above are estimates and may vary depending on the property,
-        location, and individual circumstances.
-      </p>
-    </aside>
+    <?php
+    $APPLICATION->IncludeComponent(
+      'bitrix:main.include',
+      '',
+      [
+        'AREA_FILE_SHOW' => 'file',
+        'PATH' => '/local/include/pages/property-details/pricing-note.php',
+        'EDIT_TEMPLATE' => '',
+      ]
+    );
+    ?>
 
     <div class="pricing__grid">
       <div class="pricing__summary">
@@ -430,9 +506,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
           </dt>
 
           <dd class="pricing__summary-value">
-            <data value="1250000" data-currency="USD">
-              $1,250,000
-            </data>
+            <?= $estateinPricingMoney(
+              $estateinDemoPricing['listing_price']
+            ) ?>
           </dd>
         </dl>
       </div>
@@ -444,7 +520,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Additional Fees
             </h3>
 
-            <a class="pricing-card__btn" href="/properties/#inquiry" aria-label="Learn more about additional fees">
+            <a class="pricing-card__btn" href="#property-details-inquiry" aria-label="Learn more about additional fees">
               Learn More
             </a>
           </header>
@@ -457,9 +533,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="25000" data-currency="USD">
-                    $25,000
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['transfer_tax'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Based on the sale price and local regulations
@@ -473,9 +550,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="3000" data-currency="USD">
-                    $3,000
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['legal_fees'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Approximate cost for legal services, including title transfer
@@ -491,9 +569,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="500" data-currency="USD">
-                    $500
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['home_inspection'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Recommended for due diligence
@@ -507,9 +586,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="1200" data-currency="USD">
-                    $1,200
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['insurance_annual'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Annual cost for comprehensive property insurance
@@ -544,7 +624,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Monthly Costs
             </h3>
 
-            <a class="pricing-card__btn" href="/properties/#inquiry" aria-label="Learn more about monthly costs">
+            <a class="pricing-card__btn" href="#property-details-inquiry" aria-label="Learn more about monthly costs">
               Learn More
             </a>
           </header>
@@ -557,9 +637,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="1250" data-currency="USD">
-                    $1,250
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['property_tax_monthly'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Approximate monthly property tax based on the sale price and local rates
@@ -575,9 +656,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="300" data-currency="USD">
-                    $300
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['hoa_monthly'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Monthly fee for common area maintenance and security
@@ -594,7 +676,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Total Initial Costs
             </h3>
 
-            <a class="pricing-card__btn" href="/properties/#inquiry" aria-label="Learn more about total initial costs">
+            <a class="pricing-card__btn" href="#property-details-inquiry" aria-label="Learn more about total initial costs">
               Learn More
             </a>
           </header>
@@ -607,9 +689,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="1250000" data-currency="USD">
-                    $1,250,000
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['listing_price'],
+                    'pricing-card__price'
+                  ) ?>
                 </dd>
               </dl>
 
@@ -619,12 +702,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="29700" data-currency="USD">
-                    $29,700
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['additional_fees'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
-                    Property transfer tax, legal fees, inspection, insurance
+                    Property transfer tax, legal fees, inspection, annual insurance; variable mortgage fees excluded
                   </span>
                 </dd>
               </dl>
@@ -637,12 +721,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="250000" data-currency="USD">
-                    $250,000
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['down_payment'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
-                    20%
+                    <?= htmlspecialcharsbx($estateinPricingPercent) ?>
                   </span>
                 </dd>
               </dl>
@@ -653,9 +738,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="1000000" data-currency="USD">
-                    $1,000,000
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['mortgage_amount'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     If applicable
@@ -672,7 +758,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
               Monthly Expenses
             </h3>
 
-            <a class="pricing-card__btn" href="/properties/#inquiry" aria-label="Learn more about monthly expenses">
+            <a class="pricing-card__btn" href="#property-details-inquiry" aria-label="Learn more about monthly expenses">
               Learn More
             </a>
           </header>
@@ -685,9 +771,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="1250" data-currency="USD">
-                    $1,250
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['property_tax_monthly'],
+                    'pricing-card__price'
+                  ) ?>
                 </dd>
               </dl>
 
@@ -697,9 +784,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="300" data-currency="USD">
-                    $300
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['hoa_monthly'],
+                    'pricing-card__price'
+                  ) ?>
                 </dd>
               </dl>
             </div>
@@ -727,9 +815,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                 </dt>
 
                 <dd class="pricing-card__details">
-                  <data class="pricing-card__price" value="100" data-currency="USD">
-                    $100
-                  </data>
+                  <?= $estateinPricingMoney(
+                    $estateinDemoPricing['insurance_monthly'],
+                    'pricing-card__price'
+                  ) ?>
 
                   <span class="pricing-card__badge">
                     Approximate monthly cost
@@ -743,304 +832,134 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     </div>
   </div>
 </section>
-<section
-  class="faq-section"
-  aria-labelledby="faq-title"
-  id="faq"
-  data-js-slider
-  data-slider-slides-desktop="3"
-  data-slider-slides-tablet="2"
-  data-slider-slides-mobile="1"
-  data-slider-group-desktop="3"
-  data-slider-group-tablet="2"
-  data-slider-group-mobile="1"
-  data-slider-loop="false">
-  <div class="faq-section__inner container">
-    <img
-      class="faq-section__decoration"
-      src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
-      alt=""
-      width="69"
-      height="30"
-      aria-hidden="true" />
+<?php
+$estateinDetailsFaqIblockId = (int)(
+  $estateinDetailsConfig['faq_iblock_id'] ?? 0
+);
 
-    <div class="faq-section__header section-header">
-      <div class="section-header__content">
-        <?php
-        $APPLICATION->IncludeComponent(
-          'bitrix:main.include',
-          '',
-          [
-            'AREA_FILE_SHOW' => 'file',
-            'PATH' => '/local/include/pages/property-details/faq-content.php',
-            'EDIT_TEMPLATE' => '',
-          ]
-        );
-        ?>
+$estateinDetailsFaqHtml = '';
+
+if ($estateinDetailsFaqIblockId > 0) {
+  ob_start();
+
+  $APPLICATION->IncludeComponent(
+    'bitrix:news.list',
+    'home-faq',
+    [
+      'IBLOCK_ID' => $estateinDetailsFaqIblockId,
+
+      'NEWS_COUNT' => '1000',
+
+      'SORT_BY1' => 'SORT',
+      'SORT_ORDER1' => 'ASC',
+      'SORT_BY2' => 'ID',
+      'SORT_ORDER2' => 'ASC',
+
+      'CHECK_DATES' => 'Y',
+
+      'FIELD_CODE' => [
+        'NAME',
+        'DETAIL_TEXT',
+        'DETAIL_TEXT_TYPE',
+      ],
+
+      'PROPERTY_CODE' => [
+        'LINK_URL',
+      ],
+
+      'FILTER_NAME' => '',
+
+      'DETAIL_URL' => '',
+      'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
+
+      'PREVIEW_TRUNCATE_LEN' => '0',
+      'DISPLAY_DATE' => 'N',
+      'DISPLAY_NAME' => 'Y',
+      'DISPLAY_PICTURE' => 'N',
+      'DISPLAY_PREVIEW_TEXT' => 'N',
+
+      'SET_TITLE' => 'N',
+      'SET_BROWSER_TITLE' => 'N',
+      'SET_META_KEYWORDS' => 'N',
+      'SET_META_DESCRIPTION' => 'N',
+      'SET_LAST_MODIFIED' => 'N',
+
+      'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+      'ADD_SECTIONS_CHAIN' => 'N',
+
+      'PARENT_SECTION' => '',
+      'PARENT_SECTION_CODE' => '',
+      'INCLUDE_SUBSECTIONS' => 'Y',
+
+      'CACHE_TYPE' => 'A',
+      'CACHE_TIME' => '3600',
+      'CACHE_FILTER' => 'N',
+      'CACHE_GROUPS' => 'Y',
+
+      'DISPLAY_TOP_PAGER' => 'N',
+      'DISPLAY_BOTTOM_PAGER' => 'N',
+      'PAGER_SHOW_ALWAYS' => 'N',
+
+      'SET_STATUS_404' => 'N',
+      'SHOW_404' => 'N',
+    ],
+    false,
+    [
+      'HIDE_ICONS' => 'Y',
+    ]
+  );
+
+  $estateinDetailsFaqHtml = (string)ob_get_clean();
+}
+?>
+
+<?php if (trim($estateinDetailsFaqHtml) !== ''): ?>
+  <section
+    class="faq-section"
+    aria-labelledby="faq-title"
+    id="faq"
+    data-js-slider
+    data-slider-slides-desktop="3"
+    data-slider-slides-tablet="2"
+    data-slider-slides-mobile="1"
+    data-slider-group-desktop="3"
+    data-slider-group-tablet="2"
+    data-slider-group-mobile="1"
+    data-slider-loop="false">
+    <div class="faq-section__inner container">
+      <img
+        class="faq-section__decoration"
+        src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e"
+        alt=""
+        width="69"
+        height="30"
+        aria-hidden="true" />
+
+      <div class="faq-section__header section-header">
+        <div class="section-header__content">
+          <?php
+          $APPLICATION->IncludeComponent(
+            'bitrix:main.include',
+            '',
+            [
+              'AREA_FILE_SHOW' => 'file',
+              'PATH' => '/local/include/pages/property-details/faq-content.php',
+              'EDIT_TEMPLATE' => '',
+            ]
+          );
+          ?>
+        </div>
+
+        <a
+          class="section-header__action button button--dark"
+          href="/#faq">
+          View All FAQ’s
+        </a>
       </div>
 
-      <a
-        class="section-header__action button button--dark"
-        href="/#faq">
-        View All FAQ’s
-      </a>
+      <?php
+      echo $estateinDetailsFaqHtml;
+      ?>
     </div>
-
-    <div
-      class="faq-section__slider slider swiper"
-      data-js-slider-swiper>
-      <ul class="swiper-wrapper">
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                What documents do I need to sell my
-                property through Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Find out about the necessary documentation
-                for listing and selling your property with
-                us.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/services/#unlock-value"
-              aria-label="Read more about documents needed to sell a property">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How can I contact an Estatein agent?
-              </h3>
-
-              <p class="faq-card__description">
-                Discover the different ways you can get
-                in touch with our experienced agents.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/contacts/#contact-form"
-              aria-label="Read more about contacting an Estatein agent">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-
-        <li class="swiper-slide">
-          <article class="faq-card">
-            <div class="faq-card__content">
-              <h3 class="faq-card__title">
-                How do I search for properties on
-                Estatein?
-              </h3>
-
-              <p class="faq-card__description">
-                Learn how to use our user-friendly search
-                tools to find properties that match your
-                criteria.
-              </p>
-            </div>
-
-            <a
-              class="faq-card__link button button--gray"
-              href="/properties/"
-              aria-label="Read more about searching for properties on Estatein">
-              Read More
-            </a>
-          </article>
-        </li>
-      </ul>
-    </div>
-
-    <div class="faq-section__footer slider__footer">
-      <a
-        class="slider__mobile-action button button--dark"
-        href="/#faq">
-        View All FAQs
-      </a>
-
-      <p
-        class="slider__counter"
-        aria-live="polite"
-        aria-atomic="true">
-        <span
-          class="slider__counter-current"
-          data-js-slider-current>
-          01
-        </span>
-        of
-        <span data-js-slider-total>06</span>
-      </p>
-
-      <div
-        class="slider__navigation"
-        aria-label="FAQ slider controls">
-        <button
-          class="slider__button slider__button--previous"
-          type="button"
-          aria-label="Previous FAQ group"
-          data-js-slider-prev></button>
-
-        <button
-          class="slider__button slider__button--next"
-          type="button"
-          aria-label="Next FAQ group"
-          data-js-slider-next></button>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+<?php endif; ?>
