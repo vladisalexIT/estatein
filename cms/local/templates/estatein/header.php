@@ -98,7 +98,8 @@ foreach ($estateinAssets['css'] as $estateinCss) {
     property="og:url"
     content="<?= htmlspecialcharsbx($estateinCanonical) ?>">
 
-  <link rel="icon" type="image/svg+xml" href="<?= htmlspecialcharsbx(SITE_TEMPLATE_PATH . '/favicon.svg') ?>">
+  <link rel="icon" type="image/svg+xml" href="<?= htmlspecialcharsbx(SITE_TEMPLATE_PATH . '/favicon.svg?v=2') ?>">
+
   <?php foreach ($estateinAssets['js'] as $estateinJs): ?>
     <script type="module" crossorigin src="<?= htmlspecialcharsbx(SITE_TEMPLATE_PATH . '/' . $estateinJs) ?>"></script>
   <?php endforeach; ?>
@@ -110,8 +111,11 @@ foreach ($estateinAssets['css'] as $estateinCss) {
   <aside class="announcement" aria-label="Special announcement" data-js-announcement>
     <div class="announcement__inner container">
       <div class="announcement__content">
-        <p class="announcement__text">
-          <svg class="announcement__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <div class="announcement__text">
+          <svg
+            class="announcement__icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true">
             <path
               d="M12 1.75C12.85 7.15 16.85 11.15 22.25 12C16.85 12.85 12.85 16.85 12 22.25C11.15 16.85 7.15 12.85 1.75 12C7.15 11.15 11.15 7.15 12 1.75Z"
               fill="currentColor" />
@@ -120,13 +124,21 @@ foreach ($estateinAssets['css'] as $estateinCss) {
               fill="currentColor" />
           </svg>
 
-          <span class="announcement__message">
-            Discover Your Dream Property with Estatein
-            <a class="announcement__link" href="/properties/">
-              Learn More
-            </a>
-          </span>
-        </p>
+          <div class="announcement__message">
+            <?php
+            $APPLICATION->IncludeComponent(
+              'bitrix:main.include',
+              '',
+              [
+                'AREA_FILE_SHOW' => 'file',
+                'PATH' => '/local/include/common/announcement-message.php',
+                'EDIT_TEMPLATE' => '',
+              ],
+              false
+            );
+            ?>
+          </div>
+        </div>
       </div>
 
       <button class="announcement__close" type="button" aria-label="Close announcement" data-js-announcement-close>
