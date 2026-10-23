@@ -528,6 +528,9 @@ $estateinCatalogNewsCount = max(
 
                         'LOCATION',
 
+                        'MAP_LATITUDE',
+                        'MAP_LONGITUDE',
+
                         'SIZE',
                         'PROPERTY_SIZE',
                         'AREA',

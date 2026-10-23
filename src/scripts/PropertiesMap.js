@@ -1,21 +1,122 @@
+import PropertyMapSupport from './PropertyMapSupport.js';
+
 class PropertiesMap {
   constructor() {
-    this.toggleBtn = document.querySelector('[data-js-map-toggle]');
-    this.mapWrapper = document.querySelector('[data-js-map-wrapper]');
-    this.propertiesList = document.querySelector('[data-js-properties-list]');
-    this.mapContainerId = 'estatein-yandex-map';
-    this.mapInstance = null;
-    this.searchCircleMarker = null;
+    this.toggleBtn = document.querySelector(
+      '[data-js-map-toggle]'
+    );
+
+    this.mapWrapper = document.querySelector(
+      '[data-js-map-wrapper]'
+    );
+
+    this.propertiesList = document.querySelector(
+      '[data-js-properties-list]'
+    );
+
     this.swiperSnapshots = new WeakMap();
     this.connectedSwipers = new WeakSet();
-    this.markerItems = [];
-    this.isSwitching = false;
-    this.isMapReadyPending = false;
 
-    if (!this.toggleBtn || !this.mapWrapper || !this.propertiesList) {
+    this.isSwitching = false;
+    this.dataChanged = true;
+    this.hasSyncedMap = false;
+    this.resizeFrame = null;
+
+    if (
+      !this.toggleBtn
+      || !this.mapWrapper
+      || !this.propertiesList
+    ) {
       return;
     }
+
+    this.mapView = new PropertyMapSupport({
+      containerId: 'estatein-yandex-map',
+
+      getCards: () => [
+        ...this.propertiesList.querySelectorAll(
+          '.property-card'
+        ),
+      ],
+
+      onSelect: (id) => this.activateCard(id),
+
+      isVisible: () => this.isMapActive(),
+    });
+
     this.bindEvents();
+  }
+
+  isMapActive() {
+    return this.propertiesList.classList.contains(
+      'is-map-active'
+    );
+  }
+
+  getSwiper() {
+    const element = this.propertiesList.querySelector(
+      '[data-js-slider-swiper], .swiper'
+    );
+
+    const swiper = element?.swiper;
+
+    return swiper && !swiper.destroyed
+      ? swiper
+      : null;
+  }
+
+  getActiveCard() {
+    return this.propertiesList.querySelector(
+      '.swiper-slide-active .property-card'
+    ) || this.propertiesList.querySelector(
+      '.property-card'
+    );
+  }
+
+  selectActiveCard({ pan = false } = {}) {
+    const card = this.getActiveCard();
+
+    this.mapView.select(
+      card?.dataset.propertyId ?? '',
+      { pan }
+    );
+  }
+
+  activateCard(id) {
+    const swiper = this.getSwiper();
+
+    if (swiper) {
+      const slides = Array.from(swiper.slides);
+
+      const index = slides.findIndex((slide) => {
+        const card = slide.querySelector(
+          '.property-card'
+        );
+
+        return card?.dataset.propertyId === String(id);
+      });
+
+      if (index >= 0) {
+        const logicalIndex = Number(
+          slides[index].dataset.swiperSlideIndex
+        );
+
+        if (
+          swiper.params.loop
+          && Number.isInteger(logicalIndex)
+        ) {
+          swiper.slideToLoop(logicalIndex, 400);
+        } else {
+          swiper.slideTo(index, 400);
+        }
+      }
+    }
+
+    this.mapView.select(id);
+
+    requestAnimationFrame(() => {
+      this.adjustMapHeight();
+    });
   }
 
   toggleInterface(event) {
@@ -25,16 +126,10 @@ class PropertiesMap {
       return;
     }
 
-    const isOpening = !this.propertiesList.classList.contains(
-      'is-map-active'
-    );
+    this.connectSwiper();
 
-    const swiperContainer = this.propertiesList.querySelector(
-      '[data-js-slider-swiper], .swiper'
-    );
-
-    const swiperInstance = swiperContainer?.swiper;
-    const hasSwiper = swiperInstance && !swiperInstance.destroyed;
+    const isOpening = !this.isMapActive();
+    const swiper = this.getSwiper();
 
     const mapBody = this.mapWrapper.querySelector(
       '.properties-map-wrapper__body'
@@ -42,23 +137,30 @@ class PropertiesMap {
 
     this.isSwitching = true;
 
-    this.propertiesList.classList.add('is-map-switching');
-    this.mapWrapper.classList.add('is-map-switching');
+    this.propertiesList.classList.add(
+      'is-map-switching'
+    );
+
+    this.mapWrapper.classList.add(
+      'is-map-switching'
+    );
 
     const finishSwitching = () => {
-      this.propertiesList.classList.remove('is-map-switching');
-      this.mapWrapper.classList.remove('is-map-switching');
+      this.propertiesList.classList.remove(
+        'is-map-switching'
+      );
+
+      this.mapWrapper.classList.remove(
+        'is-map-switching'
+      );
+
       this.isSwitching = false;
     };
 
     try {
-      if (hasSwiper) {
-        swiperInstance.setTransition(0);
-
-        this.setSwiperMode(
-          swiperInstance,
-          isOpening
-        );
+      if (swiper) {
+        swiper.setTransition(0);
+        this.setSwiperMode(swiper, isOpening);
       }
 
       this.propertiesList.classList.toggle(
@@ -89,18 +191,18 @@ class PropertiesMap {
         mapBody.style.height = '';
       }
 
-      if (hasSwiper) {
-        swiperInstance.update();
+      if (swiper) {
+        swiper.update();
 
-        if (isOpening) {
-          swiperInstance.slideTo(0, 0);
+        if (isOpening && !this.hasSyncedMap) {
+          swiper.slideTo(0, 0);
         }
       }
 
       requestAnimationFrame(() => {
         try {
-          if (hasSwiper && !swiperInstance.destroyed) {
-            swiperInstance.update();
+          if (swiper && !swiper.destroyed) {
+            swiper.update();
           }
 
           if (isOpening) {
@@ -121,53 +223,10 @@ class PropertiesMap {
     }
   }
 
-  syncMapMarkers() {
-    if (!this.mapInstance) return;
-
-    const normalizeName = (value) =>
-      value
-        .replace(/\s+/g, ' ')
-        .trim()
-        .toLowerCase();
-
-    const visibleNames = new Set(
-      [
-        ...this.propertiesList.querySelectorAll(
-          '.swiper-slide .property-card__title'
-        ),
-      ].map((element) =>
-        normalizeName(element.textContent)
-      )
-    );
-
-    this.markerItems.forEach((markerItem) => {
-      const shouldBeVisible =
-        visibleNames.has(
-          normalizeName(markerItem.name)
-        );
-
-      if (
-        shouldBeVisible === markerItem.visible
-      ) {
-        return;
-      }
-
-      if (shouldBeVisible) {
-        this.mapInstance.geoObjects.add(
-          markerItem.placemark
-        );
-      } else {
-        this.mapInstance.geoObjects.remove(
-          markerItem.placemark
-        );
-      }
-
-      markerItem.visible = shouldBeVisible;
-    });
-  }
-
   setSwiperMode(swiper, isMapActive) {
-    if (!swiper || swiper.destroyed) return;
+    if (!swiper || swiper.destroyed) {
+      return;
+    }
 
     const keys = [
       'slidesPerView',
@@ -177,25 +236,23 @@ class PropertiesMap {
     ];
 
     if (isMapActive) {
-      if (!this.swiperSnapshots.has(swiper)) {
-        const snapshot = {
-          params: {},
-          originalParams: {},
-        };
-
-        keys.forEach((key) => {
-          snapshot.params[key] =
-            swiper.params[key];
-
-          snapshot.originalParams[key] =
-            swiper.originalParams[key];
-        });
-
-        this.swiperSnapshots.set(
-          swiper,
-          snapshot
-        );
+      if (this.swiperSnapshots.has(swiper)) {
+        return;
       }
+
+      const snapshot = {
+        params: {},
+        originalParams: {},
+      };
+
+      keys.forEach((key) => {
+        snapshot.params[key] = swiper.params[key];
+
+        snapshot.originalParams[key] =
+          swiper.originalParams[key];
+      });
+
+      this.swiperSnapshots.set(swiper, snapshot);
 
       const mapParams = {
         slidesPerView: 1,
@@ -204,20 +261,16 @@ class PropertiesMap {
         breakpoints: {},
       };
 
-      Object.assign(
-        swiper.params,
-        mapParams
-      );
-
-      Object.assign(
-        swiper.originalParams,
-        mapParams
-      );
+      Object.assign(swiper.params, mapParams);
+      Object.assign(swiper.originalParams, mapParams);
     } else {
-      const snapshot =
-        this.swiperSnapshots.get(swiper);
+      const snapshot = this.swiperSnapshots.get(
+        swiper
+      );
 
-      if (!snapshot) return;
+      if (!snapshot) {
+        return;
+      }
 
       Object.assign(
         swiper.params,
@@ -237,38 +290,46 @@ class PropertiesMap {
   }
 
   connectSwiper() {
-    const swiperElement =
-      this.propertiesList.querySelector(
-        '[data-js-slider-swiper]'
-      );
+    const swiper = this.getSwiper();
 
-    const swiper = swiperElement?.swiper;
-
-    if (!swiper || swiper.destroyed) return;
+    if (!swiper) {
+      return;
+    }
 
     if (!this.connectedSwipers.has(swiper)) {
-      const updateHeight = () => {
+      const updateSelection = () => {
         if (
-          !this.propertiesList.classList.contains(
-            'is-map-active'
-          )
+          !this.isMapActive()
+          || this.isSwitching
+          || swiper !== this.getSwiper()
         ) {
           return;
         }
 
         requestAnimationFrame(() => {
+          if (
+            !this.isMapActive()
+            || swiper !== this.getSwiper()
+          ) {
+            return;
+          }
+
           this.adjustMapHeight();
+
+          this.selectActiveCard({
+            pan: true,
+          });
         });
       };
 
       swiper.on(
         'slideChange',
-        updateHeight
+        updateSelection
       );
 
       swiper.on(
         'slideChangeTransitionEnd',
-        updateHeight
+        updateSelection
       );
 
       this.connectedSwipers.add(swiper);
@@ -276,164 +337,58 @@ class PropertiesMap {
 
     this.setSwiperMode(
       swiper,
-      this.propertiesList.classList.contains(
-        'is-map-active'
-      )
+      this.isMapActive()
     );
   }
 
-  refreshMapView() {
-    const updateMap = () => {
-      if (
-        !this.propertiesList.classList.contains('is-map-active')
-      ) {
-        return;
-      }
+  async refreshMapView({ fit = false } = {}) {
+    if (!this.isMapActive()) {
+      return;
+    }
 
-      if (!this.mapInstance) {
-        this.initMap();
-      }
+    try {
+      const ready = await this.mapView.ready();
 
-      if (!this.mapInstance) {
+      if (!ready || !this.isMapActive()) {
         return;
       }
 
       this.adjustMapHeight();
-      this.mapInstance.container.fitToViewport();
-      this.autoScaleMap();
-    };
+      this.mapView.resize();
 
-    if (
-      !this.propertiesList.classList.contains('is-map-active')
-    ) {
-      return;
-    }
-
-    if (this.mapInstance) {
-      updateMap();
-      return;
-    }
-
-    if (
-      typeof ymaps === 'undefined' ||
-      this.isMapReadyPending
-    ) {
-      return;
-    }
-
-    this.isMapReadyPending = true;
-
-    ymaps.ready(() => {
-      this.isMapReadyPending = false;
-      updateMap();
-    });
-  }
-
-  initMap() {
-    if (this.mapInstance) return;
-    try {
-      const defaultCenter = [34.0259, -118.7798];
-      this.mapInstance = new ymaps.Map(this.mapContainerId, {
-        center: defaultCenter,
-        zoom: 11,
-        controls: ['zoomControl', 'fullscreenControl']
-      }, {
-        autoFitToViewport: 'always'
+      this.mapView.sync({
+        fit:
+          fit
+          || this.dataChanged
+          || !this.hasSyncedMap,
       });
 
-      const mapElement = document.getElementById(this.mapContainerId);
-      if (mapElement) {
-        mapElement.style.filter = 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)';
-      }
+      this.dataChanged = false;
+      this.hasSyncedMap = true;
 
-      const properties = [
-        { name: 'Seaside Serenity Villa', coords: [34.0259, -118.7798], desc: 'Malibu, California' },
-        { name: 'Metropolitan Haven', coords: [34.0400, -118.6500], desc: 'Los Angeles Area' },
-        { name: 'Rustic Retreat Cottage', coords: [34.0120, -118.8200], desc: 'Premium Sea View' },
-        { name: 'Seaside Serenity Villa', coords: [34.0380, -118.7610], desc: 'Downtown Los Angeles Area' }
-      ];
+      this.selectActiveCard();
+    } catch (error) {
+      this.mapView.setStatus(
+        'The map could not be updated.'
+      );
 
-      properties.forEach(item => {
-        const placemark = new ymaps.Placemark(item.coords, {
-          balloonContentHeader: `<b style="color: #141414;">${item.name}</b>`,
-          balloonContentBody: `<span style="color: #666;">${item.desc}</span>`,
-          hintContent: item.name
-        }, {
-          preset: 'islands#violetDotIcon'
-        });
-
-        placemark.events.add('click', () => {
-          const slides = this.propertiesList.querySelectorAll('.swiper-slide');
-          const swiperContainer = this.propertiesList.querySelector('.swiper');
-
-          slides.forEach((slide, index) => {
-            const title = slide.querySelector('.property-card__title');
-
-            if (title && title.textContent.trim().toLowerCase().includes(item.name.toLowerCase())) {
-              const card = slide.querySelector('.property-card');
-
-              this.propertiesList.querySelectorAll('.property-card--highlighted').forEach(el => el.classList.remove('property-card--highlighted'));
-
-              if (card) card.classList.add('property-card--highlighted');
-
-              if (swiperContainer && swiperContainer.swiper) {
-                swiperContainer.swiper.slideTo(index, 400);
-              }
-            }
-          });
-        });
-
-        this.mapInstance.geoObjects.add(placemark);
-
-        this.markerItems.push({
-          name: item.name,
-          placemark,
-          visible: true,
-        });
-      });
-
-      const initialRadius = window.innerWidth < 768 ? 1500 : 5000;
-
-      this.searchCircleMarker = new ymaps.Circle([defaultCenter, initialRadius], {
-        balloonContent: 'Search Radius'
-      }, {
-        fillColor: 'rgba(112, 59, 247, 0.12)',
-        strokeColor: '#703bf7',
-        strokeOpacity: 0.7,
-        strokeWidth: 2
-      });
-
-      this.mapInstance.geoObjects.add(this.searchCircleMarker);
-
-      this.mapInstance.events.add('click', (e) => {
-        const clickCoords = e.get('coords');
-        if (this.searchCircleMarker) {
-          this.searchCircleMarker.geometry.setCoordinates(clickCoords);
-        }
-        this.mapInstance.setCenter(clickCoords, this.mapInstance.getZoom(), { duration: 300 });
-      });
-
-      this.syncMapMarkers();
-      this.mapInstance.container.fitToViewport();
-      this.autoScaleMap();
-    } catch (e) {
-      console.error('[PropertiesMap] Error:', e);
+      console.error(
+        '[PropertiesMap] Update error:',
+        error
+      );
     }
   }
 
   adjustMapHeight() {
-    const mapBody =
-      this.mapWrapper.querySelector(
-        '.properties-map-wrapper__body'
-      );
+    const mapBody = this.mapWrapper.querySelector(
+      '.properties-map-wrapper__body'
+    );
 
-    if (!mapBody) return;
+    if (!mapBody) {
+      return;
+    }
 
-    if (
-      !this.propertiesList.classList.contains(
-        'is-map-active'
-      )
-    ) {
+    if (!this.isMapActive()) {
       mapBody.style.height = '';
       return;
     }
@@ -442,13 +397,8 @@ class PropertiesMap {
       mapBody.style.height = '';
     } else {
       const referenceElement =
-        this.propertiesList.querySelector(
-          '.swiper-slide-active .property-card'
-        ) ||
-        this.propertiesList.querySelector(
-          '.property-card'
-        ) ||
-        this.propertiesList.querySelector(
+        this.getActiveCard()
+        || this.propertiesList.querySelector(
           '.properties-listings__empty'
         );
 
@@ -458,28 +408,7 @@ class PropertiesMap {
       mapBody.style.height = `${height}px`;
     }
 
-    this.mapInstance?.container.fitToViewport();
-  }
-
-  autoScaleMap() {
-    if (!this.mapInstance || !this.searchCircleMarker) return;
-    try {
-      const defaultCenter = [34.0259, -118.7798];
-
-      if (window.innerWidth < 768) {
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(1500);
-        this.mapInstance.setCenter(defaultCenter);
-        this.mapInstance.setZoom(11.2, { preciseZoom: true });
-      } else {
-        const targetZoom = window.innerWidth <= 1024 ? 10 : 11;
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(5000);
-        this.mapInstance.setCenter(defaultCenter, targetZoom);
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    this.mapView.resize();
   }
 
   bindEvents() {
@@ -491,19 +420,24 @@ class PropertiesMap {
     this.connectSwiper();
 
     window.addEventListener('resize', () => {
-      if (
-        !this.propertiesList.classList.contains(
-          'is-map-active'
-        )
-      ) {
+      if (!this.isMapActive()) {
         return;
       }
 
-      requestAnimationFrame(() => {
+      cancelAnimationFrame(this.resizeFrame);
+
+      this.resizeFrame = requestAnimationFrame(() => {
         this.connectSwiper();
         this.adjustMapHeight();
-        this.autoScaleMap();
       });
+    });
+
+    window.addEventListener('load', () => {
+      this.connectSwiper();
+
+      if (this.isMapActive()) {
+        this.refreshMapView();
+      }
     });
 
     document.addEventListener(
@@ -513,24 +447,36 @@ class PropertiesMap {
           event.detail?.rootElement;
 
         if (
-          !(rootElement instanceof Element) ||
-          !rootElement.matches(
-            '#property-listings'
-          )
+          !(rootElement instanceof Element)
+          || !rootElement.matches('#property-listings')
         ) {
           return;
         }
 
-        this.connectSwiper();
-        this.syncMapMarkers();
+        const updatedList = rootElement.matches(
+          '[data-js-properties-list]'
+        )
+          ? rootElement
+          : rootElement.querySelector(
+            '[data-js-properties-list]'
+          );
 
-        if (
-          this.propertiesList.classList.contains(
-            'is-map-active'
-          )
+        if (updatedList) {
+          this.propertiesList = updatedList;
+        } else if (
+          !this.propertiesList.contains(rootElement)
         ) {
+          return;
+        }
+
+        this.dataChanged = true;
+        this.connectSwiper();
+
+        if (this.isMapActive()) {
           requestAnimationFrame(() => {
-            this.adjustMapHeight();
+            this.refreshMapView({
+              fit: true,
+            });
           });
         }
       }
@@ -539,4 +485,3 @@ class PropertiesMap {
 }
 
 export default PropertiesMap;
-

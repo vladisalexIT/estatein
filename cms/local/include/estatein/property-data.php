@@ -148,6 +148,43 @@ if (!function_exists('estateinFormatPrice')) {
     }
 }
 
+if (!function_exists('estateinParseMapCoordinate')) {
+    function estateinParseMapCoordinate(
+        string $value,
+        float $minimum,
+        float $maximum
+    ): ?float {
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        $value = str_replace(',', '.', $value);
+
+        if (
+            preg_match(
+                '/^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/D',
+                $value
+            ) !== 1
+        ) {
+            return null;
+        }
+
+        $coordinate = (float)$value;
+
+        if (
+            !is_finite($coordinate)
+            || $coordinate < $minimum
+            || $coordinate > $maximum
+        ) {
+            return null;
+        }
+
+        return $coordinate;
+    }
+}
+
 if (!function_exists('estateinBuildPropertyCard')) {
     function estateinBuildPropertyCard(
         array $fields,
@@ -247,8 +284,36 @@ if (!function_exists('estateinBuildPropertyCard')) {
             ['BUILD_YEAR', 'YEAR_BUILT']
         );
 
+        $mapLatitude = estateinParseMapCoordinate(
+            estateinGetPropertyValue(
+                $properties,
+                ['MAP_LATITUDE']
+            ),
+            -90.0,
+            90.0
+        );
+
+        $mapLongitude = estateinParseMapCoordinate(
+            estateinGetPropertyValue(
+                $properties,
+                ['MAP_LONGITUDE']
+            ),
+            -180.0,
+            180.0
+        );
+
+        if (
+            $mapLatitude === null
+            || $mapLongitude === null
+        ) {
+            $mapLatitude = null;
+            $mapLongitude = null;
+        }
+
         return [
             'id' => $id,
+            'map_latitude' => $mapLatitude,
+            'map_longitude' => $mapLongitude,
             'title' => $title,
             'description' => $description,
             'image' => (string)$image['SRC'],
