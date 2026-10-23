@@ -8,7 +8,13 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     Seaside Serenity Villa
 </h1>
 
-<p class="property-gallery__location">
+<button
+    class="property-gallery__location"
+    type="button"
+    data-js-map-open
+    aria-haspopup="dialog"
+    aria-controls="property-map-dialog"
+>
     <svg class="property-gallery__location-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -17,4 +23,4 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     </svg>
 
     <span>Malibu, California</span>
-</p>
+</button>

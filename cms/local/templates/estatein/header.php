@@ -58,6 +58,22 @@ foreach ($estateinAssets['css'] as $estateinCss) {
   <?php $APPLICATION->ShowHead(); ?>
   <?php $APPLICATION->ShowMeta('description'); ?>
 
+  <?php
+  $estateinNeedsMaps = in_array(
+    $estateinRequestPath,
+    [
+      SITE_DIR . 'properties/',
+      SITE_DIR . 'property-details/',
+    ],
+    true
+  );
+  ?>
+
+  <?php if ($estateinNeedsMaps): ?>
+    <script
+      src="https://api-maps.yandex.ru/2.1/?apikey=b8da4112-5f91-4145-a8cb-c60ee8974be4&amp;lang=en_US"></script>
+  <?php endif; ?>
+
   <link
     rel="canonical"
     href="<?= htmlspecialcharsbx($estateinCanonical) ?>">
@@ -194,4 +210,6 @@ foreach ($estateinAssets['css'] as $estateinCss) {
 
     </div>
   </header>
-  <main class="main" id="main-content">
+  <main
+    class="main<?= $estateinRequestPath === SITE_DIR . 'properties/' ? ' properties-page' : '' ?>"
+    id="main-content">

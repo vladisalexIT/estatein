@@ -281,7 +281,9 @@ $estateinCatalogNewsCount = max(
     </div>
 
     <div class="properties-search container">
-        <form class="properties-search__form"
+        <form
+            class="properties-search__form"
+            data-search-mode="remote"
             action="<?= htmlspecialcharsbx(SITE_DIR . 'properties/') ?>"
             method="get"
             role="search">
@@ -437,128 +439,157 @@ $estateinCatalogNewsCount = max(
                 </div>
             </div>
         </form>
+
+        <div class="properties-search__actions">
+            <button
+                class="properties-search__toggle-btn"
+                type="button"
+                data-js-map-toggle
+                aria-controls="properties-map-wrapper"
+                aria-expanded="false">
+                Show on Map
+            </button>
+
+            <button
+                class="properties-search__reset-btn"
+                type="button"
+                data-js-properties-reset
+                disabled>
+                Reset Filters
+            </button>
+        </div>
     </div>
 </section>
-<section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider data-slider-counter-mode="visible-cards"
-    data-slider-slides-desktop="3" data-slider-slides-tablet="2" data-slider-slides-mobile="1"
-    data-slider-group-desktop="1" data-slider-group-tablet="1" data-slider-group-mobile="1"
-    data-slider-space-desktop="30" data-slider-space-tablet="20" data-slider-space-mobile="16" data-slider-loop="false">
-    <div class="properties-listings__container container">
-        <img class="properties-listings__decoration" src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" width="69"
-            height="30" aria-hidden="true" />
+<div class="properties-results" data-js-properties-list>
+    <section class="properties-listings" id="property-listings" aria-labelledby="properties-listings-title" data-js-slider data-slider-counter-mode="visible-cards" data-slider-desktop-breakpoint="1200"
+        data-slider-slides-desktop="3" data-slider-slides-tablet="2" data-slider-slides-mobile="1"
+        data-slider-group-desktop="1" data-slider-group-tablet="1" data-slider-group-mobile="1"
+        data-slider-space-desktop="30" data-slider-space-tablet="20" data-slider-space-mobile="16" data-slider-loop="false">
+        <div class="properties-listings__container container">
+            <img class="properties-listings__decoration" src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" width="69"
+                height="30" aria-hidden="true" />
 
-        <header class="properties-listings__header">
+            <header class="properties-listings__header">
+                <?php
+                $APPLICATION->IncludeComponent(
+                    'bitrix:main.include',
+                    '',
+                    [
+                        'AREA_FILE_SHOW' => 'file',
+                        'PATH' => '/local/include/pages/properties/listings-content.php',
+                        'EDIT_TEMPLATE' => '',
+                    ],
+                    false
+                );
+                ?>
+            </header>
+
             <?php
             $APPLICATION->IncludeComponent(
-                'bitrix:main.include',
-                '',
+                'bitrix:news.list',
+                'catalog-properties',
                 [
-                    'AREA_FILE_SHOW' => 'file',
-                    'PATH' => '/local/include/pages/properties/listings-content.php',
-                    'EDIT_TEMPLATE' => '',
+                    'IBLOCK_ID' => (int)(
+                        $estateinConfig['properties_iblock_id'] ?? 0
+                    ),
+
+                    'NEWS_COUNT' => (string)$estateinCatalogNewsCount,
+
+                    'SORT_BY1' => 'SORT',
+                    'SORT_ORDER1' => 'ASC',
+                    'SORT_BY2' => 'ID',
+                    'SORT_ORDER2' => 'DESC',
+
+                    'CHECK_DATES' => 'Y',
+
+                    'FIELD_CODE' => [
+                        'NAME',
+                        'PREVIEW_TEXT',
+                        'PREVIEW_PICTURE',
+                        'DETAIL_PICTURE',
+                    ],
+
+                    'PROPERTY_CODE' => [
+                        'PRICE',
+                        'PROPERTY_PRICE',
+                        'COST',
+
+                        'BEDROOMS',
+                        'BEDROOM_COUNT',
+                        'BEDROOM',
+
+                        'BATHROOMS',
+                        'BATHROOM_COUNT',
+                        'BATHROOM',
+
+                        'PROPERTY_TYPE',
+                        'TYPE',
+                        'PROPERTY_KIND',
+
+                        'LOCATION',
+
+                        'SIZE',
+                        'PROPERTY_SIZE',
+                        'AREA',
+
+                        'BUILD_YEAR',
+                        'YEAR_BUILT',
+
+                        'CARD_LABEL',
+                    ],
+
+                    'FILTER_NAME' => 'estateinCatalogPropertiesFilter',
+
+                    'DETAIL_URL' => SITE_DIR . 'property-details/',
+                    'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
+
+                    'ACTIVE_DATE_FORMAT' => 'd.m.Y',
+                    'PREVIEW_TRUNCATE_LEN' => '0',
+
+                    'DISPLAY_DATE' => 'N',
+                    'DISPLAY_NAME' => 'Y',
+                    'DISPLAY_PICTURE' => 'Y',
+                    'DISPLAY_PREVIEW_TEXT' => 'Y',
+
+                    'SET_TITLE' => 'N',
+                    'SET_BROWSER_TITLE' => 'N',
+                    'SET_META_KEYWORDS' => 'N',
+                    'SET_META_DESCRIPTION' => 'N',
+                    'SET_LAST_MODIFIED' => 'N',
+
+                    'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
+                    'ADD_SECTIONS_CHAIN' => 'N',
+
+                    'PARENT_SECTION' => '',
+                    'PARENT_SECTION_CODE' => '',
+                    'INCLUDE_SUBSECTIONS' => 'Y',
+
+                    'CACHE_TYPE' => 'A',
+                    'CACHE_TIME' => '3600',
+                    'CACHE_FILTER' => 'Y',
+                    'CACHE_GROUPS' => 'Y',
+
+                    'DISPLAY_TOP_PAGER' => 'N',
+                    'DISPLAY_BOTTOM_PAGER' => 'N',
+                    'PAGER_SHOW_ALWAYS' => 'N',
+
+                    'SET_STATUS_404' => 'N',
+                    'SHOW_404' => 'N',
                 ],
                 false
             );
             ?>
-        </header>
+        </div>
+    </section>
 
-        <?php
-        $APPLICATION->IncludeComponent(
-            'bitrix:news.list',
-            'catalog-properties',
-            [
-                'IBLOCK_ID' => (int)(
-                    $estateinConfig['properties_iblock_id'] ?? 0
-                ),
+    <?php
+    require $_SERVER['DOCUMENT_ROOT']
+        . '/local/include/pages/properties/map.php';
+    ?>
 
-                'NEWS_COUNT' => (string)$estateinCatalogNewsCount,
+</div>
 
-                'SORT_BY1' => 'SORT',
-                'SORT_ORDER1' => 'ASC',
-                'SORT_BY2' => 'ID',
-                'SORT_ORDER2' => 'DESC',
 
-                'CHECK_DATES' => 'Y',
-
-                'FIELD_CODE' => [
-                    'NAME',
-                    'PREVIEW_TEXT',
-                    'PREVIEW_PICTURE',
-                    'DETAIL_PICTURE',
-                ],
-
-                'PROPERTY_CODE' => [
-                    'PRICE',
-                    'PROPERTY_PRICE',
-                    'COST',
-
-                    'BEDROOMS',
-                    'BEDROOM_COUNT',
-                    'BEDROOM',
-
-                    'BATHROOMS',
-                    'BATHROOM_COUNT',
-                    'BATHROOM',
-
-                    'PROPERTY_TYPE',
-                    'TYPE',
-                    'PROPERTY_KIND',
-
-                    'LOCATION',
-
-                    'SIZE',
-                    'PROPERTY_SIZE',
-                    'AREA',
-
-                    'BUILD_YEAR',
-                    'YEAR_BUILT',
-
-                    'CARD_LABEL',
-                ],
-
-                'FILTER_NAME' => 'estateinCatalogPropertiesFilter',
-
-                'DETAIL_URL' => SITE_DIR . 'property-details/',
-                'HIDE_LINK_WHEN_NO_DETAIL' => 'N',
-
-                'ACTIVE_DATE_FORMAT' => 'd.m.Y',
-                'PREVIEW_TRUNCATE_LEN' => '0',
-
-                'DISPLAY_DATE' => 'N',
-                'DISPLAY_NAME' => 'Y',
-                'DISPLAY_PICTURE' => 'Y',
-                'DISPLAY_PREVIEW_TEXT' => 'Y',
-
-                'SET_TITLE' => 'N',
-                'SET_BROWSER_TITLE' => 'N',
-                'SET_META_KEYWORDS' => 'N',
-                'SET_META_DESCRIPTION' => 'N',
-                'SET_LAST_MODIFIED' => 'N',
-
-                'INCLUDE_IBLOCK_INTO_CHAIN' => 'N',
-                'ADD_SECTIONS_CHAIN' => 'N',
-
-                'PARENT_SECTION' => '',
-                'PARENT_SECTION_CODE' => '',
-                'INCLUDE_SUBSECTIONS' => 'Y',
-
-                'CACHE_TYPE' => 'A',
-                'CACHE_TIME' => '3600',
-                'CACHE_FILTER' => 'Y',
-                'CACHE_GROUPS' => 'Y',
-
-                'DISPLAY_TOP_PAGER' => 'N',
-                'DISPLAY_BOTTOM_PAGER' => 'N',
-                'PAGER_SHOW_ALWAYS' => 'N',
-
-                'SET_STATUS_404' => 'N',
-                'SHOW_404' => 'N',
-            ],
-            false
-        );
-        ?>
-    </div>
-</section>
 <section class="property-inquiry" id="inquiry" aria-labelledby="property-inquiry-title">
     <div class="property-inquiry__container container">
         <img class="property-inquiry__decoration" src="data:image/svg+xml,%3csvg%20width='69'%20height='30'%20viewBox='0%200%2069%2030'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_75_930)'%3e%3cpath%20d='M15%2030.0166C23.2843%2030.0166%2030%2023.3009%2030%2015.0166C30%206.73233%2023.2843%200.0166836%2015%200.0166836C6.71573%200.0166836%200%206.73233%200%2015.0166C0%2023.3009%206.71573%2030.0166%2015%2030.0166Z'%20fill='%23666666'/%3e%3cpath%20d='M0%2045C8.28427%2045%2015%2038.2843%2015%2030C15%2021.7157%208.28427%2015%200%2015C-8.28427%2015%20-15%2021.7157%20-15%2030C-15%2038.2843%20-8.28427%2045%200%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2045C38.2843%2045%2045%2038.2843%2045%2030C45%2021.7157%2038.2843%2015%2030%2015C21.7157%2015%2015%2021.7157%2015%2030C15%2038.2843%2021.7157%2045%2030%2045Z'%20fill='%23141414'/%3e%3cpath%20d='M0%2015C8.28427%2015%2015%208.28427%2015%200C15%20-8.28427%208.28427%20-15%200%20-15C-8.28427%20-15%20-15%20-8.28427%20-15%200C-15%208.28427%20-8.28427%2015%200%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M30%2015C38.2843%2015%2045%208.28427%2045%200C45%20-8.28427%2038.2843%20-15%2030%20-15C21.7157%20-15%2015%20-8.28427%2015%200C15%208.28427%2021.7157%2015%2030%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip1_75_930)'%3e%3cpath%20d='M45%2024.01C49.9706%2024.01%2054%2019.9805%2054%2015.01C54%2010.0394%2049.9706%206.01001%2045%206.01001C40.0294%206.01001%2036%2010.0394%2036%2015.01C36%2019.9805%2040.0294%2024.01%2045%2024.01Z'%20fill='%23333333'/%3e%3cpath%20d='M36%2033C40.9706%2033%2045%2028.9706%2045%2024C45%2019.0294%2040.9706%2015%2036%2015C31.0294%2015%2027%2019.0294%2027%2024C27%2028.9706%2031.0294%2033%2036%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2033C58.9706%2033%2063%2028.9706%2063%2024C63%2019.0294%2058.9706%2015%2054%2015C49.0294%2015%2045%2019.0294%2045%2024C45%2028.9706%2049.0294%2033%2054%2033Z'%20fill='%23141414'/%3e%3cpath%20d='M36%2015C40.9706%2015%2045%2010.9706%2045%206C45%201.02944%2040.9706%20-3%2036%20-3C31.0294%20-3%2027%201.02944%2027%206C27%2010.9706%2031.0294%2015%2036%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M54%2015C58.9706%2015%2063%2010.9706%2063%206C63%201.02944%2058.9706%20-3%2054%20-3C49.0294%20-3%2045%201.02944%2045%206C45%2010.9706%2049.0294%2015%2054%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cg%20clip-path='url(%23clip2_75_930)'%3e%3cpath%20d='M64.2%2019.2046C66.5196%2019.2046%2068.4%2017.3242%2068.4%2015.0046C68.4%2012.6851%2066.5196%2010.8047%2064.2%2010.8047C61.8804%2010.8047%2060%2012.6851%2060%2015.0046C60%2017.3242%2061.8804%2019.2046%2064.2%2019.2046Z'%20fill='%23333333'/%3e%3cpath%20d='M59.9998%2023.4C62.3194%2023.4%2064.1998%2021.5196%2064.1998%2019.2C64.1998%2016.8804%2062.3194%2015%2059.9998%2015C57.6802%2015%2055.7998%2016.8804%2055.7998%2019.2C55.7998%2021.5196%2057.6802%2023.4%2059.9998%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2023.4C70.7193%2023.4%2072.5997%2021.5196%2072.5997%2019.2C72.5997%2016.8804%2070.7193%2015%2068.3997%2015C66.0801%2015%2064.1997%2016.8804%2064.1997%2019.2C64.1997%2021.5196%2066.0801%2023.4%2068.3997%2023.4Z'%20fill='%23141414'/%3e%3cpath%20d='M59.9998%2015C62.3194%2015%2064.1998%2013.1196%2064.1998%2010.8C64.1998%208.4804%2062.3194%206.6%2059.9998%206.6C57.6802%206.6%2055.7998%208.4804%2055.7998%2010.8C55.7998%2013.1196%2057.6802%2015%2059.9998%2015Z'%20fill='%23141414'/%3e%3cpath%20d='M68.3997%2015C70.7193%2015%2072.5997%2013.1196%2072.5997%2010.8C72.5997%208.4804%2070.7193%206.6%2068.3997%206.6C66.0801%206.6%2064.1997%208.4804%2064.1997%2010.8C64.1997%2013.1196%2066.0801%2015%2068.3997%2015Z'%20fill='%23141414'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_75_930'%3e%3crect%20width='30'%20height='30'%20fill='white'/%3e%3c/clipPath%3e%3cclipPath%20id='clip1_75_930'%3e%3crect%20width='18'%20height='18'%20fill='white'%20transform='translate(36%206)'/%3e%3c/clipPath%3e%3cclipPath%20id='clip2_75_930'%3e%3crect%20width='8.4'%20height='8.4'%20fill='white'%20transform='translate(60%2010.8)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e" alt="" width="69"

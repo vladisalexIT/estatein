@@ -60,7 +60,12 @@ class PropertyModalMap {
     if (!sidePanelList || sidePanelList.children.length > 0) return;
 
     try {
-      const response = await fetch('/properties.html');
+      const catalogUrl =
+        this.dialog.dataset.catalogUrl || '/properties.html';
+
+      const response = await fetch(catalogUrl, {
+        credentials: 'same-origin',
+      });
       if (!response.ok) throw new Error('Catalog page response error');
 
       const htmlText = await response.text();
@@ -202,6 +207,10 @@ class PropertyModalMap {
   bindEvents() {
     this.openBtn.addEventListener('click', () => this.openModal());
     this.closeBtn.addEventListener('click', () => this.closeModal());
+
+    this.dialog.addEventListener('close', () => {
+      document.body.classList.remove('is-locked');
+    });
 
     this.dialog.addEventListener('click', (e) => {
       if (e.target === this.dialog) {

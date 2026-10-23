@@ -963,3 +963,8 @@ if ($estateinDetailsFaqIblockId > 0) {
     </div>
   </section>
 <?php endif; ?>
+
+<?php
+require $_SERVER['DOCUMENT_ROOT']
+    . '/local/include/pages/property-details/map-modal.php';
+?>
