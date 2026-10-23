@@ -142,6 +142,11 @@ class Slider {
     }
 
     init() {
+        const desktopBreakpoint = this.getNumberData(
+            'sliderDesktopBreakpoint',
+            1024
+        )
+
         const slidesDesktop = this.getNumberData(
             'sliderSlidesDesktop',
             3
@@ -236,7 +241,7 @@ class Slider {
                     slidesPerGroup: groupTablet,
                     spaceBetween: spaceTablet,
                 },
-                1024: {
+                [desktopBreakpoint]: {
                     slidesPerView: slidesDesktop,
                     slidesPerGroup: groupDesktop,
                     spaceBetween: spaceTablet,

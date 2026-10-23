@@ -34,6 +34,7 @@
 
 @use 'blocks/properties-hero';
 @use 'blocks/properties-listings';
+@use 'blocks/properties-map';
 @use 'blocks/property-inquiry';
 
 @use 'blocks/contacts-hero';
@@ -54,7 +55,11 @@
 @use 'blocks/pricing-card';
 @use 'blocks/property-details-gallery';
 @use 'blocks/property-details-inquiry';
+@use 'blocks/property-map-modal';
 
 @use 'blocks/custom-select';
 @use 'blocks/thank-you-modal';
 @use 'blocks/form-validation';
+
+@use 'blocks/properties-page';
+

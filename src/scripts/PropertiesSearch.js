@@ -8,6 +8,8 @@ class PropertiesSearch {
     primary: '.properties-search__primary',
     input: '.properties-search__input',
     submit: '.properties-search__submit',
+    reset: '[data-js-properties-reset]',
+    error: '[data-search-errors]',
     listings: '#property-listings',
   }
 
@@ -16,35 +18,158 @@ class PropertiesSearch {
       this.selectors.root
     )
 
-    if (!this.rootElement) {
-      return
-    }
+    if (!this.rootElement) return
 
     this.formElement = this.rootElement.querySelector(
       this.selectors.form
     )
 
-    this.primaryElement = this.rootElement.querySelector(
-      this.selectors.primary
-    )
+    if (!this.formElement) return
 
-    this.inputElement = this.rootElement.querySelector(
+    this.inputElement = this.formElement.querySelector(
       this.selectors.input
     )
 
-    this.submitElement = this.rootElement.querySelector(
+    this.primaryElement = this.formElement.querySelector(
+      this.selectors.primary
+    )
+
+    this.submitElement = this.formElement.querySelector(
       this.selectors.submit
     )
 
-    this.isLoading = false
+    this.resetElement = this.rootElement.querySelector(
+      this.selectors.reset
+    )
 
-    this.bindFields()
-    this.bindPrimary()
-    this.bindForm()
-    this.bindHistory()
+    this.errorElement = this.rootElement.querySelector(
+      this.selectors.error
+    )
+
+    this.selectElements = [
+      ...this.formElement.querySelectorAll(
+        this.selectors.select
+      ),
+    ]
+
+    this.isLocal =
+      this.formElement.dataset.searchMode === 'local'
+
+    this.isSyncing = false
+    this.searchTimer = null
+    this.abortController = null
+    this.requestId = 0
+
+    const listingsElement = document.querySelector(
+      this.selectors.listings
+    )
+
+    this.localTemplate = this.isLocal
+      ? listingsElement?.cloneNode(true)
+      : null
+
+    this.localSlides = this.localTemplate
+      ? [
+          ...this.localTemplate.querySelectorAll(
+            '.swiper-wrapper > .swiper-slide'
+          ),
+        ]
+      : []
+
+    this.statusElement = document.createElement('p')
+    this.statusElement.className = 'visually-hidden'
+    this.statusElement.setAttribute('role', 'status')
+    this.statusElement.setAttribute('aria-live', 'polite')
+    this.rootElement.append(this.statusElement)
+
+    if (this.errorElement) {
+      this.errorElement.hidden = true
+      this.errorElement.setAttribute('role', 'alert')
+    }
+
+    this.bindEvents()
+    this.syncFormWithUrl(window.location.href)
+
+    if (this.isLocal) {
+      this.updateResults({
+        historyMode: 'none',
+      })
+    }
   }
 
-  bindFields() {
+  bindEvents() {
+    this.selectElements.forEach((selectElement) => {
+      selectElement.addEventListener('change', () => {
+        this.updateFieldLabels()
+        this.updateResetButton()
+
+        if (this.isSyncing) return
+
+        this.updateResults()
+      })
+    })
+
+    this.inputElement?.addEventListener('input', (event) => {
+      this.updateResetButton()
+
+      window.clearTimeout(this.searchTimer)
+
+      if (event.isComposing) return
+
+      this.searchTimer = window.setTimeout(() => {
+        this.updateResults()
+      }, 300)
+    })
+
+    this.inputElement?.addEventListener(
+      'compositionend',
+      () => {
+        window.clearTimeout(this.searchTimer)
+
+        this.searchTimer = window.setTimeout(() => {
+          this.updateResults()
+        }, 300)
+      }
+    )
+
+    this.formElement.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      this.updateResults({
+        historyMode: 'push',
+        scroll: true,
+      })
+    })
+
+    this.resetElement?.addEventListener('click', () => {
+      this.setFormValues(new URLSearchParams())
+
+      this.updateResults()
+    })
+
+    this.primaryElement?.addEventListener(
+      'click',
+      (event) => {
+        if (
+          this.submitElement?.contains(event.target)
+        ) {
+          return
+        }
+
+        this.inputElement?.focus()
+      }
+    )
+
+    window.addEventListener('popstate', () => {
+      this.syncFormWithUrl(window.location.href)
+
+      this.updateResults({
+        historyMode: 'none',
+      })
+    })
+  }
+
+  updateFieldLabels() {
     this.rootElement
       .querySelectorAll(this.selectors.field)
       .forEach((fieldElement) => {
@@ -56,58 +181,82 @@ class PropertiesSearch {
           this.selectors.value
         )
 
-        if (!selectElement || !valueElement) {
-          return
-        }
+        if (!selectElement || !valueElement) return
 
-        const updateValue = () => {
-          const selectedOption =
-            selectElement.options[selectElement.selectedIndex]
+        const option =
+          selectElement.options[
+            selectElement.selectedIndex
+          ]
 
-          valueElement.textContent =
-            selectedOption?.textContent.trim() ?? ''
-        }
-
-        updateValue()
-
-        selectElement.addEventListener('change', updateValue)
+        valueElement.textContent =
+          option?.textContent.trim() || ''
       })
   }
 
-  bindPrimary() {
-    if (!this.primaryElement || !this.inputElement) {
-      return
-    }
+  updateResetButton() {
+    if (!this.resetElement) return
 
-    this.primaryElement.addEventListener('click', (event) => {
-      if (
-        this.submitElement &&
-        this.submitElement.contains(event.target)
-      ) {
-        return
+    const hasQuery =
+      Boolean(this.inputElement?.value.trim())
+
+    const hasSelectedFilters =
+      this.selectElements.some(
+        (selectElement) => selectElement.value !== ''
+      )
+
+    this.resetElement.disabled =
+      !hasQuery && !hasSelectedFilters
+  }
+
+  setFormValues(params) {
+    this.isSyncing = true
+
+    try {
+      if (this.inputElement) {
+        this.inputElement.value =
+          params.get(this.inputElement.name) || ''
       }
 
-      this.inputElement.focus()
-    })
-  }
+      this.selectElements.forEach((selectElement) => {
+        const requestedValue =
+          params.get(selectElement.name) || ''
 
-  bindForm() {
-    if (!this.formElement) {
-      return
+        const hasOption = [
+          ...selectElement.options,
+        ].some(
+          (option) => option.value === requestedValue
+        )
+
+        const value = hasOption ? requestedValue : ''
+
+        if (selectElement._estateinChoices) {
+          selectElement._estateinChoices
+            .setChoiceByValue(value)
+        } else {
+          selectElement.value = value
+        }
+
+        selectElement.dispatchEvent(
+          new Event('change', {
+            bubbles: true,
+          })
+        )
+      })
+    } finally {
+      this.isSyncing = false
     }
 
-    this.formElement.addEventListener('submit', (event) => {
-      event.preventDefault()
-
-      this.loadResults()
-    })
+    this.updateFieldLabels()
+    this.updateResetButton()
   }
 
-  bindHistory() {
-    window.addEventListener('popstate', () => {
-      this.syncFormWithUrl(window.location.href)
-      this.loadResults(window.location.href, false)
-    })
+  syncFormWithUrl(rawUrl) {
+    const url = new URL(
+      rawUrl,
+      window.location.origin
+    )
+
+    this.setFormValues(url.searchParams)
   }
 
   getFormUrl() {
@@ -117,99 +266,280 @@ class PropertiesSearch {
     )
 
     const params = new URLSearchParams()
-    const formData = new FormData(this.formElement)
 
-    formData.forEach((value, key) => {
-      if (
-        typeof value === 'string' &&
-        value.trim() !== ''
-      ) {
-        params.append(key, value)
+    new FormData(this.formElement).forEach(
+      (value, key) => {
+        if (
+          typeof value === 'string' &&
+          value.trim() !== ''
+        ) {
+          params.append(key, value.trim())
+        }
       }
-    })
+    )
 
     url.search = params.toString()
+    url.hash = ''
 
     return url
   }
 
-  syncFormWithUrl(rawUrl) {
-    const url = new URL(
-      rawUrl,
-      window.location.origin
-    )
-
-    if (this.inputElement) {
-      this.inputElement.value =
-        url.searchParams.get('query') || ''
-    }
-
-    this.rootElement
-      .querySelectorAll(this.selectors.select)
-      .forEach((selectElement) => {
-        const value =
-          url.searchParams.get(selectElement.name) || ''
-
-        if (selectElement._estateinChoices) {
-          selectElement._estateinChoices.setChoiceByValue(value)
-        } else {
-          selectElement.value = value
-        }
-
-        selectElement.dispatchEvent(
-          new Event('change', { bubbles: true })
-        )
-      })
+  normalize(value) {
+    return String(value)
+      .toLocaleLowerCase()
+      .replace(/[-_]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
   }
 
-  async loadResults(
-    rawUrl = this.getFormUrl(),
-    updateHistory = true
-  ) {
-    if (this.isLoading) {
-      return
-    }
-
-    this.isLoading = true
-
-    const url = new URL(
-      rawUrl,
-      window.location.origin
+  matchesLocalSlide(slideElement, params) {
+    const query = this.normalize(
+      params.get('query') || ''
     )
 
-    this.rootElement.classList.add('is-loading')
-    this.rootElement.setAttribute('aria-busy', 'true')
+    const searchableText = this.normalize(
+      [
+        slideElement.textContent,
+        slideElement.dataset.filterLocation,
+        slideElement.dataset.filterType,
+      ].join(' ')
+    )
 
-    if (this.submitElement) {
-      this.submitElement.disabled = true
+    if (
+      query &&
+      !query.split(' ').every(
+        (word) => searchableText.includes(word)
+      )
+    ) {
+      return false
     }
 
-    try {
-      const response = await fetch(url.toString(), {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          Accept: 'text/html',
-        },
-      })
+    const fields = [
+      ['location', 'filterLocation'],
+      ['type', 'filterType'],
+      ['size', 'filterSize'],
+      ['build-year', 'filterBuildYear'],
+    ]
 
-      if (!response.ok) {
-        throw new Error(
-          `Property search request failed: ${response.status}`
+    const matchesFields = fields.every(
+      ([parameter, dataKey]) => {
+        const selectedValue =
+          params.get(parameter) || ''
+
+        return (
+          !selectedValue ||
+          slideElement.dataset[dataKey] ===
+            selectedValue
         )
       }
+    )
 
-      const html = await response.text()
+    if (!matchesFields) return false
 
-      const documentFragment =
-        new DOMParser().parseFromString(
-          html,
-          'text/html'
+    const priceSelect = this.selectElements.find(
+      (element) => element.name === 'price'
+    )
+
+    if (priceSelect?.value) {
+      const selectedOption =
+        priceSelect.options[
+          priceSelect.selectedIndex
+        ]
+
+      const price = Number(
+        slideElement.dataset.filterPrice
+      )
+
+      if (!Number.isFinite(price)) return false
+
+      const min = selectedOption.dataset.priceMin
+      const max = selectedOption.dataset.priceMax
+
+      if (
+        min !== undefined &&
+        price < Number(min)
+      ) {
+        return false
+      }
+
+      if (
+        max !== undefined &&
+        price >= Number(max)
+      ) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  buildLocalResults(url) {
+    if (!this.localTemplate) {
+      throw new Error(
+        'Local property listings template was not found'
+      )
+    }
+
+    const nextListings =
+      this.localTemplate.cloneNode(true)
+
+    const wrapper = nextListings.querySelector(
+      '.swiper-wrapper'
+    )
+
+    const matchedSlides = this.localSlides.filter(
+      (slideElement) =>
+        this.matchesLocalSlide(
+          slideElement,
+          url.searchParams
+        )
+    )
+
+    wrapper.replaceChildren(
+      ...matchedSlides.map(
+        (slideElement) =>
+          slideElement.cloneNode(true)
+      )
+    )
+
+    if (!matchedSlides.length) {
+      nextListings
+        .querySelector('[data-js-slider-swiper]')
+        ?.remove()
+
+      nextListings
+        .querySelector('.properties-listings__footer')
+        ?.remove()
+
+      const emptyElement =
+        document.createElement('div')
+
+      emptyElement.className =
+        'properties-listings__empty'
+
+      const title = document.createElement('h3')
+      title.className =
+        'properties-listings__empty-title'
+      title.textContent = 'No properties found'
+
+      const text = document.createElement('p')
+      text.className =
+        'properties-listings__empty-text'
+      text.textContent =
+        'Try changing your search or resetting the filters.'
+
+      emptyElement.append(title, text)
+
+      nextListings
+        .querySelector(
+          '.properties-listings__container'
+        )
+        .append(emptyElement)
+    }
+
+    return nextListings
+  }
+
+  setLoading(isLoading) {
+    this.rootElement.classList.toggle(
+      'is-loading',
+      isLoading
+    )
+
+    this.formElement.setAttribute(
+      'aria-busy',
+      String(isLoading)
+    )
+
+    const listings = document.querySelector(
+      this.selectors.listings
+    )
+
+    listings?.setAttribute(
+      'aria-busy',
+      String(isLoading)
+    )
+  }
+
+  showError(message = '') {
+    if (!this.errorElement) return
+
+    this.errorElement.textContent = message
+    this.errorElement.hidden = !message
+  }
+
+  scrollToResults(element) {
+    window.requestAnimationFrame(() => {
+      element.scrollIntoView({
+        behavior: window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches
+          ? 'instant'
+          : 'smooth',
+        block: 'start',
+      })
+    })
+  }
+
+  async updateResults({
+    historyMode = 'replace',
+    scroll = false,
+  } = {}) {
+    window.clearTimeout(this.searchTimer)
+
+    const requestId = ++this.requestId
+
+    this.abortController?.abort()
+
+    const url = this.getFormUrl()
+
+    this.showError()
+
+    try {
+      let nextListings
+
+      if (this.isLocal) {
+        nextListings = this.buildLocalResults(url)
+      } else {
+        this.abortController = new AbortController()
+
+        this.setLoading(true)
+
+        const response = await fetch(
+          url.toString(),
+          {
+            signal: this.abortController.signal,
+            headers: {
+              'X-Requested-With':
+                'XMLHttpRequest',
+              Accept: 'text/html',
+            },
+          }
         )
 
-      const nextListings =
-        documentFragment.querySelector(
-          this.selectors.listings
-        )
+        if (!response.ok) {
+          throw new Error(
+            `Property search failed: ${response.status}`
+          )
+        }
+
+        const html = await response.text()
+
+        if (requestId !== this.requestId) return
+
+        const parsedDocument =
+          new DOMParser().parseFromString(
+            html,
+            'text/html'
+          )
+
+        nextListings =
+          parsedDocument.querySelector(
+            this.selectors.listings
+          )
+      }
+
+      if (requestId !== this.requestId) return
 
       const currentListings =
         document.querySelector(
@@ -224,8 +554,16 @@ class PropertiesSearch {
 
       currentListings.replaceWith(nextListings)
 
-      if (updateHistory) {
-        window.history.pushState(
+      if (
+        historyMode !== 'none' &&
+        url.href !== window.location.href
+      ) {
+        const method =
+          historyMode === 'push'
+            ? 'pushState'
+            : 'replaceState'
+
+        window.history[method](
           {},
           '',
           url.toString()
@@ -242,18 +580,38 @@ class PropertiesSearch {
           }
         )
       )
+
+      const count = nextListings.querySelectorAll(
+        '.swiper-wrapper > .swiper-slide'
+      ).length
+
+      this.statusElement.textContent =
+        `${count} properties found.`
+
+      this.updateResetButton()
+
+      if (scroll) {
+        this.scrollToResults(nextListings)
+      }
     } catch (error) {
-      console.error(error)
+      if (
+        error.name === 'AbortError' ||
+        requestId !== this.requestId
+      ) {
+        return
+      }
 
-      window.location.assign(url.toString())
+      console.error(
+        '[PropertiesSearch]',
+        error
+      )
+
+      this.showError(
+        'Unable to update properties. Please try again.'
+      )
     } finally {
-      this.isLoading = false
-
-      this.rootElement.classList.remove('is-loading')
-      this.rootElement.setAttribute('aria-busy', 'false')
-
-      if (this.submitElement) {
-        this.submitElement.disabled = false
+      if (requestId === this.requestId) {
+        this.setLoading(false)
       }
     }
   }

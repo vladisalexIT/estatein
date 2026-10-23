@@ -16,8 +16,8 @@
     </div>
 
     <div class="properties-search container">
-        <form class="properties-search__form" data-js-form data-form-kind="search" action="/properties.html"
-            method="get" role="search" novalidate>
+        <form class="properties-search__form" data-search-mode="local" action="/properties.html" method="get"
+            role="search" novalidate>
             <div class="properties-search__primary">
                 <label class="properties-search__input-wrapper" for="properties-search-query">
                     <span class="visually-hidden">
@@ -83,12 +83,17 @@
                     <select class="properties-search__select js-custom-select" id="property-price" name="price"
                         aria-label="Price range">
                         <option value="">Pricing Range</option>
-                        <option value="0-250000">Up to $250,000</option>
-                        <option value="250000-500000">
-                            $250,000–$500,000
+
+                        <option value="under-500k" data-price-max="500000">
+                            Under $500,000
                         </option>
-                        <option value="500000-plus">
-                            $500,000 and above
+
+                        <option value="500k-1m" data-price-min="500000" data-price-max="1000000">
+                            $500,000 – Under $1,000,000
+                        </option>
+
+                        <option value="over-1m" data-price-min="1000000">
+                            $1,000,000 and above
                         </option>
                     </select>
                 </div>
@@ -128,5 +133,16 @@
                 </div>
             </div>
         </form>
+        <div class="properties-search__actions">
+            <button class="properties-search__toggle-btn" type="button" data-js-map-toggle
+                aria-controls="properties-map-wrapper" aria-expanded="false">
+                Show on Map
+            </button>
+
+            <button class="properties-search__reset-btn" type="button" data-js-properties-reset disabled>
+                Reset Filters
+            </button>
+        </div>
     </div>
 </section>
+

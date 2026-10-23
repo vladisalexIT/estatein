@@ -1,0 +1,179 @@
+@use "../helpers" as *;
+
+.property-map-overlay {
+  padding: 0;
+  border: none;
+  border-radius: rem(12);
+  background: var(--color-dark);
+  max-width: rem(1597);
+  width: 100vw;
+  height: 85vh;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(rem(4));
+  }
+
+  @include mobile {
+    height: 100vh;
+    max-height: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.property-map-modal {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: rem(12);
+  overflow: hidden;
+  box-sizing: border-box;
+
+  @include mobile {
+    height: auto;
+    min-height: 100vh;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  &__close {
+    position: absolute;
+    top: rem(15);
+    right: rem(15);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(36);
+    height: rem(36);
+    font-size: rem(24);
+    color: var(--color-gray-60);
+    background-color: var(--color-dark);
+    border: rem(1) solid var(--color-dark-15);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    @include hover {
+      color: var(--color-light);
+      border-color: var(--color-accent);
+      background-color: var(--color-dark-12);
+    }
+
+    @include mobile {
+      position: fixed;
+      top: rem(12);
+      right: rem(12);
+    }
+  }
+
+  &__split-layout {
+    display: grid;
+    grid-template-columns: fluid(512, 357) minmax(0, 1fr);
+    width: 100%;
+    height: 100%;
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      overflow: visible;
+      gap: rem(16);
+    }
+  }
+
+  &__side-panel {
+    height: 100%;
+    overflow-y: auto;
+    border-right: rem(1) solid var(--color-dark-15);
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+      width: rem(6);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--color-dark-10);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-dark-15);
+      border-radius: rem(3);
+    }
+
+    @include mobile {
+      height: auto;
+      width: 100%;
+      border-right: none;
+      overflow-y: visible;
+      order: 2;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    padding: fluid(20, 16);
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+    background: var(--color-dark);
+  }
+
+  &__item {
+    width: 100%;
+    min-height: fluid(470, 350);
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  &__map-zone {
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-dark);
+
+    #estatein-modal-yandex-map {
+      width: 100%;
+      height: 100%;
+    }
+
+
+    @include mobile {
+      width: 100%;
+      max-width: min(100% - rem(32), rem(769));
+      margin-inline: auto;
+      // min-height: rem(350);
+      height: rem(400);
+      border-radius: rem(12);
+      overflow: hidden;
+      margin-top: rem(60);
+      order: 1;
+      flex-shrink: 0;
+    }
+  }
+
+  // .property-card {
+  //   padding: fluid(20, 10);
+  // }
+
+  .property-card--highlighted {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 rem(20) rgba(112, 59, 247, 0.25);
+    background-color: var(--color-dark);
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+  }
+}
+
+body.is-locked {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}

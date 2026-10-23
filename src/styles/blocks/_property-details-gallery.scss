@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: rem(16);
+    gap: rem(20);
     min-width: 0;
   }
 
@@ -46,8 +46,27 @@
     color: var(--color-light);
     background-color: var(--color-dark-10);
     line-height: 1.2;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+    transition:
+      border-color var(--transition-duration, 0.2s) ease,
+      background-color var(--transition-duration, 0.2s) ease,
+      color var(--transition-duration, 0.2s) ease,
+      transform 0.1s ease;
 
     @include fluid-text(18, 14);
+
+    @include hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-dark-12);
+      color: var(--color-light);
+    }
+
+    &:active {
+      background-color: var(--color-dark);
+      transform: scale(0.98);
+    }
   }
 
   &__location-icon {
@@ -516,4 +535,5 @@
     }
   }
 }
+
 
