@@ -1,4 +1,4 @@
-<dialog
+﻿<dialog
   class="property-map-overlay"
   data-js-map-dialog
   data-catalog-url="/properties.html"
@@ -15,20 +15,29 @@
     >
       &times;
     </button>
+
     <h2 class="visually-hidden" id="property-map-modal-title">
       Interactive Property Map Split View
     </h2>
 
     <div class="property-map-modal__split-layout">
-      <aside class="property-map-modal__side-panel" aria-label="Available properties selection">
-        <ul class="property-map-modal__list" data-js-modal-cards-list>
-        </ul>
-
+      <aside
+        class="property-map-modal__side-panel"
+        aria-label="Available properties selection"
+      >
+        <ul
+          class="property-map-modal__list"
+          data-js-modal-cards-list
+        ></ul>
       </aside>
-      <div class="property-map-modal__map-zone" role="region" aria-label="Property locations on map">
+
+      <div
+        class="property-map-modal__map-zone"
+        role="region"
+        aria-label="Property locations on map"
+      >
         <div id="estatein-modal-yandex-map"></div>
       </div>
     </div>
   </div>
 </dialog>
-
