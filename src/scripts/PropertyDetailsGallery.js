@@ -13,8 +13,8 @@ class PropertyDetailsGallery {
     previousButton: '[data-gallery-prev]',
     nextButton: '[data-gallery-next]',
     pagination: '[data-gallery-pagination]',
+    thumbnails: '.property-gallery__thumbnails',
     thumbnail: '[data-gallery-thumb]',
-    infoPanel: '[data-gallery-info]',
   }
 
   constructor() {
@@ -45,15 +45,14 @@ class PropertyDetailsGallery {
         this.selectors.pagination
       )
 
+    const thumbnailsElement =
+      rootElement.querySelector(
+        this.selectors.thumbnails
+      )
+
     const thumbnailElements = [
       ...rootElement.querySelectorAll(
         this.selectors.thumbnail
-      ),
-    ]
-
-    const infoPanelElements = [
-      ...rootElement.querySelectorAll(
-        this.selectors.infoPanel
       ),
     ]
 
@@ -62,13 +61,65 @@ class PropertyDetailsGallery {
       !previousButtonElement ||
       !nextButtonElement ||
       !paginationElement ||
-      !thumbnailElements.length ||
-      !infoPanelElements.length
+      !thumbnailElements.length
     ) {
       return
     }
 
-    const updateThumbnails = (activeIndex) => {
+    if (
+      swiperElement.swiper &&
+      !swiperElement.swiper.destroyed
+    ) {
+      return
+    }
+
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    )
+
+    const scrollToThumbnail = (thumbnailElement) => {
+      if (
+        !thumbnailsElement ||
+        thumbnailsElement.scrollWidth <=
+        thumbnailsElement.clientWidth
+      ) {
+        return
+      }
+
+      const containerRect =
+        thumbnailsElement.getBoundingClientRect()
+
+      const thumbnailRect =
+        thumbnailElement.getBoundingClientRect()
+
+      const isFullyVisible =
+        thumbnailRect.left >= containerRect.left &&
+        thumbnailRect.right <= containerRect.right
+
+      if (isFullyVisible) {
+        return
+      }
+
+      const targetLeft =
+        thumbnailsElement.scrollLeft +
+        thumbnailRect.left -
+        containerRect.left -
+        (thumbnailsElement.clientWidth -
+          thumbnailRect.width) /
+        2
+
+      thumbnailsElement.scrollTo({
+        left: targetLeft,
+        behavior: reducedMotion.matches
+          ? 'instant'
+          : 'smooth',
+      })
+    }
+
+    const updateThumbnails = (
+      activeIndex,
+      shouldScroll = false
+    ) => {
       thumbnailElements.forEach((thumbnailElement) => {
         const thumbnailIndex = Number(
           thumbnailElement.dataset.galleryThumb
@@ -87,45 +138,9 @@ class PropertyDetailsGallery {
           String(isActive)
         )
 
-        if (isActive) {
-          thumbnailElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center',
-          })
+        if (isActive && shouldScroll) {
+          scrollToThumbnail(thumbnailElement)
         }
-      })
-    }
-
-    const updateInfoPanel = (activeIndex) => {
-      infoPanelElements.forEach((panelElement) => {
-        const panelIndex = Number(
-          panelElement.dataset.galleryInfo
-        )
-
-        const isActive =
-          panelIndex === activeIndex
-
-        panelElement.hidden = !isActive
-        panelElement.classList.remove('is-active')
-        panelElement.setAttribute(
-          'aria-hidden',
-          String(!isActive)
-        )
-      })
-
-      const activePanel = infoPanelElements.find(
-        (panelElement) =>
-          Number(panelElement.dataset.galleryInfo) ===
-          activeIndex
-      )
-
-      if (!activePanel) {
-        return
-      }
-
-      requestAnimationFrame(() => {
-        activePanel.classList.add('is-active')
       })
     }
 
@@ -140,7 +155,7 @@ class PropertyDetailsGallery {
       slidesPerView: 1,
       slidesPerGroup: 1,
       spaceBetween: 0,
-      speed: 550,
+      speed: reducedMotion.matches ? 0 : 550,
       loop: false,
       watchOverflow: false,
       observer: true,
@@ -149,14 +164,19 @@ class PropertyDetailsGallery {
       keyboard: {
         enabled: true,
         onlyInViewport: true,
+        pageUpDown: false,
       },
 
       a11y: {
         enabled: true,
-        prevSlideMessage: 'Previous property gallery slide',
-        nextSlideMessage: 'Next property gallery slide',
-        firstSlideMessage: 'This is the first property gallery slide',
-        lastSlideMessage: 'This is the last property gallery slide',
+        prevSlideMessage:
+          'Previous property gallery slide',
+        nextSlideMessage:
+          'Next property gallery slide',
+        firstSlideMessage:
+          'This is the first property gallery slide',
+        lastSlideMessage:
+          'This is the last property gallery slide',
       },
 
       navigation: {
@@ -174,12 +194,13 @@ class PropertyDetailsGallery {
       on: {
         init: (instance) => {
           updateThumbnails(instance.activeIndex)
-          updateInfoPanel(instance.activeIndex)
         },
 
         slideChange: (instance) => {
-          updateThumbnails(instance.activeIndex)
-          updateInfoPanel(instance.activeIndex)
+          updateThumbnails(
+            instance.activeIndex,
+            true
+          )
         },
       },
     })
@@ -188,15 +209,30 @@ class PropertyDetailsGallery {
       thumbnailElement.addEventListener(
         'click',
         () => {
-          const targetIndex = Number(
+          const rawIndex =
             thumbnailElement.dataset.galleryThumb
-          )
 
-          if (!Number.isInteger(targetIndex)) {
+          if (
+            rawIndex === undefined ||
+            rawIndex.trim() === ''
+          ) {
             return
           }
 
-          swiper.slideTo(targetIndex)
+          const targetIndex = Number(rawIndex)
+
+          if (
+            !Number.isInteger(targetIndex) ||
+            targetIndex < 0 ||
+            targetIndex >= swiper.slides.length
+          ) {
+            return
+          }
+
+          swiper.slideTo(
+            targetIndex,
+            reducedMotion.matches ? 0 : 550
+          )
         }
       )
     })

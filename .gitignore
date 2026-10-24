@@ -28,6 +28,5 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Local project reports
-project-report/
-generate-report.ps1
+# Separate Vite build for Bitrix
+/dist-bitrix/

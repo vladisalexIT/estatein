@@ -4,7 +4,7 @@
   padding: 0;
   border: none;
   border-radius: rem(12);
-  background: var(--color-dark); 
+  background: var(--color-dark);
   max-width: rem(1597);
   width: 100vw;
   height: 85vh;
@@ -19,8 +19,8 @@
   @include mobile {
     height: 100vh;
     max-height: none;
-    overflow-y: auto; 
-    -webkit-overflow-scrolling: touch; 
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -110,7 +110,7 @@
       width: 100%;
       border-right: none;
       overflow-y: visible;
-      order: 2; 
+      order: 2;
     }
   }
 
@@ -120,9 +120,9 @@
     gap: rem(20);
     padding: fluid(20, 16);
     margin: 0;
-    list-style: none; 
+    list-style: none;
     box-sizing: border-box;
-    background: var(--color-dark); 
+    background: var(--color-dark);
   }
 
   &__item {
@@ -144,19 +144,19 @@
       width: 100%;
       height: 100%;
     }
-    
+
 
     @include mobile {
       width: 100%;
-      max-width: min(100% - rem(32), rem(769)); 
+      max-width: min(100% - rem(32), rem(769));
       margin-inline: auto;
       // min-height: rem(350);
-      height: rem(400); 
+      height: rem(400);
       border-radius: rem(12);
       overflow: hidden;
-      margin-top: rem(60); 
-      order: 1; 
-      flex-shrink: 0; 
+      margin-top: rem(60);
+      order: 1;
+      flex-shrink: 0;
     }
   }
 

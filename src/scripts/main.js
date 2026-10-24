@@ -15,18 +15,23 @@ import ScrollToTop from './ScrollToTop.js'
 import CustomSelects from './CustomSelects.js'
 import FormsValidation from './FormsValidation.js'
 import PropertiesMap from './PropertiesMap.js'
-import PropertyModalMap from './PropertyModalMap.js' 
+import PropertyModalMap from './PropertyModalMap.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Header()
-  new SliderCollection()
+
+  new CustomSelects()
   new PropertiesSearch()
+  new SliderCollection()
+
   new ContactsOffices()
   new PropertyDetailsGallery()
   new FormMasks()
-  new CustomSelects()
   new FormsValidation()
-  new PropertiesMap() 
+
+  new PropertiesMap()
   new PropertyModalMap()
+
   new ScrollToTop()
 })
+

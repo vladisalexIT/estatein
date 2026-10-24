@@ -55,8 +55,12 @@
 @use 'blocks/pricing-card';
 @use 'blocks/property-details-gallery';
 @use 'blocks/property-details-inquiry';
-@use 'blocks/property-map-modal'; 
+@use 'blocks/property-map-modal';
 
 @use 'blocks/custom-select';
 @use 'blocks/thank-you-modal';
 @use 'blocks/form-validation';
+
+@use 'blocks/properties-page';
+@use 'blocks/property-map-status';
+

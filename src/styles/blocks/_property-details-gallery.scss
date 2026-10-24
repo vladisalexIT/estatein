@@ -41,7 +41,7 @@
     gap: rem(7);
     margin: 0;
     padding: rem(8) rem(12);
-    border: rem(1) solid var(--color-dark-15); 
+    border: rem(1) solid var(--color-dark-15);
     border-radius: rem(6);
     color: var(--color-light);
     background-color: var(--color-dark-10);
@@ -49,7 +49,7 @@
     cursor: pointer;
     outline: none;
     box-shadow: none;
-    transition: 
+    transition:
       border-color var(--transition-duration, 0.2s) ease,
       background-color var(--transition-duration, 0.2s) ease,
       color var(--transition-duration, 0.2s) ease,
@@ -58,7 +58,7 @@
     @include fluid-text(18, 14);
 
     @include hover {
-      border-color: var(--color-accent); 
+      border-color: var(--color-accent);
       background-color: var(--color-dark-12);
       color: var(--color-light);
     }
@@ -316,11 +316,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: fluid(30, 20);
     width: 100%;
-    animation: property-gallery-info-enter 220ms ease both;
-
-    &[hidden] {
-      display: none;
-    }
   }
 
   &__description,
@@ -533,10 +528,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &__info-panel {
-      animation: none;
-    }
-
     &__thumbnail,
     &__arrow,
     &__bullet {
@@ -545,14 +536,4 @@
   }
 }
 
-@keyframes property-gallery-info-enter {
-  from {
-    opacity: 0;
-    transform: translateY(rem(8));
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}

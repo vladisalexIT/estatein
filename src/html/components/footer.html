@@ -27,8 +27,11 @@
           <img class="logo__image" src="/src/assets/icons/logo.svg" alt="Estatein — Home" width="160" height="48">
         </a>
 
-        <form class="footer__form form-subscribe" data-js-form data-form-kind="newsletter" action="" method="post"
+        <form class="footer__form form-subscribe" data-js-form data-form-kind="newsletter" action="/local/ajax/estatein-form.php" method="post"
           novalidate>
+<input type="hidden" name="form_type" value="newsletter">
+<div class="form-honeypot" aria-hidden="true" inert><label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
           <label class="visually-hidden" for="footer-subscribe-email">
             Email address
           </label>
@@ -38,14 +41,22 @@
               aria-hidden="true">
 
             <input class="form-subscribe__input" id="footer-subscribe-email" name="email" type="email"
-              placeholder="Enter Your Email" autocomplete="email" inputmode="email" required>
+              placeholder="Enter Your Email" autocomplete="email" inputmode="email" required maxlength="254">
 
             <button class="form-subscribe__submit" type="submit" aria-label="Subscribe to the newsletter">
               <img src="/src/assets/icons/send.svg" alt="" width="24" height="24" aria-hidden="true">
             </button>
           </div>
           <div data-js-form-field-errors></div>
-        </form>
+        
+          <div class="agreement form-subscribe__agreement">
+            <input class="agreement__checkbox visually-hidden" type="checkbox" id="footer-subscribe-consent" name="privacy_agreement" required>
+            <label class="agreement__label" for="footer-subscribe-consent">I agree to be contacted about Estatein updates.</label>
+            <div data-js-form-field-errors></div>
+          </div>
+
+      <p class="form-error form-submission-error" data-js-form-submit-error role="alert" tabindex="-1" hidden></p>
+</form>
       </div>
 
       <nav class="footer__nav nav-footer" aria-label="Footer navigation">
@@ -124,10 +135,6 @@
         <p class="footer__copyright">
           © 2026 Estatein. All Rights Reserved.
         </p>
-
-        <a class="footer__legal-link" href="/terms.html">
-          Terms &amp; Conditions
-        </a>
       </div>
 
       <nav class="footer__soc1als soc1als" aria-label="Social media">

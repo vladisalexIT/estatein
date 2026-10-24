@@ -1,16 +1,23 @@
 @use "../helpers" as *;
 
+
 .properties-map-wrapper {
-  width: 100%;
-  height: 100%;
   display: none;
+  width: 100%;
+  min-width: 0;
+  height: auto;
 
   &.is-active {
     display: block;
   }
 
   &__body {
-    height: 100%;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    height: rem(560);
+
     padding: fluid(20, 16);
     border: rem(1) solid var(--color-dark-15);
     border-radius: rem(12);
@@ -19,122 +26,237 @@
 
   &__container {
     width: 100%;
+    min-width: 0;
     height: 100%;
-    border-radius: rem(8);
+    min-height: 0;
+
     overflow: hidden;
+    border-radius: rem(8);
     background-color: #1a1a1a;
   }
 }
 
+
+[data-js-properties-list],
+[data-js-properties-list] .properties-listings,
+[data-js-properties-list] .properties-listings__container,
+[data-js-properties-list] [data-js-slider-swiper],
+[data-js-properties-list] .swiper,
+[data-js-map-wrapper] {
+  min-width: 0;
+}
+
+
 [data-js-properties-list].is-map-active {
-  width: min(rem(1597), 100% - rem(48)); 
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: fluid(512, 357) minmax(0, 1fr);
-  grid-template-rows: auto auto; 
-  gap: fluid(30, 20);
-  align-items: stretch; 
-  padding-bottom: fluid(110, 80);
+
+  grid-template-columns:
+    minmax(0, clamp(rem(368), 34vw, rem(528)))
+    minmax(0, 1fr);
+
+  grid-template-rows: auto;
+  align-items: start;
+  gap: clamp(rem(12), 1vw, rem(24));
+
+  width: 100%;
+
+  max-width: calc(
+    var(--container-width) + var(--container-padding-x) * 2
+  );
+
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+  padding-bottom: clamp(rem(48), 5vw, rem(80));
+
   box-sizing: border-box;
 
-  @include mobile {
-    display: flex;
-    flex-direction: column;
-    gap: rem(20);
-    width: 100%; 
-    padding-left: fluid(20, 16); 
-    padding-right: fluid(20, 16);
-  }
+  > .properties-listings {
+    grid-column: 1;
+    grid-row: 1;
 
-  .properties-listings {
-    padding-bottom: 0;
     width: 100%;
     min-width: 0;
-    grid-row: 1;
-    grid-column: 1;
 
-    @include mobile {
-      width: 100%;
-      order: 2;
-    }
+    padding-inline: rem(24);
+    padding-bottom: 0;
 
-    &__container {
-      width: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    &__header,
-    &__decoration {
-      display: none; 
-    }
-
-    &__slider {
-      width: 100%;
-      margin-top: 0;
-    }
+    overflow: visible;
+    box-sizing: border-box;
   }
 
-  .slider__footer {
-    grid-row: 2;   
-    grid-column: 1; 
+  .properties-listings .properties-listings__container {
+    position: relative;
+
     width: 100%;
-    margin-top: rem(30); 
+    min-width: 0;
+    max-width: none;
+
+    margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;   
-    border: none;         
+
+    overflow: visible;
+    box-sizing: border-box;
   }
 
-  .slider__navigation {
-    display: contents; 
+  .properties-listings__header,
+  .properties-listings__decoration {
+    display: none;
   }
 
-  .slider__button--previous,
-  .slider__button--next,
-  .slider__counter {
-    margin: 0; 
-    position: static;
-    top: auto;
-    bottom: auto;
+  .properties-listings__slider {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+    overflow: hidden;
   }
 
-  .slider__button--previous {
-    order: 1; 
-  }
+  .properties-listings__footer.slider__footer {
+    position: absolute;
+    z-index: 5;
+    inset: 0;
 
-  .slider__counter {
-    display: flex;
-    gap: rem(6);
-    order: 2; 
-  }
-
-  .slider__button--next {
-    order: 3; 
-  }
-
-  .properties-map-wrapper {
-    width: 100%; 
-    height: 100%;
     display: block;
-    grid-row: 1;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    box-sizing: border-box;
+
+    pointer-events: none;
+  }
+
+  .properties-listings__footer .slider__counter {
+    display: none;
+  }
+
+  .properties-listings__footer .slider__navigation {
+    display: contents;
+  }
+
+  .properties-listings__footer .slider__button {
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    z-index: 1;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: rem(44);
+    height: rem(44);
+
+    margin: 0;
+    padding: 0;
+
+    border: rem(1) solid var(--color-dark-20);
+    background-color: var(--color-dark-10);
+    box-shadow: 0 rem(4) rem(12) rgb(0 0 0 / 20%);
+
+    pointer-events: auto;
+  }
+
+  .properties-listings__footer [data-js-slider-prev] {
+    left: 0;
+    right: auto;
+
+    transform: translate(-50%, -50%);
+  }
+
+  .properties-listings__footer [data-js-slider-next] {
+    right: 0;
+    left: auto;
+
+    transform: translate(50%, -50%);
+  }
+
+  .properties-listings__footer .slider__button:disabled,
+  .properties-listings__footer .slider__button.swiper-button-disabled {
+    color: var(--color-dark-40);
+    border-color: var(--color-dark-15);
+    background-color: var(--color-dark-10);
+    box-shadow: none;
+
+    pointer-events: none;
+  }
+
+  .properties-listings__footer .slider__button.swiper-button-lock {
+    display: none;
+  }
+
+  > .properties-map-wrapper {
     grid-column: 2;
+    grid-row: 1;
+    align-self: start;
 
-    @include mobile {
-      height: rem(517); 
-    }
+    display: block;
 
-    &__body,
-    &__container {
-      height: 100%;
-    }
+    width: 100%;
+    min-width: 0;
+    height: auto;
+  }
+
+  .properties-listings__empty {
+    min-height: rem(280);
+    box-shadow: none;
   }
 
   .property-card--highlighted {
     border-color: var(--color-accent);
-    box-shadow: 0 0 rem(20) rgba(112, 59, 247, 0.25);
-    background-color: var(--color-dark-12);
-    transition: all 0.3s ease;
+    background-color: var(--color-dark-12, #1f1f1f);
+    box-shadow: 0 0 rem(20) rgb(112 59 247 / 25%);
+
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
+
+  @include laptop {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+
+    > .properties-map-wrapper {
+      order: 1;
+    }
+
+    .properties-map-wrapper__body {
+      height: rem(420);
+    }
+
+    > .properties-listings {
+      order: 2;
+      padding-inline: rem(22);
+    }
+
+    .properties-listings__footer .slider__button {
+      width: rem(40);
+      height: rem(40);
+    }
+  }
+}
+
+
+[data-js-properties-list].is-map-switching,
+[data-js-properties-list].is-map-switching .properties-listings,
+[data-js-properties-list].is-map-switching [data-js-slider-swiper],
+[data-js-properties-list].is-map-switching .swiper,
+[data-js-properties-list].is-map-switching .swiper-wrapper,
+[data-js-properties-list].is-map-switching .swiper-slide,
+[data-js-map-wrapper].is-map-switching,
+[data-js-map-wrapper].is-map-switching .properties-map-wrapper__body {
+  transition: none !important;
+}
+
+[data-js-properties-list].is-map-switching [data-js-slider-swiper],
+[data-js-properties-list].is-map-switching .swiper {
+  visibility: hidden;
 }

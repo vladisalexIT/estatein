@@ -1,217 +1,387 @@
+import PropertyMapSupport from './PropertyMapSupport.js';
+
 class PropertyModalMap {
   constructor() {
-    this.openBtn = document.querySelector('[data-js-map-open]');
-    this.dialog = document.querySelector('[data-js-map-dialog]');
-    this.mapContainerId = 'estatein-modal-yandex-map';
-    this.mapInstance = null;
-    this.searchCircleMarker = null;
+    this.openBtn = document.querySelector(
+      '[data-js-map-open]'
+    );
+
+    this.dialog = document.querySelector(
+      '[data-js-map-dialog]'
+    );
 
     if (!this.openBtn || !this.dialog) {
       return;
     }
 
-    this.closeBtn = this.dialog.querySelector('[data-js-map-close]');
-    if (!this.closeBtn) {
+    this.closeBtn = this.dialog.querySelector(
+      '[data-js-map-close]'
+    );
+
+    this.sidePanelList = this.dialog.querySelector(
+      '[data-js-modal-cards-list]'
+    );
+
+    if (!this.closeBtn || !this.sidePanelList) {
       return;
     }
+
+    this.isOpening = false;
+    this.cardsLoaded = false;
+    this.hasSyncedMap = false;
+    this.resizeFrame = null;
+
+    this.mapView = new PropertyMapSupport({
+      containerId: 'estatein-modal-yandex-map',
+
+      getCards: () => [
+        ...this.sidePanelList.querySelectorAll(
+          '.property-card'
+        ),
+      ],
+
+      onSelect: (id) => this.activateCard(id),
+
+      isVisible: () => this.dialog.open,
+    });
 
     this.bindEvents();
   }
 
   async openModal() {
-    document.body.classList.add('is-locked');
-    
-    await this.loadCardsFromCatalog();
-
-    this.dialog.style.backgroundColor = 'var(--color-dark, #141414)';
-    
-    const sidePanel = this.dialog.querySelector('.property-map-modal__side-panel');
-    if (sidePanel) {
-      sidePanel.style.backgroundColor = 'var(--color-dark-10, #1a1a1a)';
+    if (this.isOpening || this.dialog.open) {
+      return;
     }
-    
-    this.dialog.showModal();
 
-    if (!this.mapInstance && typeof ymaps !== 'undefined') {
-      setTimeout(() => {
-        ymaps.ready(() => {
-          this.initMap();
-          if (this.mapInstance) {
-            this.mapInstance.container.fitToViewport();
-            this.autoScaleMap();
-          }
+    this.isOpening = true;
+
+    try {
+      const cardsLoaded =
+        await this.loadCardsFromCatalog();
+
+      this.dialog.style.backgroundColor =
+        'var(--color-dark, #141414)';
+
+      const sidePanel = this.dialog.querySelector(
+        '.property-map-modal__side-panel'
+      );
+
+      if (sidePanel) {
+        sidePanel.style.backgroundColor =
+          'var(--color-dark-10, #1a1a1a)';
+      }
+
+      this.dialog.showModal();
+
+      document.body.classList.add('is-locked');
+
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(resolve);
         });
-      }, 150);
-    } else if (this.mapInstance) {
-      setTimeout(() => {
-        this.mapInstance.container.fitToViewport();
-        this.autoScaleMap();
-      }, 150);
+      });
+
+      const ready = await this.mapView.ready();
+
+      if (!this.dialog.open) {
+        return;
+      }
+
+      if (ready) {
+        this.mapView.resize();
+
+        this.mapView.sync({
+          fit: !this.hasSyncedMap,
+        });
+
+        this.hasSyncedMap = true;
+      }
+
+      if (!cardsLoaded) {
+        this.mapView.setStatus(
+          'Properties could not be loaded. '
+          + 'Close the map and try again.'
+        );
+      }
+    } catch (error) {
+      console.error(
+        '[PropertyModalMap] Opening error:',
+        error
+      );
+
+      if (!this.dialog.open) {
+        document.body.classList.remove('is-locked');
+      }
+    } finally {
+      this.isOpening = false;
     }
   }
 
   closeModal() {
-    this.dialog.close();
+    if (this.dialog.open) {
+      this.dialog.close();
+    }
+
     document.body.classList.remove('is-locked');
   }
 
   async loadCardsFromCatalog() {
-    const sidePanelList = this.dialog.querySelector('[data-js-modal-cards-list]');
-    if (!sidePanelList || sidePanelList.children.length > 0) return;
+    if (this.cardsLoaded) {
+      return true;
+    }
+
+    if (
+      this.sidePanelList.querySelector('.property-card')
+    ) {
+      this.cardsLoaded = true;
+      return true;
+    }
 
     try {
-      const response = await fetch('/properties.html');
-      if (!response.ok) throw new Error('Catalog page response error');
-      
-      const htmlText = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlText, 'text/html');
-      const catalogCards = doc.querySelectorAll('.properties-listings .property-card, [data-js-properties-list] .property-card');
+      const catalogUrl = new URL(
+        this.dialog.dataset.catalogUrl
+          || '/properties.html',
+        window.location.href
+      );
 
-      sidePanelList.classList.add('properties-listings');
+      if (catalogUrl.origin !== window.location.origin) {
+        throw new Error(
+          'The catalog must use the same origin.'
+        );
+      }
+
+      const response = await fetch(
+        catalogUrl.href,
+        {
+          credentials: 'same-origin',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Catalog response: ${response.status}`
+        );
+      }
+
+      const htmlText = await response.text();
+
+      const doc = new DOMParser().parseFromString(
+        htmlText,
+        'text/html'
+      );
+
+      const catalogCards = doc.querySelectorAll(
+        '.properties-listings .property-card, '
+        + '[data-js-properties-list] .property-card'
+      );
+
+      const fragment = document.createDocumentFragment();
 
       catalogCards.forEach((card, index) => {
         const listItem = document.createElement('li');
-        listItem.className = 'property-map-modal__item';
+
+        listItem.className =
+          'property-map-modal__item';
 
         const clonedCard = card.cloneNode(true);
-        clonedCard.removeAttribute('style'); 
 
-        clonedCard.classList.remove('swiper-slide', 'swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
+        clonedCard.removeAttribute('style');
+        clonedCard.removeAttribute('id');
 
-        const titleElement = clonedCard.querySelector('.property-card__title') || clonedCard.querySelector('h3');
+        clonedCard.classList.remove(
+          'swiper-slide',
+          'swiper-slide-active',
+          'swiper-slide-next',
+          'swiper-slide-prev',
+          'property-card--highlighted'
+        );
+
+        clonedCard.querySelectorAll('[id]').forEach(
+          (element) => element.removeAttribute('id')
+        );
+
+        const titleElement = clonedCard.querySelector(
+          '.property-card__title'
+        );
+
         if (titleElement) {
-          const uniqueId = `modal-card-title-${index}`;
+          const uniqueId =
+            `modal-card-title-${index}`;
+
           titleElement.id = uniqueId;
-          clonedCard.setAttribute('aria-labelledby', uniqueId);
+
+          clonedCard.setAttribute(
+            'aria-labelledby',
+            uniqueId
+          );
         }
 
-        listItem.appendChild(clonedCard);
-        sidePanelList.appendChild(listItem);
-      });
-    } catch (error) {
-      console.error('[PropertyModalMap] Error fetching ready cards from catalog:', error);
-    }
-  }
+        clonedCard.querySelectorAll(
+          '[href], [src]'
+        ).forEach((element) => {
+          ['href', 'src'].forEach((attribute) => {
+            const value = element.getAttribute(
+              attribute
+            );
 
-  initMap() {
-    if (this.mapInstance) return;
-
-    try {
-      const defaultCenter = [34.0259, -118.7798]; 
-
-      this.mapInstance = new ymaps.Map(this.mapContainerId, {
-        center: defaultCenter,
-        zoom: 12,
-        controls: ['zoomControl', 'fullscreenControl']
-      }, {
-        autoFitToViewport: 'always'
-      });
-
-      const mapElement = document.getElementById(this.mapContainerId);
-      if (mapElement) {
-        mapElement.style.filter = 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)';
-      }
-
-      const properties = [
-        { name: 'Seaside Serenity Villa', coords: [34.0259, -118.7798], desc: 'Malibu, California' },
-        { name: 'Metropolitan Haven', coords: [34.0400, -118.6500], desc: 'Los Angeles Area' },
-        { name: 'Rustic Retreat Cottage', coords: [34.0120, -118.8200], desc: 'Premium Sea View' }
-      ];
-
-      properties.forEach(item => {
-        const placemark = new ymaps.Placemark(item.coords, {
-          balloonContentHeader: `<b style="color: #141414;">${item.name}</b>`,
-          balloonContentBody: `<span style="color: #141414;">${item.desc}</span>`,
-          hintContent: item.name
-        }, {
-          preset: 'islands#violetDotIcon'
-        });
-
-        placemark.events.add('click', () => {
-          const sidePanelList = this.dialog.querySelector('[data-js-modal-cards-list]');
-          if (!sidePanelList) return;
-
-          const cardsTitles = sidePanelList.querySelectorAll('.property-card__title, h3');
-          cardsTitles.forEach(titleElement => {
-            if (titleElement.textContent.trim().toLowerCase().includes(item.name.toLowerCase())) {
-              const cardContainer = titleElement.closest('.property-card');
-              
-              if (cardContainer) {
-                sidePanelList.querySelectorAll('.property-card--highlighted').forEach(el => el.classList.remove('property-card--highlighted'));
-                cardContainer.classList.add('property-card--highlighted');
-                
-                const sidebarWrapper = sidePanelList.closest('.property-map-modal__side-panel') || sidePanelList;
-                const topPos = cardContainer.getBoundingClientRect().top - sidebarWrapper.getBoundingClientRect().top + sidebarWrapper.scrollTop - 20;
-                
-                sidebarWrapper.scrollTo({ top: topPos, behavior: 'smooth' });
-              }
+            if (
+              !value
+              || value.startsWith('#')
+            ) {
+              return;
             }
+
+            element.setAttribute(
+              attribute,
+              new URL(value, response.url).href
+            );
           });
         });
 
-        this.mapInstance.geoObjects.add(placemark);
+        listItem.appendChild(clonedCard);
+        fragment.appendChild(listItem);
       });
 
-      const initialRadius = window.innerWidth < 768 ? 1500 : 5000;
-      this.searchCircleMarker = new ymaps.Circle([defaultCenter, initialRadius], {
-        balloonContent: 'Search Radius'
-      }, {
-        fillColor: 'rgba(112, 59, 247, 0.12)',
-        strokeColor: '#703bf7',
-        strokeOpacity: 0.7,
-        strokeWidth: 2
-      });
+      this.sidePanelList.classList.add(
+        'properties-listings'
+      );
 
-      this.mapInstance.geoObjects.add(this.searchCircleMarker);
-      
-      this.mapInstance.events.add('click', (e) => {
-        const clickCoords = e.get('coords');
-        if (this.searchCircleMarker) {
-          this.searchCircleMarker.geometry.setCoordinates(clickCoords);
-        }
-        this.mapInstance.setCenter(clickCoords, this.mapInstance.getZoom(), { duration: 300 });
-      });
+      this.sidePanelList.replaceChildren(fragment);
 
-      this.mapInstance.container.fitToViewport();
-      this.autoScaleMap();
+      this.cardsLoaded = true;
+      this.hasSyncedMap = false;
 
-    } catch (e) {
-      console.error('[PropertyModalMap] Error initializing Yandex Maps:', e);
+      return true;
+    } catch (error) {
+      this.cardsLoaded = false;
+
+      console.error(
+        '[PropertyModalMap] Catalog loading error:',
+        error
+      );
+
+      return false;
     }
   }
 
-  autoScaleMap() {
-    if (!this.mapInstance || !this.searchCircleMarker) return;
-    try {
-      const defaultCenter = [34.0259, -118.7798];
-      if (window.innerWidth < 768) {
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(1500);
-        this.mapInstance.setCenter(defaultCenter, 12, { duration: 200 });
-      } else {
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(5000);
-        this.mapInstance.setCenter(defaultCenter, 11, { duration: 200 });
-      }
-    } catch (e) {
-      console.error('[PropertyModalMap] AutoScale Error:', e);
+  activateCard(id) {
+    const card = [
+      ...this.sidePanelList.querySelectorAll(
+        '.property-card'
+      ),
+    ].find((element) =>
+      element.dataset.propertyId === String(id)
+    );
+
+    if (!card) {
+      return;
     }
+
+    this.mapView.select(id);
+
+    const sidebarWrapper = card.closest(
+      '.property-map-modal__side-panel'
+    ) || this.sidePanelList;
+
+    const top =
+      card.getBoundingClientRect().top
+      - sidebarWrapper.getBoundingClientRect().top
+      + sidebarWrapper.scrollTop
+      - 20;
+
+    sidebarWrapper.scrollTo({
+      top,
+      behavior: 'smooth',
+    });
+  }
+
+  selectCardFromEvent(event) {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    const card = event.target.closest(
+      '.property-card'
+    );
+
+    if (
+      !card
+      || !this.sidePanelList.contains(card)
+    ) {
+      return;
+    }
+
+    this.mapView.select(
+      card.dataset.propertyId ?? '',
+      { pan: true }
+    );
   }
 
   bindEvents() {
-    this.openBtn.addEventListener('click', () => this.openModal());
-    this.closeBtn.addEventListener('click', () => this.closeModal());
+    this.openBtn.addEventListener(
+      'click',
+      (event) => {
+        event.preventDefault();
+        this.openModal();
+      }
+    );
 
-    this.dialog.addEventListener('click', (e) => {
-      if (e.target === this.dialog) {
+    this.closeBtn.addEventListener(
+      'click',
+      (event) => {
+        event.preventDefault();
+        this.closeModal();
+      }
+    );
+
+    this.dialog.addEventListener('close', () => {
+      document.body.classList.remove('is-locked');
+    });
+
+    this.dialog.addEventListener('click', (event) => {
+      if (event.target === this.dialog) {
         this.closeModal();
       }
     });
 
+    this.sidePanelList.addEventListener(
+      'click',
+      (event) => this.selectCardFromEvent(event)
+    );
+
+    this.sidePanelList.addEventListener(
+      'focusin',
+      (event) => this.selectCardFromEvent(event)
+    );
+
     window.addEventListener('resize', () => {
-      if (this.dialog.hasAttribute('open')) {
-        setTimeout(() => this.autoScaleMap(), 150);
+      if (!this.dialog.open) {
+        return;
+      }
+
+      cancelAnimationFrame(this.resizeFrame);
+
+      this.resizeFrame = requestAnimationFrame(() => {
+        this.mapView.resize();
+      });
+    });
+
+    window.addEventListener('load', () => {
+      if (
+        this.dialog.open
+        && !this.mapView.map
+      ) {
+        this.mapView.ready().then((ready) => {
+          if (!ready || !this.dialog.open) {
+            return;
+          }
+
+          this.mapView.sync({
+            fit: true,
+          });
+
+          this.hasSyncedMap = true;
+        });
       }
     });
   }

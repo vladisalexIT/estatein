@@ -1,257 +1,486 @@
+import PropertyMapSupport from './PropertyMapSupport.js';
+
 class PropertiesMap {
   constructor() {
-    this.toggleBtn = document.querySelector('[data-js-map-toggle]');
-    this.mapWrapper = document.querySelector('[data-js-map-wrapper]');
-    this.propertiesList = document.querySelector('[data-js-properties-list]');
-    this.mapContainerId = 'estatein-yandex-map';
-    this.mapInstance = null;
-    this.searchCircleMarker = null;
-    this.savedSwiperParams = null;
+    this.toggleBtn = document.querySelector(
+      '[data-js-map-toggle]'
+    );
 
-    if (!this.toggleBtn || !this.mapWrapper || !this.propertiesList) {
+    this.mapWrapper = document.querySelector(
+      '[data-js-map-wrapper]'
+    );
+
+    this.propertiesList = document.querySelector(
+      '[data-js-properties-list]'
+    );
+
+    this.swiperSnapshots = new WeakMap();
+    this.connectedSwipers = new WeakSet();
+
+    this.isSwitching = false;
+    this.dataChanged = true;
+    this.hasSyncedMap = false;
+    this.resizeFrame = null;
+
+    if (
+      !this.toggleBtn
+      || !this.mapWrapper
+      || !this.propertiesList
+    ) {
       return;
     }
+
+    this.mapView = new PropertyMapSupport({
+      containerId: 'estatein-yandex-map',
+
+      getCards: () => [
+        ...this.propertiesList.querySelectorAll(
+          '.property-card'
+        ),
+      ],
+
+      onSelect: (id) => this.activateCard(id),
+
+      isVisible: () => this.isMapActive(),
+    });
+
     this.bindEvents();
   }
 
-  toggleInterface(event) {
-    if (event) {
-      event.preventDefault();
+  isMapActive() {
+    return this.propertiesList.classList.contains(
+      'is-map-active'
+    );
+  }
+
+  getSwiper() {
+    const element = this.propertiesList.querySelector(
+      '[data-js-slider-swiper], .swiper'
+    );
+
+    const swiper = element?.swiper;
+
+    return swiper && !swiper.destroyed
+      ? swiper
+      : null;
+  }
+
+  getActiveCard() {
+    return this.propertiesList.querySelector(
+      '.swiper-slide-active .property-card'
+    ) || this.propertiesList.querySelector(
+      '.property-card'
+    );
+  }
+
+  selectActiveCard({ pan = false } = {}) {
+    const card = this.getActiveCard();
+
+    this.mapView.select(
+      card?.dataset.propertyId ?? '',
+      { pan }
+    );
+  }
+
+  activateCard(id) {
+    const swiper = this.getSwiper();
+
+    if (swiper) {
+      const slides = Array.from(swiper.slides);
+
+      const index = slides.findIndex((slide) => {
+        const card = slide.querySelector(
+          '.property-card'
+        );
+
+        return card?.dataset.propertyId === String(id);
+      });
+
+      if (index >= 0) {
+        const logicalIndex = Number(
+          slides[index].dataset.swiperSlideIndex
+        );
+
+        if (
+          swiper.params.loop
+          && Number.isInteger(logicalIndex)
+        ) {
+          swiper.slideToLoop(logicalIndex, 400);
+        } else {
+          swiper.slideTo(index, 400);
+        }
+      }
     }
 
-    const isMapActive = this.propertiesList.classList.contains('is-map-active');
-    const swiperContainer = this.propertiesList.querySelector('.swiper');
+    this.mapView.select(id);
 
-    if (!isMapActive) {
-      this.propertiesList.classList.add('is-map-active');
-      this.mapWrapper.classList.add('is-active');
-      this.toggleBtn.textContent = 'Show List Only';
+    requestAnimationFrame(() => {
+      this.adjustMapHeight();
+    });
+  }
 
-      if (swiperContainer && swiperContainer.swiper) {
-        const swiperInstance = swiperContainer.swiper;
+  toggleInterface(event) {
+    event?.preventDefault();
 
-        if (!this.savedSwiperParams) {
-          this.savedSwiperParams = {
-            slidesPerView: swiperInstance.params.slidesPerView,
-            slidesPerGroup: swiperInstance.params.slidesPerGroup,
-            breakpoints: JSON.parse(JSON.stringify(swiperInstance.params.breakpoints || {}))
-          };
-        }
+    if (this.isSwitching) {
+      return;
+    }
 
-        setTimeout(() => {
-          swiperInstance.params.slidesPerView = 1;
-          swiperInstance.params.slidesPerGroup = 1;
-          swiperInstance.params.breakpoints = {};
-          
-          swiperInstance.update();
-          swiperInstance.slideTo(0, 0);
-          this.adjustMapHeight();
-        }, 100);
+    this.connectSwiper();
+
+    const isOpening = !this.isMapActive();
+    const swiper = this.getSwiper();
+
+    const mapBody = this.mapWrapper.querySelector(
+      '.properties-map-wrapper__body'
+    );
+
+    this.isSwitching = true;
+
+    this.propertiesList.classList.add(
+      'is-map-switching'
+    );
+
+    this.mapWrapper.classList.add(
+      'is-map-switching'
+    );
+
+    const finishSwitching = () => {
+      this.propertiesList.classList.remove(
+        'is-map-switching'
+      );
+
+      this.mapWrapper.classList.remove(
+        'is-map-switching'
+      );
+
+      this.isSwitching = false;
+    };
+
+    try {
+      if (swiper) {
+        swiper.setTransition(0);
+        this.setSwiperMode(swiper, isOpening);
       }
 
-      if (!this.mapInstance && typeof ymaps !== 'undefined') {
-        setTimeout(() => {
-          ymaps.ready(() => {
-            this.initMap();
-            if (this.mapInstance) {
-              this.mapInstance.container.fitToViewport();
-              this.autoScaleMap();
-              this.adjustMapHeight();
-            }
-          });
-        }, 150);
-      } else if (this.mapInstance) {
-        setTimeout(() => {
-          this.mapInstance.container.fitToViewport();
-          this.autoScaleMap();
-          this.adjustMapHeight();
-        }, 150);
-      }
+      this.propertiesList.classList.toggle(
+        'is-map-active',
+        isOpening
+      );
 
-    } else {
-      this.propertiesList.classList.remove('is-map-active');
-      this.mapWrapper.classList.remove('is-active');
-      this.toggleBtn.textContent = 'Show on Map';
+      this.mapWrapper.classList.toggle(
+        'is-active',
+        isOpening
+      );
 
-      const mapBody = this.mapWrapper ? this.mapWrapper.querySelector('.properties-map-wrapper__body') : null;
-      if (mapBody) {
+      this.mapWrapper.setAttribute(
+        'aria-hidden',
+        String(!isOpening)
+      );
+
+      this.toggleBtn.textContent = isOpening
+        ? 'Show List Only'
+        : 'Show on Map';
+
+      this.toggleBtn.setAttribute(
+        'aria-expanded',
+        String(isOpening)
+      );
+
+      if (!isOpening && mapBody) {
         mapBody.style.height = '';
       }
 
-      if (swiperContainer && swiperContainer.swiper) {
-        const swiperInstance = swiperContainer.swiper;
+      if (swiper) {
+        swiper.update();
 
-        setTimeout(() => {
-          if (this.savedSwiperParams) {
-            swiperInstance.params.slidesPerView = this.savedSwiperParams.slidesPerView;
-            swiperInstance.params.slidesPerGroup = this.savedSwiperParams.slidesPerGroup;
-            swiperInstance.params.breakpoints = Object.assign({}, this.savedSwiperParams.breakpoints);
-          } else {
-            const section = this.propertiesList.querySelector('.properties-listings');
-            const desktopSlides = section ? parseInt(section.getAttribute('data-slider-slides-desktop')) || 3 : 3;
-            const tabletSlides = section ? parseInt(section.getAttribute('data-slider-slides-tablet')) || 2 : 2;
-            
-            swiperInstance.params.breakpoints = {
-              768: { slidesPerView: tabletSlides, slidesPerGroup: 1 },
-              1200: { slidesPerView: desktopSlides, slidesPerGroup: 1 }
-            };
-          }
-
-          if (typeof swiperInstance.emit === 'function') {
-            swiperInstance.emit('breakpoint'); 
-          }
-          
-          swiperInstance.update();
-        }, 100);
+        if (isOpening && !this.hasSyncedMap) {
+          swiper.slideTo(0, 0);
+        }
       }
+
+      requestAnimationFrame(() => {
+        try {
+          if (swiper && !swiper.destroyed) {
+            swiper.update();
+          }
+
+          if (isOpening) {
+            this.adjustMapHeight();
+            this.refreshMapView();
+          }
+        } finally {
+          requestAnimationFrame(finishSwitching);
+        }
+      });
+    } catch (error) {
+      finishSwitching();
+
+      console.error(
+        '[PropertiesMap] Interface switching error:',
+        error
+      );
     }
   }
 
-  initMap() {
-    if (this.mapInstance) return;
-    try {
-      const defaultCenter = [34.0259, -118.7798]; 
-      this.mapInstance = new ymaps.Map(this.mapContainerId, {
-        center: defaultCenter,
-        zoom: 11,
-        controls: ['zoomControl', 'fullscreenControl']
-      }, {
-        autoFitToViewport: 'always'
-      });
+  setSwiperMode(swiper, isMapActive) {
+    if (!swiper || swiper.destroyed) {
+      return;
+    }
 
-      const mapElement = document.getElementById(this.mapContainerId);
-      if (mapElement) {
-        mapElement.style.filter = 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)';
+    const keys = [
+      'slidesPerView',
+      'slidesPerGroup',
+      'spaceBetween',
+      'breakpoints',
+    ];
+
+    if (isMapActive) {
+      if (this.swiperSnapshots.has(swiper)) {
+        return;
       }
 
-      const properties = [
-        { name: 'Seaside Serenity Villa', coords: [34.0259, -118.7798], desc: 'Malibu, California' },
-        { name: 'Metropolitan Haven', coords: [34.0400, -118.6500], desc: 'Los Angeles Area' },
-        { name: 'Rustic Retreat Cottage', coords: [34.0120, -118.8200], desc: 'Premium Sea View' },
-        { name: 'Seaside Serenity Villa', coords: [34.0380, -118.7610], desc: 'Downtown Los Angeles Area' }
-      ];
+      const snapshot = {
+        params: {},
+        originalParams: {},
+      };
 
-      properties.forEach(item => {
-        const placemark = new ymaps.Placemark(item.coords, {
-          balloonContentHeader: `<b style="color: #141414;">${item.name}</b>`,
-          balloonContentBody: `<span style="color: #666;">${item.desc}</span>`,
-          hintContent: item.name
-        }, {
-          preset: 'islands#violetDotIcon'
-        });
+      keys.forEach((key) => {
+        snapshot.params[key] = swiper.params[key];
 
-        placemark.events.add('click', () => {
-          const slides = this.propertiesList.querySelectorAll('.swiper-slide');
-          const swiperContainer = this.propertiesList.querySelector('.swiper');
-          
-          slides.forEach((slide, index) => {
-            const title = slide.querySelector('.property-card__title');
+        snapshot.originalParams[key] =
+          swiper.originalParams[key];
+      });
 
-            if (title && title.textContent.trim().toLowerCase().includes(item.name.toLowerCase())) {
-              const card = slide.querySelector('.property-card');
+      this.swiperSnapshots.set(swiper, snapshot);
 
-              this.propertiesList.querySelectorAll('.property-card--highlighted').forEach(el => el.classList.remove('property-card--highlighted'));
-              
-              if (card) card.classList.add('property-card--highlighted');
-              
-              if (swiperContainer && swiperContainer.swiper) {
-                swiperContainer.swiper.slideTo(index, 400); 
-              }
-            }
+      const mapParams = {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        spaceBetween: 0,
+        breakpoints: {},
+      };
+
+      Object.assign(swiper.params, mapParams);
+      Object.assign(swiper.originalParams, mapParams);
+    } else {
+      const snapshot = this.swiperSnapshots.get(
+        swiper
+      );
+
+      if (!snapshot) {
+        return;
+      }
+
+      Object.assign(
+        swiper.params,
+        snapshot.params
+      );
+
+      Object.assign(
+        swiper.originalParams,
+        snapshot.originalParams
+      );
+
+      this.swiperSnapshots.delete(swiper);
+    }
+
+    swiper.currentBreakpoint = undefined;
+    swiper.update();
+  }
+
+  connectSwiper() {
+    const swiper = this.getSwiper();
+
+    if (!swiper) {
+      return;
+    }
+
+    if (!this.connectedSwipers.has(swiper)) {
+      const updateSelection = () => {
+        if (
+          !this.isMapActive()
+          || this.isSwitching
+          || swiper !== this.getSwiper()
+        ) {
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          if (
+            !this.isMapActive()
+            || swiper !== this.getSwiper()
+          ) {
+            return;
+          }
+
+          this.adjustMapHeight();
+
+          this.selectActiveCard({
+            pan: true,
           });
         });
+      };
 
-        this.mapInstance.geoObjects.add(placemark);
+      swiper.on(
+        'slideChange',
+        updateSelection
+      );
+
+      swiper.on(
+        'slideChangeTransitionEnd',
+        updateSelection
+      );
+
+      this.connectedSwipers.add(swiper);
+    }
+
+    this.setSwiperMode(
+      swiper,
+      this.isMapActive()
+    );
+  }
+
+  async refreshMapView({ fit = false } = {}) {
+    if (!this.isMapActive()) {
+      return;
+    }
+
+    try {
+      const ready = await this.mapView.ready();
+
+      if (!ready || !this.isMapActive()) {
+        return;
+      }
+
+      this.adjustMapHeight();
+      this.mapView.resize();
+
+      this.mapView.sync({
+        fit:
+          fit
+          || this.dataChanged
+          || !this.hasSyncedMap,
       });
 
-      const initialRadius = window.innerWidth < 768 ? 1500 : 5000;
+      this.dataChanged = false;
+      this.hasSyncedMap = true;
 
-      this.searchCircleMarker = new ymaps.Circle([defaultCenter, initialRadius], {
-        balloonContent: 'Search Radius'
-      }, {
-        fillColor: 'rgba(112, 59, 247, 0.12)',
-        strokeColor: '#703bf7',
-        strokeOpacity: 0.7,
-        strokeWidth: 2
-      });
+      this.selectActiveCard();
+    } catch (error) {
+      this.mapView.setStatus(
+        'The map could not be updated.'
+      );
 
-      this.mapInstance.geoObjects.add(this.searchCircleMarker);
-
-      this.mapInstance.events.add('click', (e) => {
-        const clickCoords = e.get('coords');
-        if (this.searchCircleMarker) {
-          this.searchCircleMarker.geometry.setCoordinates(clickCoords);
-        }
-        this.mapInstance.setCenter(clickCoords, this.mapInstance.getZoom(), { duration: 300 });
-      });
-
-      this.mapInstance.container.fitToViewport();
-      this.autoScaleMap();
-    } catch (e) {
-      console.error('[PropertiesMap] Error:', e);
+      console.error(
+        '[PropertiesMap] Update error:',
+        error
+      );
     }
   }
 
   adjustMapHeight() {
-    const activeCard = this.propertiesList.querySelector('.swiper-slide-active .property-card') || 
-      this.propertiesList.querySelector('.property-card');
-    const mapBody = this.mapWrapper ? this.mapWrapper.querySelector('.properties-map-wrapper__body') : null;
+    const mapBody = this.mapWrapper.querySelector(
+      '.properties-map-wrapper__body'
+    );
 
-    if (window.innerWidth >= 768 && activeCard && mapBody) {
-      const cardHeight = activeCard.offsetHeight;
-      mapBody.style.height = `${cardHeight}px`;
-      if (this.mapInstance) {
-        this.mapInstance.container.fitToViewport();
-      }
-    } else if (window.innerWidth < 768 && mapBody) {
+    if (!mapBody) {
+      return;
+    }
+
+    if (!this.isMapActive()) {
       mapBody.style.height = '';
-      if (this.mapInstance) {
-        this.mapInstance.container.fitToViewport();
-      }
+      return;
     }
-  }
 
-  autoScaleMap() {
-    if (!this.mapInstance || !this.searchCircleMarker) return;
-    try {
-      const defaultCenter = [34.0259, -118.7798];
-      
-      if (window.innerWidth < 768) {
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(1500);
-        this.mapInstance.setCenter(defaultCenter);
-        this.mapInstance.setZoom(11.2, { preciseZoom: true });
-      } else {
-        const targetZoom = window.innerWidth <= 1024 ? 10 : 11;
-        this.searchCircleMarker.geometry.setCoordinates(defaultCenter);
-        this.searchCircleMarker.geometry.setRadius(5000);
-        this.mapInstance.setCenter(defaultCenter, targetZoom);
-      }
-    } catch (e) {
-      console.error(e);
+    if (window.innerWidth < 768) {
+      mapBody.style.height = '';
+    } else {
+      const referenceElement =
+        this.getActiveCard()
+        || this.propertiesList.querySelector(
+          '.properties-listings__empty'
+        );
+
+      const height =
+        referenceElement?.offsetHeight || 360;
+
+      mapBody.style.height = `${height}px`;
     }
+
+    this.mapView.resize();
   }
 
   bindEvents() {
-    this.toggleBtn.addEventListener('click', (e) => this.toggleInterface(e));
-    
+    this.toggleBtn.addEventListener(
+      'click',
+      (event) => this.toggleInterface(event)
+    );
+
+    this.connectSwiper();
+
     window.addEventListener('resize', () => {
-      if (this.mapInstance) {
-        setTimeout(() => {
-          this.adjustMapHeight();
-          this.autoScaleMap();
-        }, 50);
+      if (!this.isMapActive()) {
+        return;
+      }
+
+      cancelAnimationFrame(this.resizeFrame);
+
+      this.resizeFrame = requestAnimationFrame(() => {
+        this.connectSwiper();
+        this.adjustMapHeight();
+      });
+    });
+
+    window.addEventListener('load', () => {
+      this.connectSwiper();
+
+      if (this.isMapActive()) {
+        this.refreshMapView();
       }
     });
 
-    const swiperContainer = this.propertiesList.querySelector('.swiper');
-    if (swiperContainer && swiperContainer.swiper) {
-      swiperContainer.swiper.on('slideChange', () => {
-        if (this.propertiesList.classList.contains('is-map-active')) {
-          setTimeout(() => this.adjustMapHeight(), 50);
+    document.addEventListener(
+      'estatein:property-listings-updated',
+      (event) => {
+        const rootElement =
+          event.detail?.rootElement;
+
+        if (
+          !(rootElement instanceof Element)
+          || !rootElement.matches('#property-listings')
+        ) {
+          return;
         }
-      });
-    }
+
+        const updatedList = rootElement.matches(
+          '[data-js-properties-list]'
+        )
+          ? rootElement
+          : rootElement.querySelector(
+            '[data-js-properties-list]'
+          );
+
+        if (updatedList) {
+          this.propertiesList = updatedList;
+        } else if (
+          !this.propertiesList.contains(rootElement)
+        ) {
+          return;
+        }
+
+        this.dataChanged = true;
+        this.connectSwiper();
+
+        if (this.isMapActive()) {
+          requestAnimationFrame(() => {
+            this.refreshMapView({
+              fit: true,
+            });
+          });
+        }
+      }
+    );
   }
 }
 

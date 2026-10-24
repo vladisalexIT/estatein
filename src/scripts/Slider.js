@@ -142,6 +142,11 @@ class Slider {
     }
 
     init() {
+        const desktopBreakpoint = this.getNumberData(
+            'sliderDesktopBreakpoint',
+            1024
+        )
+
         const slidesDesktop = this.getNumberData(
             'sliderSlidesDesktop',
             3
@@ -236,7 +241,7 @@ class Slider {
                     slidesPerGroup: groupTablet,
                     spaceBetween: spaceTablet,
                 },
-                1024: {
+                [desktopBreakpoint]: {
                     slidesPerView: slidesDesktop,
                     slidesPerGroup: groupDesktop,
                     spaceBetween: spaceTablet,
@@ -267,12 +272,138 @@ class Slider {
 }
 
 class SliderCollection {
+    selector = '[data-js-slider]'
+
+    instances = new Map()
+
     constructor() {
-        document
-            .querySelectorAll('[data-js-slider]')
+        this.init(document)
+
+        document.addEventListener(
+            'estatein:property-listings-updated',
+            (event) => {
+                const scope =
+                    event.detail?.rootElement
+
+                this.removeDisconnected()
+
+                if (
+                    scope instanceof Element ||
+                    scope instanceof Document
+                ) {
+                    this.init(scope)
+                }
+            }
+        )
+    }
+
+    destroy(rootElement) {
+        const instance =
+            this.instances.get(rootElement)
+
+        if (
+            instance?.swiper &&
+            !instance.swiper.destroyed
+        ) {
+            instance.swiper.destroy(true, true)
+        }
+
+        this.instances.delete(rootElement)
+
+        delete rootElement.dataset.sliderInitialized
+    }
+
+    removeDisconnected() {
+        for (const rootElement of this.instances.keys()) {
+            if (!rootElement.isConnected) {
+                this.destroy(rootElement)
+            }
+        }
+    }
+
+    init(scope) {
+        const rootElements = new Set()
+
+        if (
+            scope instanceof Element &&
+            scope.matches(this.selector)
+        ) {
+            rootElements.add(scope)
+        }
+
+        scope.querySelectorAll(this.selector)
             .forEach((rootElement) => {
-                new Slider(rootElement)
+                rootElements.add(rootElement)
             })
+
+        if (scope instanceof Element) {
+            const parentRoot =
+                scope.closest(this.selector)
+
+            if (parentRoot) {
+                rootElements.add(parentRoot)
+            }
+        }
+
+        rootElements.forEach((rootElement) => {
+            this.initSlider(rootElement)
+        })
+    }
+
+    initSlider(rootElement) {
+        const swiperElement =
+            rootElement.querySelector(
+                '[data-js-slider-swiper]'
+            )
+
+        const instance =
+            this.instances.get(rootElement)
+
+        if (!swiperElement) {
+            if (instance) {
+                this.destroy(rootElement)
+            }
+
+            delete rootElement.dataset.sliderInitialized
+
+            return
+        }
+
+        const hasCurrentInstance =
+            instance?.swiper &&
+            !instance.swiper.destroyed &&
+            instance.swiperElement === swiperElement
+
+        if (hasCurrentInstance) {
+            instance.slidesCount =
+                swiperElement.querySelectorAll(
+                    '.swiper-slide'
+                ).length
+
+            instance.swiper.update()
+            instance.updateCounter(instance.swiper)
+
+            return
+        }
+
+        if (instance) {
+            this.destroy(rootElement)
+        }
+
+        const newInstance = new Slider(rootElement)
+
+        if (
+            newInstance.swiper &&
+            !newInstance.swiper.destroyed
+        ) {
+            this.instances.set(
+                rootElement,
+                newInstance
+            )
+
+            rootElement.dataset.sliderInitialized =
+                'true'
+        }
     }
 }
 

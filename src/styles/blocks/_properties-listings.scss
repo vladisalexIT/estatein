@@ -55,100 +55,78 @@
     height: auto;
   }
 
-  /*
-   * Только карточки страницы Properties.
-   * Общий компонент .property-card на главной не изменяется.
-   */
-  .property-card {
+  .property-card--catalog {
     gap: 0;
     padding: fluid(40, 20);
     border-radius: rem(12);
 
-    &__image {
-      aspect-ratio: 432 / 318;
-      border-radius: rem(10);
-    }
+    .property-card {
+      &__image {
+        aspect-ratio: 432 / 318;
+        border-radius: rem(10);
+      }
 
-    &__body {
-      padding-top: fluid(30, 20);
-    }
+      &__body {
+        padding-top: fluid(30, 20);
+      }
 
-    &__title {
-      margin: 0;
-      color: var(--color-light);
-      font-weight: 600;
-      line-height: 1.2;
+      &__title {
+        margin: 0;
+        color: var(--color-light);
+        font-weight: 600;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
 
-      @include fluid-text(24, 20);
-    }
+        @include fluid-text(24, 20);
+      }
 
-    &__description {
-      margin: fluid(6, 4) 0 0;
-      color: var(--color-gray-60);
-      line-height: 1.5;
+      &__description {
+        margin: fluid(6, 4) 0 0;
+        color: var(--color-gray-60);
+        line-height: 1.5;
 
-      @include fluid-text(18, 14);
-    }
+        @include fluid-text(18, 14);
 
-    &__description-link {
-      color: var(--color-light);
-      text-decoration-thickness: rem(1);
-      text-underline-offset: rem(3);
-    }
+        > p {
+          margin: 0;
+        }
+      }
 
-    &__features {
-      order: -1;
-      margin: 0 0 fluid(20, 16);
-    }
+      &__description-link {
+        color: var(--color-light);
+        text-decoration-thickness: rem(1);
+        text-underline-offset: rem(3);
+      }
 
-    &__feature {
-      width: 100%;
-      min-height: auto;
-      justify-content: flex-start;
-      padding: fluid(10, 8) fluid(14, 12);
-      border-radius: rem(28);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: fluid(18, 14);
-    }
+      &__footer {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: end;
+        gap: fluid(20, 12);
+        padding-top: fluid(30, 20);
+      }
 
-    // &__feature:not(:first-child) {
-    //   display: none;
-    // }
+      &__price {
+        min-width: 0;
+      }
 
-    // &__feature:first-child {
-    //   &::before {
-    //     content: "Coastal Escapes - Where Waves Beckon";
-    //     overflow: hidden;
-    //     text-overflow: ellipsis;
-    //     white-space: nowrap;
-    //   }
+      &__price-label {
+        margin-bottom: rem(2);
+        font-size: fluid(18, 14);
+      }
 
-    //   > * {
-    //     display: none;
-    //   }
-    // }
+      &__price-value {
+        font-size: fluid(24, 18);
+        overflow-wrap: anywhere;
+      }
 
-    &__footer {
-      grid-template-columns: minmax(rem(110), auto) minmax(0, 1fr);
-      align-items: end;
-      gap: fluid(20, 12);
-      padding-top: fluid(20, 0);
-    }
-
-    &__price-label {
-      margin-bottom: rem(2);
-      font-size: fluid(18, 14);
-    }
-
-    &__price-value {
-      font-size: fluid(24, 18);
-    }
-
-    &__button {
-      min-height: fluid(60, 52);
-      max-width: rem(279);
-      font-size: fluid(18, 14);
+      &__button {
+        min-height: fluid(60, 52);
+        max-width: rem(279);
+        padding-inline: fluid(20, 10);
+        font-size: fluid(18, 14);
+        white-space: normal;
+        text-align: center;
+      }
     }
   }
 
@@ -156,6 +134,7 @@
     &__footer {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       border: none;
     }
 
@@ -164,21 +143,21 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      margin-top: rem(30); 
+      margin-top: rem(30);
       padding: 0;
     }
 
     .slider__navigation {
-      display: contents; 
+      display: contents;
     }
 
     .slider__button--previous,
     .slider__button--next,
     .slider__counter {
-      margin: 0; 
       position: static;
       top: auto;
       bottom: auto;
+      margin: 0;
     }
 
     .slider__button--previous {
@@ -187,36 +166,109 @@
 
     .slider__counter {
       display: flex;
+      align-items: center;
       gap: rem(6);
       order: 2;
+      white-space: nowrap;
     }
 
     .slider__button--next {
       order: 3;
     }
 
-    .property-card {
-      &__footer {
-        grid-template-columns: minmax(rem(90), auto) minmax(0, 1fr);
-      }
+    .property-card--catalog {
+      .property-card {
+        &__image {
+          margin-bottom: 0;
+        }
 
-      &__button {
-        max-width: none;
+        &__footer {
+          grid-template-columns: auto minmax(0, 1fr);
+          gap: rem(12);
+        }
+
+        &__button {
+          max-width: none;
+        }
       }
     }
   }
 
-  @media (width <= rem(420)) {
-    .property-card {
-      &__footer {
-        grid-template-columns: 1fr;
-        align-items: stretch;
-      }
+  @media (width <= rem(359)) {
+    .property-card--catalog {
+      .property-card {
+        &__footer {
+          grid-template-columns: 1fr;
+        }
 
-      &__button {
-        width: 100%;
-        justify-self: stretch;
+        &__button {
+          justify-self: stretch;
+        }
       }
     }
   }
 }
+
+.properties-listings__empty {
+  margin-top: rem(40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: rem(760);
+  min-height: rem(220);
+  margin-inline: auto;
+  padding: rem(48) rem(32);
+  text-align: center;
+  background-color: var(--color-dark);
+  border: rem(1) solid var(--color-dark-15);
+  border-radius: rem(12);
+  box-shadow: 0 0 0 rem(8) #191919;
+}
+
+.properties-listings__empty-title {
+  margin: 0 0 rem(10);
+  color: var(--color-light);
+  font-size: rem(26);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.properties-listings__empty-text {
+  max-width: rem(520);
+  margin: 0;
+  color: var(--color-gray-60);
+  font-size: rem(16);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.properties-search.is-loading {
+  pointer-events: none;
+}
+
+.properties-search.is-loading .properties-search__submit {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+[data-js-properties-list].is-map-active .properties-listings__empty {
+  margin-top: 0;
+}
+
+@media (width <= rem(600)) {
+  .properties-listings__empty {
+    min-height: rem(180);
+    padding: rem(32) rem(20);
+  }
+
+  .properties-listings__empty-title {
+    font-size: rem(22);
+  }
+
+  .properties-listings__empty-text {
+    font-size: rem(14);
+  }
+}
+

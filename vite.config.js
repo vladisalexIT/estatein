@@ -6,7 +6,10 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'bitrix'
+    ? '/local/templates/estatein/'
+    : '/',
   plugins: [
     htmlInject(),
     ViteImageOptimizer({
@@ -20,18 +23,15 @@ export default defineConfig({
         plugins: [
           {
             name: 'preset-default',
-            params: {
-              overrides: {
-                removeViewBox: false,
-              },
-            },
           },
         ],
       },
     }),
   ],
   build: {
-    rollupOptions: {
+  outDir: mode === 'bitrix' ? 'dist-bitrix' : 'dist',
+  manifest: mode === 'bitrix',
+  rollupOptions: {
       input: {
         home: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
@@ -42,4 +42,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

@@ -2,19 +2,14 @@
 
 .property-card {
   display: flex;
-  height: 100%;
-  padding: fluid(40, 20);
   flex-direction: column;
   gap: fluid(30, 24);
-
+  min-width: 0;
+  height: 100%;
+  padding: fluid(40, 20);
   border: rem(1) solid var(--color-dark-15);
   border-radius: rem(12);
   background-color: var(--color-dark);
-
-  @include mobile {
-    // gap: 0; 
-  }
-
 
   &__image {
     width: 100%;
@@ -23,15 +18,15 @@
     border-radius: rem(10);
 
     @include mobile {
-      margin-bottom: rem(24); 
+      margin-bottom: rem(24);
     }
   }
 
   &__body {
     display: flex;
-    min-width: 0;
     flex-grow: 1;
     flex-direction: column;
+    min-width: 0;
   }
 
   &__eyebrow {
@@ -43,14 +38,13 @@
     border-radius: rem(28);
     color: var(--color-light);
     background-color: var(--color-dark-10);
-    line-height: 1.2;
-    overflow-wrap: anywhere;
     line-height: 1.4;
+    overflow-wrap: anywhere;
 
-   @include fluid-text(18, 14);
+    @include fluid-text(18, 14);
 
     @include mobile {
-      margin-bottom: rem(16); 
+      margin-bottom: rem(16);
     }
   }
 
@@ -81,15 +75,13 @@
 
   &__feature {
     display: inline-flex;
-    min-height: fluid(43, 36);
-    padding-inline: fluid(14, 10);
     justify-content: center;
     align-items: center;
     column-gap: rem(4);
-
+    min-height: fluid(43, 36);
+    padding-inline: fluid(14, 10);
     border: rem(1) solid var(--color-dark-15);
     border-radius: rem(28);
-
     color: var(--color-light);
     background-color: var(--color-dark-10);
     font-size: fluid(18, 14);
@@ -124,14 +116,15 @@
   &__price {
     display: flex;
     flex-direction: column;
+    min-width: 0;
     margin: 0;
   }
 
   &__price-label {
+    margin-bottom: rem(2);
     color: var(--color-gray-60);
     font-size: fluid(18, 14);
     line-height: 1.5;
-    margin-bottom: rem(2);
   }
 
   &__price-value {
@@ -139,14 +132,13 @@
     font-weight: 600;
     line-height: 1.2;
 
-     @include fluid-text(24, 18);
+    @include fluid-text(24, 18);
   }
 
   &__button {
-    // width: 100%;
-    max-width: fluid(279, 202);
-    min-width: 0;
     justify-self: end;
+    min-width: 0;
+    max-width: fluid(279, 202);
     padding-inline: fluid(20, 12);
     white-space: nowrap;
 
@@ -160,18 +152,5 @@
       gap: rem(12);
     }
   }
-
-  // @media (width <= rem(420)) {
-  //   .property-card {
-  //     &__footer {
-  //       grid-template-columns: 1fr;
-  //       align-items: stretch;
-  //     }
-
-  //     &__button {
-  //       max-width: none;
-  //       justify-self: stretch;
-  //     }
-  //   }
-  // }
 }
+

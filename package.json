@@ -10,6 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "build:bitrix": "vite build --mode bitrix",
+    "export:bitrix": "node scripts/export-bitrix.mjs",
     "images:optimize": "node scripts/optimize-images.mjs"
   },
   "devDependencies": {
