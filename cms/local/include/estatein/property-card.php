@@ -62,13 +62,13 @@ $estateinCardLabel = trim((string)(
                 <?= htmlspecialcharsbx($estateinCardLabel) ?>
             </p>
         <?php endif; ?>
-        <h3 class="property-card__title">
+        <h3 class="property-card__title" data-estatein-ru="<?= htmlspecialcharsbx($estateinProperty['title_ru'] ?: $estateinProperty['title']) ?>">
             <?= htmlspecialcharsbx($estateinProperty['title']) ?>
         </h3>
 
         <div class="property-card__description">
             <p>
-                <?= htmlspecialcharsbx($estateinProperty['description']) ?>
+                <span data-estatein-ru="<?= htmlspecialcharsbx($estateinProperty['description_ru'] ?: $estateinProperty['description']) ?>"><?= htmlspecialcharsbx($estateinProperty['description']) ?></span>
                 <a
                     class="property-card__description-link"
                     href="<?= htmlspecialcharsbx($estateinProperty['url']) ?>">
@@ -170,3 +170,4 @@ $estateinCardLabel = trim((string)(
         </div>
     </div>
 </article>
+

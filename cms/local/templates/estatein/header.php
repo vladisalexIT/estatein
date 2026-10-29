@@ -18,6 +18,7 @@ foreach ($estateinAssets['css'] as $estateinCss) {
 <html lang="en">
 
 <head>
+  <script>try { const t=localStorage.getItem('estatein-theme'); if(t==='light') document.documentElement.dataset.theme='light'; } catch(e) {}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -50,7 +51,8 @@ foreach ($estateinAssets['css'] as $estateinCss) {
   $estateinCanonical = $estateinScheme
     . '://'
     . ($_SERVER['HTTP_HOST'] ?? '')
-    . $estateinRequestPath;
+    . $estateinRequestPath
+    . ($APPLICATION->GetProperty('estatein_canonical_query') !== '' ? '?' . $APPLICATION->GetProperty('estatein_canonical_query') : '');
   ?>
 
   <title><?= htmlspecialcharsbx($estateinTitle) ?></title>
@@ -225,3 +227,4 @@ foreach ($estateinAssets['css'] as $estateinCss) {
   <main
     class="main<?= $estateinRequestPath === SITE_DIR . 'properties/' ? ' properties-page' : '' ?>"
     id="main-content">
+

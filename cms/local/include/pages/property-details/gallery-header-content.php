@@ -4,13 +4,14 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 }
 ?>
 
-<h1 class="property-gallery__title" id="property-gallery-title">
-    Seaside Serenity Villa
+<h1 class="property-gallery__title" data-estatein-ru="<?= htmlspecialcharsbx($GLOBALS['estateinCurrentProperty']['title_ru'] ?: ($GLOBALS['estateinCurrentProperty']['title'] ?? '')) ?>" id="property-gallery-title">
+    <?= htmlspecialcharsbx($GLOBALS['estateinCurrentProperty']['title']) ?>
 </h1>
 
 <button
     class="property-gallery__location"
     type="button"
+    data-property-id="<?= (int)$GLOBALS['estateinCurrentProperty']['id'] ?>"
     data-js-map-open
     aria-haspopup="dialog"
     aria-controls="property-map-dialog"
@@ -22,5 +23,6 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             fill="white" />
     </svg>
 
-    <span>Malibu, California</span>
+    <span><?= htmlspecialcharsbx($GLOBALS['estateinCurrentProperty']['location'] ?: 'Location on request') ?></span>
 </button>
+

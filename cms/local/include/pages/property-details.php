@@ -3,6 +3,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
   die();
 }
 
+$estateinCurrentProperty = $GLOBALS['estateinCurrentProperty'] ?? null;
+if (!$estateinCurrentProperty) { return; }
+
 $estateinDetailsConfig = require $_SERVER['DOCUMENT_ROOT']
   . '/local/config/estatein.php';
 
@@ -13,9 +16,7 @@ $estateinDemoPricing = estateinGetDemoPropertyPricing(
   (int)(
     $estateinDetailsConfig['properties_iblock_id'] ?? 0
   ),
-  (int)(
-    $estateinDetailsConfig['property_details_demo_element_id'] ?? 0
-  )
+  (int)$estateinCurrentProperty['id']
 );
 
 $estateinPricingMoney = static function (
@@ -106,6 +107,7 @@ $estateinPricingPercent =
       </p>
     </header>
 
+    <p class="property-gallery__demo-note">Gallery images are shared demonstration photos.</p>
     <div class="property-gallery__box" data-property-gallery>
       <nav class="property-gallery__thumbnails" aria-label="Choose a property gallery slide">
         <ul class="property-gallery__thumbnail-list">
@@ -176,18 +178,18 @@ $estateinPricingPercent =
       </nav>
 
       <div class="property-gallery__slider swiper" data-gallery-swiper
-        aria-label="Seaside Serenity Villa gallery slides">
+        aria-label="Property demonstration gallery">
         <ul class="property-gallery__slides swiper-wrapper">
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Exterior view of Seaside Serenity Villa with a private swimming pool" width="733" height="583"
+                alt="Demonstration property photograph" width="733" height="583"
                 loading="eager" decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Living room and dining area inside Seaside Serenity Villa" width="733" height="583" loading="eager"
+                alt="Demonstration property photograph" width="733" height="583" loading="eager"
                 decoding="async" />
             </figure>
           </li>
@@ -195,13 +197,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Exterior view of Seaside Serenity Villa surrounded by greenery" width="733" height="583"
+                alt="Demonstration property photograph" width="733" height="583"
                 loading="lazy" decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Open-plan living area inside Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -209,13 +211,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Modern architecture of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Bright interior of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -223,13 +225,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Poolside exterior of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Kitchen and dining area inside Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -237,13 +239,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Front elevation of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Comfortable lounge inside Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -251,13 +253,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Seaside Serenity Villa exterior at pool level" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Dining space inside Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -265,13 +267,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Contemporary exterior details of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Interior details of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -279,13 +281,13 @@ $estateinPricingPercent =
           <li class="property-gallery__slide swiper-slide">
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/seaside-serenity-villa-BMOJRHhy.webp"
-                alt="Complete exterior view of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
 
             <figure class="property-gallery__media">
               <img class="property-gallery__image" src="/local/templates/estatein/assets/metropolitan-haven-CktEm9H_.webp"
-                alt="Complete interior view of Seaside Serenity Villa" width="733" height="583" loading="lazy"
+                alt="Demonstration property photograph" width="733" height="583" loading="lazy"
                 decoding="async" />
             </figure>
           </li>
@@ -413,15 +415,7 @@ $estateinPricingPercent =
               <div class="property-details-inquiry__selected-control">
                 <select class="form-field__control form-field__control--select js-custom-select"
                   data-select-theme="form" id="property-details-selected-property" name="selected_property" required>
-                  <option value="Seaside Serenity Villa, Malibu, California" selected>Seaside Serenity Villa, Malibu,
-                    California</option>
-                  <option value="Metropolitan Haven, New York City, NY">Metropolitan Haven, New York City, NY</option>
-                  <option value="Rustic Retreat Cottage, Aspen, Colorado">Rustic Retreat Cottage, Aspen, Colorado
-                  </option>
-                  <option value="Coastal Elegance, Miami, Florida">Coastal Elegance, Miami, Florida</option>
-                  <option value="Urban Vista Apartment, Chicago, Illinois">Urban Vista Apartment, Chicago, Illinois
-                  </option>
-                  <option value="Countryside Haven, Austin, Texas">Countryside Haven, Austin, Texas</option>
+                  <option value="<?= (int)$estateinCurrentProperty['id'] ?>" selected><?= htmlspecialcharsbx($estateinCurrentProperty['title']) ?></option>
                 </select>
               </div>
               <div data-js-form-field-errors></div>
@@ -433,7 +427,7 @@ $estateinPricingPercent =
               </label>
 
               <textarea class="form-field__control form-field__control--textarea" id="property-details-message"
-                name="message" placeholder="Enter your Message here..." rows="5" required maxlength="5000"></textarea>
+                name="message" placeholder="Enter your Message here..." rows="5" maxlength="5000"></textarea>
               <div data-js-form-field-errors></div>
             </div>
           </div>
@@ -968,3 +962,4 @@ if ($estateinDetailsFaqIblockId > 0) {
 require $_SERVER['DOCUMENT_ROOT']
     . '/local/include/pages/property-details/map-modal.php';
 ?>
+

@@ -1,0 +1,140 @@
+[
+  {
+    "code": "seaside-serenity-villa",
+    "name": "Seaside Serenity Villa",
+    "name_ru": "Вилла «Морская безмятежность»",
+    "address": "Malibu, California",
+    "address_ru": "Малибу, Калифорния",
+    "description": "A coastal villa with an open living area, a terrace and space for outdoor relaxation. The layout brings together private rooms and shared family spaces.",
+    "description_ru": "Прибрежная вилла с открытой гостиной, террасой и пространством для отдыха на воздухе. Планировка сочетает отдельные комнаты и общие семейные зоны.",
+    "amenities": [
+      "Spacious terrace for outdoor dining",
+      "Kitchen with integrated appliances",
+      "Private outdoor relaxation area",
+      "Primary bedroom with an en-suite bathroom",
+      "Garage and practical storage areas"
+    ],
+    "amenities_ru": [
+      "Просторная терраса для обедов на воздухе",
+      "Кухня со встроенной техникой",
+      "Собственная зона отдыха на улице",
+      "Основная спальня с отдельной ванной",
+      "Гараж и удобные места для хранения"
+    ]
+  },
+  {
+    "code": "metropolitan-haven",
+    "name": "Metropolitan Haven",
+    "name_ru": "Апартаменты «Городская гавань»",
+    "address": "New York City, NY",
+    "address_ru": "Нью-Йорк",
+    "description": "A city apartment with an open-plan living and dining area. Well-organized rooms and storage make the home suitable for everyday urban life.",
+    "description_ru": "Городские апартаменты с объединённой гостиной и столовой. Продуманная организация комнат и хранения подходит для повседневной городской жизни.",
+    "amenities": [
+      "Open-plan living and dining area",
+      "Kitchen with modern appliances",
+      "Large windows and natural light",
+      "Built-in storage for everyday essentials",
+      "Convenient access to city amenities"
+    ],
+    "amenities_ru": [
+      "Объединённая гостиная и столовая",
+      "Кухня с современной техникой",
+      "Большие окна и естественный свет",
+      "Встроенное хранение для повседневных вещей",
+      "Удобный доступ к городской инфраструктуре"
+    ]
+  },
+  {
+    "code": "rustic-retreat-cottage",
+    "name": "Rustic Retreat Cottage",
+    "name_ru": "Коттедж «Тихое убежище»",
+    "address": "Aspen, Colorado",
+    "address_ru": "Аспен, Колорадо",
+    "description": "A welcoming cottage with comfortable living spaces and a quiet outdoor setting. The home is designed for relaxed stays and time away from the city.",
+    "description_ru": "Уютный коттедж с комфортными жилыми помещениями и спокойным пространством на улице. Дом подходит для размеренного отдыха вдали от города.",
+    "amenities": [
+      "Comfortable living room for shared evenings",
+      "Kitchen and dedicated dining area",
+      "Outdoor seating surrounded by greenery",
+      "Flexible room for guests or a home office",
+      "Utility space and convenient storage"
+    ],
+    "amenities_ru": [
+      "Комфортная гостиная для совместных вечеров",
+      "Кухня и отдельная обеденная зона",
+      "Место для отдыха на улице среди зелени",
+      "Комната для гостей или домашнего кабинета",
+      "Хозяйственное помещение и удобное хранение"
+    ]
+  },
+  {
+    "code": "coastal-elegance",
+    "name": "Coastal Elegance",
+    "name_ru": "Резиденция «Прибрежная элегантность»",
+    "address": "Miami, Florida",
+    "address_ru": "Майами, Флорида",
+    "description": "A coastal residence combining bright interiors with outdoor leisure areas. Shared living spaces and private rooms provide a balanced layout for family use.",
+    "description_ru": "Прибрежная резиденция, сочетающая светлые интерьеры и открытые зоны отдыха. Общие жилые помещения и отдельные комнаты создают сбалансированную семейную планировку.",
+    "amenities": [
+      "Bright living room with terrace access",
+      "Outdoor dining and leisure space",
+      "Kitchen with generous work surfaces",
+      "Private primary bedroom area",
+      "Parking and household storage"
+    ],
+    "amenities_ru": [
+      "Светлая гостиная с выходом на террасу",
+      "Место для обедов и отдыха на воздухе",
+      "Кухня с просторными рабочими поверхностями",
+      "Отдельная зона основной спальни",
+      "Парковка и хозяйственное хранение"
+    ]
+  },
+  {
+    "code": "urban-vista-apartment",
+    "name": "Urban Vista Apartment",
+    "name_ru": "Квартира «Городская панорама»",
+    "address": "Chicago, Illinois",
+    "address_ru": "Чикаго, Иллинойс",
+    "description": "A contemporary apartment with practical rooms and an open living zone. Natural light and flexible space support both relaxation and working from home.",
+    "description_ru": "Современная квартира с практичными комнатами и открытой жилой зоной. Естественный свет и гибкое использование пространства подходят для отдыха и работы из дома.",
+    "amenities": [
+      "Open living space with large windows",
+      "Contemporary kitchen and dining zone",
+      "Space for a compact home office",
+      "Built-in wardrobes and storage",
+      "Nearby shops and everyday services"
+    ],
+    "amenities_ru": [
+      "Открытая жилая зона с большими окнами",
+      "Современная кухня и обеденная зона",
+      "Место для компактного домашнего кабинета",
+      "Встроенные шкафы и хранение",
+      "Магазины и повседневные сервисы поблизости"
+    ]
+  },
+  {
+    "code": "countryside-haven",
+    "name": "Countryside Haven",
+    "name_ru": "Дом «Загородная гавань»",
+    "address": "Austin, Texas",
+    "address_ru": "Остин, Техас",
+    "description": "A countryside home with shared family spaces and a green outdoor setting. A practical layout leaves room for everyday life, guests and relaxation.",
+    "description_ru": "Загородный дом с общими семейными помещениями и зелёным пространством на улице. Практичная планировка подходит для повседневной жизни, гостей и отдыха.",
+    "amenities": [
+      "Family living room with a garden outlook",
+      "Garden space for outdoor activities",
+      "Kitchen with a family dining area",
+      "Flexible guest or study room",
+      "Parking and practical utility storage"
+    ],
+    "amenities_ru": [
+      "Семейная гостиная с видом на сад",
+      "Садовое пространство для отдыха на воздухе",
+      "Кухня с семейной обеденной зоной",
+      "Комната для гостей или кабинета",
+      "Парковка и практичное хозяйственное хранение"
+    ]
+  }
+]

@@ -173,11 +173,7 @@ class PropertyMapSupport {
             this.containerId
           );
 
-          if (container) {
-            container.style.filter =
-              'invert(100%) hue-rotate(180deg) '
-              + 'brightness(95%) contrast(90%)';
-          }
+          if (container) container.classList.add('estatein-map-surface');
 
           this.points = new api.GeoObjectCollection();
 
@@ -408,3 +404,4 @@ class PropertyMapSupport {
 }
 
 export default PropertyMapSupport;
+

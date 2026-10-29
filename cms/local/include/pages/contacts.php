@@ -258,7 +258,7 @@ $estateinConfig = require $_SERVER['DOCUMENT_ROOT']
             name="message"
             placeholder="Enter your Message here..."
             rows="6"
-            required maxlength="5000"></textarea>
+            maxlength="5000"></textarea>
           <div data-js-form-field-errors></div>
         </div>
       </div>

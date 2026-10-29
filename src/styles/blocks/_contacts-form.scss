@@ -32,13 +32,12 @@
   &__header {
     display: flex;
     flex-direction: column;
-    gap: fluid(14, 8);
     max-width: rem(1140);
     margin-bottom: fluid(80, 40);
   }
 
   &__title {
-    margin: 0;
+    margin: 0 0 fluid(14, 8);
     color: var(--color-light);
     font-weight: 600;
     line-height: 1.2;

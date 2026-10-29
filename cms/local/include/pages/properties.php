@@ -510,6 +510,7 @@ $estateinCatalogNewsCount = max(
                     ],
 
                     'PROPERTY_CODE' => [
+                    'NAME_RU', 'PREVIEW_TEXT_RU',
                         'PRICE',
                         'PROPERTY_PRICE',
                         'COST',
@@ -773,7 +774,7 @@ $estateinCatalogNewsCount = max(
                     </label>
 
                     <textarea class="form-field__control form-field__control--textarea" id="inquiry-message" name="message"
-                        placeholder="Enter your Message here..." rows="5" required maxlength="5000"></textarea>
+                        placeholder="Enter your Message here..." rows="5" maxlength="5000"></textarea>
                     <div data-js-form-field-errors></div>
                 </div>
             </div>
@@ -805,3 +806,4 @@ $estateinCatalogNewsCount = max(
         </form>
     </div>
 </section>
+

@@ -10,7 +10,8 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     width: 100%;
     max-width: var(--page-canvas-width);
-    min-height: fluid(814, 630);
+    min-height: 0;
+    align-items: stretch;
     margin-inline: auto;
     border-inline: rem(1) solid var(--color-dark-15);
     border-bottom: rem(1) solid var(--color-dark-15);
@@ -21,7 +22,9 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    min-width: 0;
+    row-gap: fluid(44, 28);
 
     padding: fluid(144, 40) fluid(80, 16) fluid(144, 40)
       max(
@@ -63,7 +66,7 @@
     grid-template-columns: repeat(3, minmax(0, max-content));
     gap: fluid(20, 12);
 
-    margin: fluid(60, 40) 0 0;
+    margin: 0;
   }
 
   &__stat {
@@ -91,6 +94,8 @@
   &__visual {
     position: relative;
     min-width: 0;
+    min-height: 0;
+    align-self: stretch;
 
     background:
       linear-gradient(
@@ -119,6 +124,16 @@
       pointer-events: none;
     }
 
+    @include mobile-above {
+      &::after {
+        display: block;
+        width: 100%;
+        aspect-ratio: 920 / 814;
+        content: "";
+        pointer-events: none;
+      }
+    }
+
     picture {
       position: absolute;
       inset: 0;
@@ -134,96 +149,96 @@
   }
 
   &__round-link {
-  @include flex-center;
-  @include square(fluid(175, 117));
+    @include flex-center;
+    @include square(fluid(175, 117));
 
-  position: absolute;
-  isolation: isolate;
-  z-index: 2;
-  top: 18%;
-  left: 0;
-  translate: -50% 0;
-
-  border: rem(1) solid var(--color-dark-15);
-  border-radius: 50%;
-
-  color: var(--color-light);
-  background-color: var(--color-dark);
-  box-shadow:
-    0 0 0 rem(5) rgb(20 20 20 / 72%),
-    0 rem(12) rem(30) rgb(0 0 0 / 24%);
-
-  transition-property: border-color, rotate, box-shadow;
-  transition-duration: var(--transition-duration);
-
-  &::before {
     position: absolute;
-    inset: fluid(48, 32);
-    z-index: -1;
+    isolation: isolate;
+    z-index: 2;
+    top: 18%;
+    left: 0;
+    translate: -50% 0;
 
     border: rem(1) solid var(--color-dark-15);
     border-radius: 50%;
-    background-color: var(--color-dark-10);
 
-    content: "";
-    transition-property: border-color, background-color;
-    transition-duration: var(--transition-duration);
-  }
-
-  @include hover {
-    border-color: var(--color-accent);
-    rotate: 5deg;
+    color: var(--color-light);
+    background-color: var(--color-dark);
     box-shadow:
       0 0 0 rem(5) rgb(20 20 20 / 72%),
-      0 rem(14) rem(34) rgb(0 0 0 / 32%);
+      0 rem(12) rem(30) rgb(0 0 0 / 24%);
+
+    transition-property: border-color, rotate, box-shadow;
+    transition-duration: var(--transition-duration);
 
     &::before {
-      border-color: rgb(112 59 247 / 55%);
+      position: absolute;
+      inset: fluid(48, 32);
+      z-index: -1;
+
+      border: rem(1) solid var(--color-dark-15);
+      border-radius: 50%;
+      background-color: var(--color-dark-10);
+
+      content: "";
+      transition-property: border-color, background-color;
+      transition-duration: var(--transition-duration);
+    }
+
+    @include hover {
+      border-color: var(--color-accent);
+      rotate: 5deg;
+      box-shadow:
+        0 0 0 rem(5) rgb(20 20 20 / 72%),
+        0 rem(14) rem(34) rgb(0 0 0 / 32%);
+
+      &::before {
+        border-color: rgb(112 59 247 / 55%);
+      }
+    }
+
+    &:focus-visible {
+      outline: rem(2) solid var(--color-accent-light);
+      outline-offset: rem(4);
     }
   }
 
-  &:focus-visible {
-    outline: rem(2) solid var(--color-accent-light);
-    outline-offset: rem(4);
+  &__round-link-text {
+    position: absolute;
+    inset: fluid(7, 5);
+
+    width: calc(100% - #{fluid(14, 10)});
+    height: calc(100% - #{fluid(14, 10)});
+    overflow: visible;
+
+    fill: currentColor;
+    font-family: var(--font-family-base);
+    font-size: fluid(15, 14);
+    font-weight: 500;
+    letter-spacing: rem(6);
   }
-}
 
-&__round-link-text {
-  position: absolute;
-  inset: fluid(7, 5);
+  &__round-link-sparkles {
+    position: absolute;
+    bottom: fluid(13, 8);
+    left: 50%;
 
-  width: calc(100% - #{fluid(14, 10)});
-  height: calc(100% - #{fluid(14, 10)});
-  overflow: visible;
+    width: fluid(27, 19);
+    height: fluid(27, 19);
 
-  fill: currentColor;
-  font-family: var(--font-family-base);
-  font-size: fluid(15, 14);
-  font-weight: 500;
-  letter-spacing: rem(6);
-}
+    color: #ffe500;
+    translate: -50% 0;
+  }
 
-&__round-link-sparkles {
-  position: absolute;
-  bottom: fluid(13, 8);
-  left: 50%;
+  &__round-link-arrow {
+    position: relative;
+    z-index: 1;
 
-  width: fluid(27, 19);
-  height: fluid(27, 19);
+    width: fluid(34, 24);
+    height: fluid(34, 24);
 
-  color: #ffe500;
-  translate: -50% 0;
-}
-
-&__round-link-arrow {
-  position: relative;
-  z-index: 1;
-
-  width: fluid(34, 24);
-  height: fluid(34, 24);
-
-  color: var(--color-light);
-}
+    color: var(--color-light);
+  }
 
   @include tablet {
     &__body {
@@ -256,6 +271,9 @@
     &__visual {
       order: -1;
       min-height: fluid(302, 302);
+      width: calc(100% - var(--container-padding-x) * 2);
+      aspect-ratio: auto;
+      align-self: stretch;
       margin: fluid(40, 40) var(--container-padding-x) 0;
 
       border: rem(1) solid var(--color-dark-15);
@@ -325,5 +343,35 @@
     &__stat-label {
       white-space: normal;
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__content {
+    padding-block: clamp(32px, 5vw, 96px);
+  }
+  .hero__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .hero__stat {
+    min-width: 0;
+    padding-inline: clamp(10px, 1.25vw, 24px);
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .hero__content {
+    padding-right: 24px;
+  }
+
+  .hero__actions {
+    gap: 10px;
+    margin-top: 28px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  .hero__round-link {
+    width: clamp(112px, 13vw, 144px);
+    height: clamp(112px, 13vw, 144px);
   }
 }

@@ -5,7 +5,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 
 return [
     'properties_iblock_id' => 1,
-    'property_details_demo_element_id' => 1,
+    'requests_email_to' => 'vl4disalex@gmail.com',
+    'requests_email_from' => '',
+    'mail_site_id' => defined('SITE_ID') ? SITE_ID : 's1',
     'requests_iblock_id' => 2,
     'faq_iblock_id' => 4,
     'about_team_iblock_id' => 5,
@@ -16,3 +18,4 @@ return [
     'site_contacts_element_id' => 48,
     'contacts_offices_iblock_id' => 10,
 ];
+

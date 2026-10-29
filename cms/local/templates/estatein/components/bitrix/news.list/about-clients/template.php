@@ -28,7 +28,8 @@ $readClientProperty = static function (
 <div
   class="about-clients__slider slider"
   data-js-slider
-  data-slider-slides-mobile="1"
+  data-slider-tablet-breakpoint="891"
+      data-slider-slides-mobile="1"
   data-slider-slides-tablet="2"
   data-slider-slides-desktop="2"
   data-slider-group-mobile="1"
