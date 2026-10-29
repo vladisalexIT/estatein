@@ -89,13 +89,17 @@
     &__overlay {
       position: fixed;
       z-index: 90;
-      top: 0;
+      top: var(--admin-top);
       right: 0;
+      bottom: 0;
+      left: auto;
 
       display: flex;
       width: min(rem(380), 92vw);
-      height: 100vh;
-      height: 100dvh;
+      height: auto;
+      max-height: none;
+      min-height: 0;
+      box-sizing: border-box;
       flex-direction: column;
       row-gap: rem(24);
       padding: rem(92) fluid(24, 16) rem(24);
@@ -123,6 +127,7 @@
       &::-webkit-scrollbar {
         display: none;
       }
+
     }
 
     &__menu-intro {
@@ -191,10 +196,7 @@
         color: var(--color-accent-light);
         font-size: rem(14);
         font-weight: 600;
-        content: counter(
-          mobile-navigation,
-          decimal-leading-zero
-        );
+        content: counter(mobile-navigation, decimal-leading-zero);
       }
 
       &::after {
@@ -204,10 +206,10 @@
         background-color: var(--color-gray-60);
         content: "";
 
-        mask: url("/src/assets/icons/arrow-up-right.svg")
-          center / contain no-repeat;
-        -webkit-mask: url("/src/assets/icons/arrow-up-right.svg")
-          center / contain no-repeat;
+        mask: url("/src/assets/icons/arrow-up-right.svg") center / contain
+          no-repeat;
+        -webkit-mask: url("/src/assets/icons/arrow-up-right.svg") center /
+          contain no-repeat;
       }
 
       @media (any-hover: hover) {

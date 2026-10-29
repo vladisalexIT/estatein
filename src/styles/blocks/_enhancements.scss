@@ -50,6 +50,31 @@ html {
 html.is-lock {
   padding-right: 0;
 }
+html.is-lock {
+  height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+html.is-lock body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+html.is-lock .header__overlay {
+  touch-action: pan-y;
+}
+
+html.is-lock body {
+  touch-action: none;
+}
+
+html.is-lock .header__overlay {
+  touch-action: pan-y;
+}
 .header__menu-link.is-active {
   pointer-events: auto;
 }
@@ -108,12 +133,56 @@ html.is-lock {
     height: 36px;
   }
   .header__overlay {
+    position: fixed;
+    z-index: 90;
+
     top: var(--admin-top);
-    height: calc(100dvh - var(--admin-top));
+    right: 0;
+    bottom: 0;
+    left: auto;
+
+    display: flex;
+    width: min(380px, 92vw);
+    height: auto;
+    max-height: none;
+    min-height: 0;
+
+    box-sizing: border-box;
+    flex-direction: column;
+    row-gap: 16px;
+
     padding-top: 76px;
+    padding-right: fluid(24, 16);
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    padding-left: fluid(24, 16);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .header__overlay::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header__overlay::-webkit-scrollbar {
+    display: none;
+  }
+
   .header__backdrop {
+    position: fixed;
+    z-index: 80;
     top: var(--admin-top);
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: auto;
+    height: auto;
+    min-height: 0;
   }
   .header.is-active .header__burger {
     position: fixed;
@@ -124,6 +193,17 @@ html.is-lock {
   }
   .burger-button.is-active {
     transform: none;
+  }
+  .header__overlay .header__menu-link {
+    min-height: 42px;
+  }
+
+  .header__overlay .header__contact {
+    min-height: 42px;
+  }
+
+  .header__overlay .header__menu-list {
+    row-gap: 8px;
   }
 }
 @media (max-width: 359px) {
