@@ -67,6 +67,7 @@ async function main() {
   }
   const js = []
   for (const tag of head.match(/<script\b[^>]*>/gi) ?? []) {
+    if (!attribute(tag, 'src')) continue
     if (attribute(tag, 'type')?.toLowerCase() !== 'module') {
       throw new Error('Unexpected non-module script in Home head. Review before exporting.')
     }
@@ -204,3 +205,4 @@ main().catch(error => {
   console.error(`\nEXPORT STOPPED: ${error.message}`)
   process.exitCode = 1
 })
+

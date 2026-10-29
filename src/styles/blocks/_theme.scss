@@ -1,0 +1,201 @@
+:root {
+  color-scheme: dark;
+  --color-dark-12: #1f1f1f;
+  --color-purple-60: #703bf7;
+  --surface-ring: #191919;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --color-light: #211d2e;
+  --color-dark: #fbfaff;
+  --color-dark-10: #f2eff9;
+
+  --color-dark-12: #ece7f6;
+  --color-dark-15: #bdb0cd;
+  --color-dark-20: #9684ad;
+  --color-dark-40: #60536f;
+
+  --color-gray-50: #5e536c;
+  --color-gray-60: #51485f;
+  --color-accent: #703bf7;
+  --color-accent-light: #5b28d7;
+  --color-purple-60: #e7dcff;
+  --surface-ring: #eee9f6;
+  .button--accent,
+  .form-grid__submit-btn,
+  .office-card__button,
+  .team-card__social-link,
+  .team-card__contact-icon {
+    color: #fff;
+  }
+  .button--accent:hover,
+  .form-grid__submit-btn:hover,
+  .office-card__button:hover {
+    background: #5b28d7;
+    color: #fff;
+  }
+  .agreement__label::after,
+  .form-grid__checkbox-label::after {
+    border-color: #fff;
+  }
+  .form-grid__select,
+  .properties-search {
+    color-scheme: light;
+  }
+  .features,
+  .contact-hero__list {
+    box-shadow:
+      0 -8px 0 var(--surface-ring),
+      0 8px 0 var(--surface-ring);
+  }
+  .achievement-card,
+  .client-card {
+    box-shadow: 0 0 0 6px var(--surface-ring);
+  }
+  .about-values__grid {
+    box-shadow: 0 0 0 6px var(--surface-ring);
+  }
+  .properties-listings__empty {
+    box-shadow: 0 0 0 6px var(--surface-ring);
+  }
+  .header__overlay {
+    background:
+      radial-gradient(
+        circle at 100% 0,
+        rgb(112 59 247 / 0.08),
+        transparent 34%
+      ),
+      var(--color-dark);
+  }
+  .header__menu-link,
+  .header__menu-help {
+    background-color: var(--color-dark);
+  }
+  .scroll-top {
+    background: rgb(251 250 255 / 0.96);
+  }
+  .scroll-top:hover {
+    color: #fff;
+    background: var(--color-accent);
+  }
+  .services-hero {
+    background-image: linear-gradient(95deg, #ede6fc, transparent 60%);
+  }
+  .contacts-gallery__box,
+  .services-investments__banner,
+  .services-management__banner,
+  .unlock-value__banner {
+    background-image: none;
+  }
+  .footer__cta::before,
+  .footer__cta::after {
+    opacity: 0.18;
+  }
+  .form-error {
+    color: #ac243b;
+  }
+  .estatein-map-status {
+    color: var(--color-light);
+    background: rgb(251 250 255 / 0.96);
+    border-color: var(--color-dark-20);
+  }
+  .property-gallery__location-icon path {
+    fill: currentColor;
+  }
+  .logo__image {
+    filter: brightness(0.25);
+  }
+  .soc1als__link img,
+  .form-subscribe__submit img,
+  .office-card__contact-icon,
+  .contact-method__icon,
+  .property-card__feature-icon:not(svg) {
+    filter: brightness(0);
+  }
+  .choices[data-type*="select-one"]::after {
+    filter: brightness(0);
+  }
+  .hero__round-link {
+    box-shadow:
+      0 0 0 5px rgb(251 250 255 / 0.8),
+      0 12px 30px rgb(40 24 70 / 0.12);
+  }
+}
+html[lang="ru"] {
+  --font-family-base: "Inter", "Arial", sans-serif;
+}
+html[lang="ru"] .header__menu-link {
+  white-space: nowrap;
+}
+html[lang="ru"] .about-process__item::before {
+  content: "Шаг " counter(process-step, decimal-leading-zero);
+}
+@media (max-width: 1440px) and (min-width: 1001px) {
+  html[lang="ru"] .services-investments__card-top {
+    flex-wrap: wrap;
+  }
+}
+
+html:not([data-theme="light"]) .estatein-map-surface [class*="-ground-pane"] {
+  filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+}
+
+html[data-theme="light"] .property-gallery__location-icon path {
+  fill: currentColor;
+}
+html[data-theme="light"] .estatein-map-status {
+  color: #211b30;
+  background: rgb(255 255 255 / 0.96);
+  border-color: #ded9e9;
+}
+html[data-theme="light"] .header__menu-link {
+  color: var(--color-light);
+}
+html[data-theme="light"] .header__menu-help {
+  background: var(--color-dark-10);
+}
+html[data-theme="light"] .property-card--highlighted {
+  background-color: #f1ebff;
+}
+html[data-theme="light"] .agreement__label::after,
+html[data-theme="light"] .form-grid__checkbox-label::after {
+  border-color: #fff;
+}
+html[data-theme="light"] .property-gallery__thumbnail {
+  background: var(--color-dark);
+}
+
+html[data-theme="light"] {
+  .form-subscribe__icon,
+  .properties-search__field-icon,
+  .client-card__term img {
+    opacity: 1;
+    filter: brightness(0.6);
+  }
+
+  :focus-visible {
+    outline-color: var(--color-accent-light);
+  }
+
+  .features {
+    box-shadow:
+      inset 0 8px 0 var(--surface-ring),
+      inset 0 -8px 0 var(--surface-ring);
+  }
+}
+
+html[data-theme="light"] {
+  img[class*="__decoration"],
+  .about-hero__decoration img,
+  .about-clients__decoration img {
+    content: url("/src/assets/icons/section-stars-light.svg");
+    background: transparent;
+    filter: none;
+  }
+
+  .contacts-gallery-info__content::before {
+    background-image: url("/src/assets/icons/section-stars-light.svg");
+    background-color: transparent;
+    filter: none;
+  }
+}

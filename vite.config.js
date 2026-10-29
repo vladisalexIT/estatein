@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => ({
   rollupOptions: {
       input: {
         home: resolve(__dirname, 'index.html'),
+        error404: resolve(__dirname, '404.html'),
         about: resolve(__dirname, 'about.html'),
         properties: resolve(__dirname, 'properties.html'),
         contact: resolve(__dirname, 'contacts.html'),

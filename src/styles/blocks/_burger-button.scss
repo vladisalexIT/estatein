@@ -43,7 +43,7 @@
 
   &.is-active {
 
-      transform: translateX(rem(20));
+      transform: none;
       transition-duration: 0s;
 
     .burger-button__line {

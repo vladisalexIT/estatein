@@ -176,11 +176,12 @@
   }
 
   .properties-listings .property-card--catalog .property-card__button {
-    width: 100%;
+    width: auto;
     min-width: 0;
-    max-width: 100%;
+    max-width: min(100%, 279px);
+    justify-self: end;
     white-space: normal;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
   }
 
   .properties-search__filters {
@@ -302,4 +303,5 @@
     }
   }
 }
+
 

@@ -315,6 +315,8 @@ if (!function_exists('estateinBuildPropertyCard')) {
             'map_latitude' => $mapLatitude,
             'map_longitude' => $mapLongitude,
             'title' => $title,
+            'title_ru' => estateinGetPropertyValue($properties, ['NAME_RU']),
+            'description_ru' => estateinGetPropertyValue($properties, ['PREVIEW_TEXT_RU']),
             'description' => $description,
             'image' => (string)$image['SRC'],
             'image_alt' => $imageAlt,
@@ -358,7 +360,7 @@ if (!function_exists('estateinBuildPropertyCard')) {
             ),
 
 
-            'url' => SITE_DIR . 'property-details/',
+            'url' => SITE_DIR . 'property-details/?id=' . $id,
         ];
     }
 }
@@ -413,3 +415,4 @@ if (!function_exists('estateinGetProperties')) {
         return $cards;
     }
 }
+

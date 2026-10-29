@@ -5,7 +5,7 @@
   padding-top: fluid(150, 50);
   padding-bottom: fluid(100, 50);
   background-color: var(--color-dark);
-  overflow: hidden;
+  overflow: visible;
 
   &__container {
     width: 100%;
@@ -15,12 +15,11 @@
   &__header {
     display: flex;
     flex-direction: column;
-    gap: fluid(14, 10);
     max-width: rem(1140);
   }
 
   &__title {
-    margin: 0;
+    margin: 0 0 fluid(14, 10);
     color: var(--color-light);
     font-weight: 600;
     line-height: 1.2;
@@ -42,15 +41,13 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: fluid(20, 10);
     width: 100%;
-    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+    max-width: var(--page-canvas-width);
     margin: 0 auto;
     padding: fluid(20, 10);
     list-style: none;
-    border: rem(1) solid var(--color-dark-15);
+    border-block: rem(1) solid var(--color-dark-15);
     background-color: var(--color-dark);
-    box-shadow:
-      0 rem(-10) 0 #191919,
-      0 rem(9) 0 #191919;
+    box-shadow: inset 0 rem(8) 0 var(--color-dark-10), inset 0 rem(-8) 0 var(--color-dark-10);
   }
 
   &__item {
@@ -63,7 +60,7 @@
     padding-bottom: rem(60);
 
     &__list {
-      padding-inline: fluid(30, 16);
+      padding: rem(16);
       gap: rem(16);
     }
   }
@@ -80,9 +77,12 @@
 
     &__list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: rem(10);
-      padding: rem(10);
+      gap: rem(8);
+      width: calc(100% - 32px);
+      padding: rem(8);
+      border: rem(1) solid var(--color-dark-15);
       border-radius: rem(12);
     }
   }
 }
+

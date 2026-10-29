@@ -1,5 +1,5 @@
 <?php
-// Save a request in Bitrix. No mail sending or newsletter activation is performed here.
+// Save a request, then queue a notification through Bitrix mail events.
 define('NO_KEEP_STATISTIC', true);
 define('NO_AGENT_STATISTIC', true);
 define('PUBLIC_AJAX_MODE', true);
@@ -70,7 +70,7 @@ try {
 
     $required = $type === 'newsletter'
         ? ['email', 'privacy_agreement']
-        : ['first_name', 'last_name', 'email', 'phone', 'message', 'privacy_agreement'];
+        : ['first_name', 'last_name', 'email', 'phone', 'privacy_agreement'];
 
     $choices = [];
     if ($type === 'contacts') {
@@ -91,16 +91,12 @@ try {
         ];
     } elseif ($type === 'property_details') {
         $required[] = 'selected_property';
-        $choices = [
-            'selected_property' => [
-                'Seaside Serenity Villa, Malibu, California',
-                'Metropolitan Haven, New York City, NY',
-                'Rustic Retreat Cottage, Aspen, Colorado',
-                'Coastal Elegance, Miami, Florida',
-                'Urban Vista Apartment, Chicago, Illinois',
-                'Countryside Haven, Austin, Texas',
-            ],
-        ];
+        $propertyConfig = require $_SERVER['DOCUMENT_ROOT'] . '/local/config/estatein.php';
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/local/include/estatein/property-context.php';
+        $selectedRaw = $_POST['selected_property'] ?? '';
+        $selectedId = preg_match('/^[1-9][0-9]{0,9}$/D', $selectedRaw) ? (int)$selectedRaw : 0;
+        $selectedProperty = estateinFindProperty((int)($propertyConfig['properties_iblock_id'] ?? 0), $selectedId);
+        $choices = ['selected_property' => $selectedProperty ? [(string)$selectedProperty['id']] : []];
     }
 
     $limits = ['email' => 254, 'privacy_agreement' => 2];
@@ -193,7 +189,12 @@ try {
     $lines = ['Form: ' . $titles[$type]];
     foreach ($labels as $field => $label) {
         if (!isset($data[$field]) || $data[$field] === '') continue;
-        $lines[] = $label . ': ' . $data[$field];
+        $lines[] = $label . ': ' . ($field === 'selected_property' && isset($selectedProperty) ? $selectedProperty['title'] . ' [ID ' . $selectedProperty['id'] . ']' : $data[$field]);
+    }
+    if (isset($selectedObject)) {
+        $lines[] = 'Property ID: ' . $selectedObject['id'];
+        $lines[] = 'Property: ' . $selectedObject['title'];
+        $lines[] = 'Property address: ' . $selectedObject['location'];
     }
     $lines[] = 'Consent: confirmed';
 
@@ -218,11 +219,31 @@ try {
         estateinRespond(500, ['success' => false, 'message' => 'Unable to save your request. Please try again later.']);
     }
 
+    // The request is already saved. Mail failure MUST NOT ask the visitor to submit again.
+    $mailQueued = false;
+    try {
+        $to = (string)($config['requests_email_to'] ?? '');
+        $from = (string)($config['requests_email_from'] ?? '');
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL) || !filter_var($from, FILTER_VALIDATE_EMAIL)
+            || preg_match('/[\r\n]/', $to . $from)) {
+            throw new RuntimeException('Configure requests_email_to and an authorized requests_email_from.');
+        }
+        $eventId = CEvent::Send('ESTATEIN_REQUEST', (string)($config['mail_site_id'] ?? SITE_ID), [
+            'EMAIL_TO'=>$to, 'EMAIL_FROM'=>$from, 'REPLY_TO'=>$data['email'],
+            'FORM_TITLE'=>$titles[$type], 'FORM_TYPE'=>$type, 'REQUEST_ID'=>(string)$id,
+            'REQUEST_BODY'=>implode("\n\n", $lines),
+        ], 'N');
+        $mailQueued = (int)$eventId > 0;
+        if (!$mailQueued) throw new RuntimeException('Mail event was not queued.');
+    } catch (Throwable $mailError) {
+        AddMessage2Log('Request #' . $id . ': ' . $mailError->getMessage(), 'estatein_mail');
+    }
     $_SESSION['ESTATEIN_FORM_SUCCESS'] = $now;
-    estateinRespond(200, ['success' => true]);
+    estateinRespond(200, ['success' => true, 'mail_queued' => $mailQueued]);
 } catch (Throwable $exception) {
     if (function_exists('AddMessage2Log')) {
         AddMessage2Log('Estatein form handler: ' . $exception->getMessage(), 'estatein_forms');
     }
     estateinRespond(500, ['success' => false, 'message' => 'Unable to process your request. Please try again later.']);
 }
+

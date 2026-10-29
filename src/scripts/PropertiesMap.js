@@ -393,7 +393,7 @@ class PropertiesMap {
       return;
     }
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth <= 1440.98) {
       mapBody.style.height = '';
     } else {
       const referenceElement =
@@ -485,3 +485,4 @@ class PropertiesMap {
 }
 
 export default PropertiesMap;
+

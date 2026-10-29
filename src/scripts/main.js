@@ -6,6 +6,9 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import Header from './Header.js'
+import InterfaceEnhancements from './InterfaceEnhancements.js'
+import ContactsLightbox from './ContactsLightbox.js'
+import SitePreferences from './SitePreferences.js'
 import SliderCollection from './Slider.js'
 import PropertiesSearch from './PropertiesSearch.js'
 import ContactsOffices from './ContactsOffices.js'
@@ -18,7 +21,10 @@ import PropertiesMap from './PropertiesMap.js'
 import PropertyModalMap from './PropertyModalMap.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  new SitePreferences()
   new Header()
+  new InterfaceEnhancements()
+  new ContactsLightbox()
 
   new CustomSelects()
   new PropertiesSearch()
@@ -34,4 +40,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   new ScrollToTop()
 })
+
 

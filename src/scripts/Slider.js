@@ -142,6 +142,16 @@ class Slider {
     }
 
     init() {
+        const isAboutClients =
+            this.rootElement.matches('.about-clients__slider') ||
+            Boolean(this.rootElement.closest('.about-clients'))
+
+        const tabletBreakpoint = isAboutClients
+            ? 901
+            : this.getNumberData(
+                'sliderTabletBreakpoint',
+                768,
+            )
         const desktopBreakpoint = this.getNumberData(
             'sliderDesktopBreakpoint',
             1024
@@ -236,7 +246,7 @@ class Slider {
                 : false,
 
             breakpoints: {
-                768: {
+                [tabletBreakpoint]: {
                     slidesPerView: slidesTablet,
                     slidesPerGroup: groupTablet,
                     spaceBetween: spaceTablet,

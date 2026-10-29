@@ -10,7 +10,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
       <?php
       $itemClasses = ['header__menu-item'];
 
-      if (!empty($item['SELECTED'])) {
+      if ((rtrim((string)parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/') === rtrim((string)parse_url($item['LINK'], PHP_URL_PATH), '/'))) {
           $itemClasses[] = 'is-active';
       }
       ?>
@@ -19,7 +19,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
         <a
           class="header__menu-link"
           href="<?= htmlspecialcharsbx($item['LINK']) ?>"
-          <?php if (!empty($item['SELECTED'])): ?>
+          <?php if ((rtrim((string)parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/') === rtrim((string)parse_url($item['LINK'], PHP_URL_PATH), '/'))): ?>
             aria-current="page"
           <?php endif; ?>
         >

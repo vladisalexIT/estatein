@@ -97,6 +97,7 @@ class Header {
       '/contacts.html': '/contacts',
     }
 
+    if (normalizedPath.startsWith('/property-details/')) return '/property-details'
     return staticPagePaths[normalizedPath] ?? normalizedPath
   }
 
@@ -239,10 +240,7 @@ class Header {
       window.location.pathname
     )
 
-    const navigationPath =
-      currentPath === '/property-details'
-        ? '/properties'
-        : currentPath
+    const navigationPath = currentPath
 
     this.menuLinkElements.forEach((linkElement) => {
       const linkPath = this.normalizePath(
@@ -253,6 +251,7 @@ class Header {
       )
 
       const isActive = linkPath === navigationPath
+      linkElement.closest('.header__menu-item')?.classList.toggle('is-active', isActive)
 
       linkElement.classList.toggle(
         this.stateClasses.isActive,
@@ -296,8 +295,9 @@ class Header {
       ...this.overlayElement.querySelectorAll(
         this.focusableSelector
       ),
+      this.burgerElement,
     ].filter((element) => {
-      return !element.hidden
+      return element && !element.hidden && element.getClientRects().length > 0
     })
 
     if (!focusableElements.length) {

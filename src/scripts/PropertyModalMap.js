@@ -95,6 +95,8 @@ class PropertyModalMap {
         });
 
         this.hasSyncedMap = true;
+        const selected = this.openBtn.dataset.propertyId;
+        if (selected) this.activateCard(selected);
       }
 
       if (!cardsLoaded) {
@@ -381,6 +383,8 @@ class PropertyModalMap {
           });
 
           this.hasSyncedMap = true;
+        const selected = this.openBtn.dataset.propertyId;
+        if (selected) this.activateCard(selected);
         });
       }
     });
@@ -388,3 +392,4 @@ class PropertyModalMap {
 }
 
 export default PropertyModalMap;
+

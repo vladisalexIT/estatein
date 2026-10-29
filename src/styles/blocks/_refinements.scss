@@ -1,0 +1,53 @@
+/* Shared responsive refinements. Imported LAST. */
+@media (max-width: 767.98px) {
+ .feature-card { padding:18px 12px; row-gap:12px; }
+ .contact-card { padding:18px 12px; row-gap:12px; }
+ .feature-card__arrow,.contact-card__arrow { top:12px; right:12px; width:24px; height:24px; }
+ .property-gallery__media { aspect-ratio:16/10; max-height:300px; }
+ .property-gallery__image { object-fit:cover; }
+ .property-gallery__amenity { padding-left:42px; }
+ .property-gallery__amenity::before { width:20px; height:20px; left:12px; top:13px; }
+}
+@media (max-width: 600px) {
+ .team-card { max-width:380px; margin-inline:auto; }
+ .team-card__media { aspect-ratio:316/253; max-height:265px; }
+}
+@media (min-width:768px) and (max-width:1000px) {
+ .services-investments__grid { grid-template-columns:minmax(0,1fr); gap:28px; }
+ .services-investments__left-column { max-width:none; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+ .services-investments__list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .services-investments__card { padding:24px; min-width:0; }
+ .services-investments__card-title { min-width:0; overflow-wrap:break-word; }
+ .services-investments__card-top { gap:12px; }
+ .services-investments__icon-wrapper { width:54px; min-height:54px; }
+}
+/* Intermediate map layout: bound BOTH map and card rather than scaling a card to 1400px. */
+@media (max-width:1440.98px) {
+ [data-js-properties-list].is-map-active { display:flex; flex-direction:column; align-items:stretch; }
+ [data-js-properties-list].is-map-active > .properties-map-wrapper { order:1; }
+ [data-js-properties-list].is-map-active .properties-map-wrapper__body { height:clamp(260px,38vw,420px); }
+ [data-js-properties-list].is-map-active > .properties-listings { order:2; width:min(100%,560px); align-self:center; padding-inline:22px; }
+ [data-js-properties-list].is-map-active .property-card__image { height:auto; max-height:290px; aspect-ratio:432/280; }
+ [data-js-properties-list].is-map-active .property-card { height:auto; }
+ [data-js-properties-list].is-map-active .properties-listings__footer .slider__button { top:50%; }
+}
+@media (max-width:600px) {
+ [data-js-properties-list].is-map-active { padding-inline:12px; gap:18px; }
+ [data-js-properties-list].is-map-active > .properties-listings { padding-inline:6px; }
+ [data-js-properties-list].is-map-active .properties-map-wrapper__body { padding:10px; height:280px; }
+ [data-js-properties-list].is-map-active .properties-listings__footer.slider__footer { position:static; display:flex; height:auto; min-height:44px; margin-top:16px; pointer-events:auto; }
+ [data-js-properties-list].is-map-active .properties-listings__footer .slider__navigation { display:flex; width:100%; justify-content:space-between; }
+ [data-js-properties-list].is-map-active .properties-listings__footer .slider__button { position:static; transform:none; }
+}
+
+@media (max-width:1023.98px) {
+ .property-map-overlay { height:100dvh; max-height:100dvh; border-radius:0; }
+ .property-map-modal { height:auto; min-height:100dvh; overflow:visible; }
+ .property-map-overlay { overflow-y:auto; }
+ .property-map-modal__split-layout { display:flex; flex-direction:column; height:auto; }
+ .property-map-modal__map-zone { order:1; height:clamp(270px,42vw,400px); flex-shrink:0; width:calc(100% - 32px); margin:64px auto 16px; border-radius:12px; overflow:hidden; }
+ .property-map-modal__side-panel { order:2; height:auto; overflow:visible; border:0; }
+ .property-map-modal__list { width:min(100%,600px); margin-inline:auto; }
+ .property-map-modal__item { height:auto; min-height:0; }
+ .property-map-modal__close { position:fixed; top:12px; right:12px; }
+}
